@@ -1,0 +1,410 @@
+/*While Writing This My Great Grandpa Is Still Alive. However He Might Not Last Much Longer.
+Not A Lot Of People Get To Meet Their Great Grandpa, In Most Cases He's Already Dead, I Never Got To Meet Him. The Old Ages Are Dying, And The New Ones Are Beginning.
+Jose De Jesus(Great-Grandpa), Jose De Jesus 2 (Grandpa), Jose De Jesus 3 (Father), Jose De Jesus 4/Maybe (Nino/Me)
+I Will Leave This Comment Here Forever, In The Websites HTML Files. - Nino
+ Thu Jan 16 6:32:42 2025 AD. Welcome To The Official Coco Website!*/
+
+ #page-wrapper {
+    background-color: #1b9ed8;
+    margin: auto;
+    padding: 12px;
+    width: 1240px;
+    height: 3000px;
+    margin-top: 50px;
+    background-image: url("https://web.archive.org/web/20180910224244im_/https://cdn.scratch.mit.edu/scratchr2/static/__a42f0ee5757a5592765778443d9ddd7f__/images/scratch-bg.png");
+ }
+
+.showcase-container {
+    width: 1042px;
+    margin: auto;
+    margin-top: 50px;
+    padding: 0px;
+}
+
+.showcase-box {
+    background-color: white;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    height: 500px;
+    width: 1040px;
+    height: 526px;
+    padding-top: 0px;
+    border: 1px solid rgb(204, 204, 204);
+}
+
+#project-showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#box-head {
+    width: 1000px;
+    /*height: 78px;*/
+}
+
+#title {
+    width: 474px;
+    margin-bottom: -5px;
+}
+
+#buttons {
+    position: relative;
+    left: 540px;
+    /*right: 500px;*/
+    top: -50px;
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+    width: 570px;
+}
+
+#button-container {
+    display: grid;
+    grid-template-columns: 180px 150px 180px;
+}
+
+#votes {
+    display: inline-block;
+    vertical-align: middle;
+    background-color: rgb(238, 238, 238);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(204, 204, 204);
+    border-image: initial;
+    border-radius: 5px;
+    padding: 0px 5px;
+}
+
+#See-code {
+    line-height: 30px;
+    display: inline-block;
+    font-weight: normal;
+    background-color: rgb(22, 159, 219);
+    color: rgb(255, 255, 255);
+    background-image: -webkit-linear-gradient(top, rgb(25, 182, 250), rgb(22, 159, 219));
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 1px 0px inset, rgba(0, 0, 0, 0.05) 0px 1px 2px;
+    cursor: pointer;
+    height: 32px;
+    vertical-align: middle;
+    text-shadow: none;
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-color: rgb(23, 152, 196) rgb(23, 152, 196) rgb(20, 135, 173);
+    border-radius: 5px;
+    overflow: visible;
+    transition: 0.25s ease-in-out;
+    margin: 3px;
+}
+
+#Remix {
+    line-height: 30px;
+    display: inline-block;
+    font-weight: normal;
+    background-color: rgb(219, 127, 22);
+    color: rgb(255, 255, 255);
+    background-image: -webkit-linear-gradient(top, rgb(250, 186, 25), rgb(219, 143, 22));
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 1px 0px inset, rgba(0, 0, 0, 0.05) 0px 1px 2px;
+    cursor: pointer;
+    height: 32px;
+    vertical-align: middle;
+    text-shadow: none;
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-color: rgb(196, 124, 23) rgb(196, 118, 23) rgb(173, 153, 20);
+    border-radius: 5px;
+    overflow: visible;
+    transition: 0.25s ease-in-out;
+    margin: 3px;
+}
+
+.buttons-buttons-text {
+    margin-left: 10px;
+    margin-top: 12px;
+}
+
+.buttons-buttons-text2 {
+    margin-left: 0px;
+    margin-top: 12px;
+}
+
+#Teapot {
+    line-height: 30px;
+    display: inline-block;
+    font-weight: normal;
+    background-color: rgb(221, 134, 240);
+    color: rgb(255, 255, 255);
+    background-image: -webkit-linear-gradient(top, rgb(222, 121, 247), rgb(225, 93, 255));
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 1px 0px inset, rgba(0, 0, 0, 0.05) 0px 1px 2px;
+    cursor: pointer;
+    height: 32px;
+    vertical-align: middle;
+    text-shadow: none;
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-color: rgb(196, 23, 196) rgb(167, 23, 196) rgb(160, 20, 173);
+    border-radius: 5px;
+    overflow: visible;
+    transition: 0.25s ease-in-out;
+    margin: 3px;
+}
+
+#Share-with-others {
+    line-height: 30px;
+    display: inline-block;
+    font-weight: normal;
+    background-color: rgb(22, 219, 38);
+    color: rgb(255, 255, 255);
+    background-image: -webkit-linear-gradient(top, rgb(11, 167, 52), rgb(17, 126, 34));
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 1px 0px inset, rgba(0, 0, 0, 0.05) 0px 1px 2px;
+    cursor: pointer;
+    height: 32px;
+    vertical-align: middle;
+    text-shadow: none;
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-color: rgb(22, 79, 25) rgb(17, 97, 44) rgb(13, 77, 22);
+    border-radius: 5px;
+    overflow: visible;
+    transition: 0.25s ease-in-out;
+    margin: 3px;
+}
+
+#Scratch-button {
+    line-height: 30px;
+    display: inline-block;
+    font-weight: normal;
+    background-color: rgb(219, 199, 22);
+    color: rgb(255, 255, 255);
+    background-image: -webkit-linear-gradient(top, rgb(250, 246, 25), rgb(219, 212, 22));
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 1px 0px inset, rgba(0, 0, 0, 0.05) 0px 1px 2px;
+    cursor: pointer;
+    height: 32px;
+    vertical-align: middle;
+    text-shadow: none;
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-color: rgb(196, 187, 23) rgb(196, 187, 23) rgb(178, 189, 16);
+    border-radius: 5px;
+    overflow: visible;
+    transition: 0.25s ease-in-out;
+    margin: 3px;
+}
+
+.scratch-2-tooltip {
+    background-color: #1b9ed8;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 13px;
+    color: #fff;
+    text-shadow: none;
+    line-height: 13px;
+    padding: 10px;
+    position: absolute;
+    /*display: none;*/
+    white-space: nowrap;
+    z-index: 999;
+    -webkit-box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+    box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+}
+
+#bottom {
+    background-color: #ddd;
+    display: block;
+    padding: 2px 12px 2px 22px;
+    list-style-type: none;
+    margin: 0;
+    clear: both;
+    border-top: 1px solid #ccc;
+}
+
+#side {
+    background-color: rgb(244, 242, 242);
+    color: rgb(50, 47, 49);
+    /*border: 1px solid rgb(204, 204, 204);*/
+}
+
+#project-showcase {
+    background-color: rgb(255, 255, 255);
+    color: rgb(50, 47, 49);
+    /*border: 1px solid rgb(204, 204, 204);*/
+}
+
+.player-fullscreen {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999999999999999999;
+    margin: 0px;
+    padding: 0px;
+    padding: 10px;
+    padding-bottom: 250px;
+    padding-right: 120px;
+    background: rgba(27, 158, 216, 0.41);
+    backdrop-filter: blur(3.4px);
+}
+
+.scratch-warning-orange {
+    background-color: rgb(255, 200, 0);
+    border: orange 2px solid;
+    border-radius: 5px;
+}
+
+#player {
+    z-index: 9999999999999999999;
+    display: grid;
+    grid-template-rows: 100% 1fr;
+    /*position: relative;*/
+    padding: 10px;
+    background: rgba(27, 158, 216, 0.41);
+}
+
+/*#scratch {
+    width: 482px;
+    height: 425px;
+    /*width: 241px;
+    height: 212.5px;*
+}/**/
+
+.scratch-embedded {
+    width: 482px;
+    height: 425px;
+}
+
+.scratch-fullscreen {
+    width: 482px;
+    height: 425px;
+    top: 0;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    width: 98%;
+    height: 90%;
+    transition: width 3s, height 3s, top 3s, bottom 3s, left 3s, right 3s, position 3s;
+}
+
+.player-embedded {
+    width: 482px;
+    height: 425px;
+    position: relative;
+}
+
+.player-fullscreen {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999999999999999999;
+    width: 100%;
+    height: 100%;
+    transition: width 3s, height 3s, top 3s, bottom 3s, left 3s, right 3s;
+}
+
+#Player-buttons {
+    background-color: #1b9ed8;
+    padding: 5px;
+    margin-top: -3px;
+    padding-bottom: 50px;
+    /* From https://css.glass */
+background: rgba(27, 158, 216, 0.41);
+/*border-radius: 16px;*/
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(3.4px);
+-webkit-backdrop-filter: blur(3.4px);
+border: 1px solid rgba(27, 158, 216, 0.11);
+}
+
+.player-button {
+    line-height: 30px;
+    display: inline-block;
+    font-weight: normal;
+    background-color: rgb(22, 159, 219);
+    color: rgb(255, 255, 255);
+    background-image: -webkit-linear-gradient(top, rgb(25, 182, 250), rgb(22, 159, 219));
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 1px 0px inset, rgba(0, 0, 0, 0.05) 0px 1px 2px;
+    cursor: pointer;
+    height: 32px;
+    vertical-align: middle;
+    text-shadow: none;
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-color: rgb(23, 152, 196) rgb(23, 152, 196) rgb(20, 135, 173);
+    border-radius: 5px;
+    overflow: visible;
+    transition: 0.25s ease-in-out;
+    margin: 3px;
+}
+
+.silver-button {
+    line-height: 30px;
+    display: inline-block;
+    font-weight: normal;
+    background-color: rgb(22, 159, 219);
+    color: rgb(255, 255, 255);
+    background-image: -webkit-linear-gradient(top, rgb(25, 182, 250), rgb(22, 159, 219));
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 1px 0px inset, rgba(0, 0, 0, 0.05) 0px 1px 2px;
+    cursor: pointer;
+    height: 32px;
+    vertical-align: middle;
+    text-shadow: none;
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-color: rgb(234, 234, 234) rgb(207, 207, 207) rgb(138, 138, 138);
+    border-radius: 5px;
+    overflow: visible;
+    transition: 0.25s ease-in-out;
+    margin: 3px;
+    background-image: -webkit-linear-gradient(top,#fff,#ccc);
+    background-image: -moz-linear-gradient(top,#fff,#ccc);
+    background-image: -ms-linear-gradient(top,#fff,#ccc);
+    background-image: -o-linear-gradient(top,#fff,#ccc);
+    background-image: linear-gradient(top,#fff,#ccc);
+}
+
+.silver-button a {
+    color: inherit;
+    padding: 8px 10px;
+}
+
+#right-side {
+    background-color: rgb(244, 242, 242);
+    color: rgb(50, 47, 49);
+    /*border: 1px solid rgb(204, 204, 204);*/
+}
+
+
+#userdata {
+    margin-top: 50px;
+    display: grid;
+    background-color: #1b9ed8;
+    column-gap: 30px;
+    grid-template-columns: 1fr 1fr;
+}
+
+#comment-section {
+    background-color: #fff;
+    width: 640px;
+    float: left;
+    margin: 0 10px;
+    display: inline;
+}
+
+#otherdata {
+    background-color: aqua;
+    width: 280px;
+}
+
+#comment-form {
+    margin: 12px;
+}
+    

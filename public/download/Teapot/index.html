@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="http://127.0.0.1:5500/CSS/general.css" rel="stylesheet">
+        <link href="http://127.0.0.1:5500/CSS/header.css" rel="stylesheet">
+        <link href="http://127.0.0.1:5500/CSS/teapot.css" rel="stylesheet">
+        <style>
+            body {
+                background-color: grey;
+                font-family: Arial, Helvetica, sans-serif;
+                background-image: url("Images/Background.png");
+                margin: 0px;
+                padding: 0px;
+                height: 3000px;
+                width: 100%;
+                max-width: 1200px;
+            }
+    
+            #webpage {
+                position: absolute;
+                margin-top: 50px;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+            }
+    
+            .products {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                row-gap: 12px;
+                column-gap: 12px;
+                margin-top: 30px;
+                margin-left: 12px;
+                margin-right: 12px;
+                bottom: 0;
+            }
+    
+                /*#header {}*/
+    
+                .header {
+                    display: flex;
+                    flex: 1;
+                    height: 44px;
+                    position: fixed;
+                    z-index: 100;
+                    margin-bottom: 50px;
+                    background-color: lightgrey;
+                    top: 0;
+                    right: 0;
+                    left: 0;
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+                    padding-top: 12px;
+                    padding-left: 12px;
+                    padding-bottom: 12px;
+                    padding-right: 12px;
+                }
+    
+    
+                .box-product{
+                    background-color: rgb(247, 243, 243);
+                    white-space: nowrap;
+                /* grid-template-columns: 100px 1fr; */
+                /* width: 300px;
+                    height: 300px; */
+                    padding: 30px 3px 30px 40px;
+                /* display: grid; */
+                height: 100%;
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+                }
+    
+                    #Coco{
+                        z-index: 101;
+                        height: 38px;
+                        padding-bottom: -20px;
+                        padding-right: -100px;
+                        opacity: 1;
+                        transition: opacity 1.0s;
+                        transition: height 1.0s;
+                    }
+    
+    
+                    #Coco:hover{
+                        opacity: 0.10;
+                        cursor: pointer;
+                        height: 50px;
+                        transition: opacity 1.0s;
+                        transition: height 1.0s;
+                    }
+    
+                    .product-img {
+                        height: 120px;
+                        width: 120px;
+                        margin-left: 40px;
+                        max-width: 100%;
+                    }
+    
+                    .Announcement {
+                        background-color: wheat;
+                        margin-top: 100px;
+                        margin-bottom: 50px;
+                    }
+            </style>
+    </head>
+    <body style="background-image: url(../../Images/Background.png);">
+
+        <div id="webpage">
+            <div id="header">
+                <header class="header">
+                    <!--<button onclick="cocoSound();">Test</button>-->
+                    <a href="../../Website.html"><img id="Coco" src="../../Coco.svg" onmouseover="/* Aa */ const audio = new Audio('../../Coco.wav'); audio.play();/* Aa */ /* Aa * cocoSound();/* Aa */"></a>
+                    <!--<select title="Bob">
+                        <option selected value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        </select>-->
+
+                        <div class="left-header"> <div></div>
+                        <a class="content-only-a" href="../../Games/">
+                            <button class="special-button">Games</button>
+                        </a>
+                        <button class="special-button">Productivity</button>
+                        <button class="special-button">Creation</button>
+                        <button class="special-button">Develop</button>
+
+                    </div>
+
+                        <div class="right-header">
+                            <button id="sign-in" class="special-button header-right">Sign In</button>
+                            <button class="special-button">Create Account</button>
+                        </div>
+
+                </header>
+        </div>
+
+        <div class="product-box">
+            <h1 class="header-text">Teapot</h1>
+            <img src="../../Images/Teapot.png">
+            <h3>Have Teapot Installed?</h3>
+            <object class="inner-big-box-object" type="application/tea-teapot-coco"></object>
+            <h4>Downloads For Teapot</h4>
+            <h2>Notice: "This Application Is Paid Software, Prices Do Not Vary Between Operating Systems Or Devices, Because Once An Application Is Bought, All Editions For Deferent Operating Systems (Not Different Editions Like Packages Unless A "1. Full Package Is Purchased, 2. A Higher Up Level Of Edition (Somtimes).") Will Be Available To You On This Device And/Or Your Coco Account. A Coco Account Is Required To Purchase Products!"</h2>
+
+            <h3>Downloads For Teapot V1.25.57.4.79.90</h3>
+
+            <h5>Full Package ($340.99):</h5> <button class="add-to-cart-button">Add To Cart</button> <h5>Full Language Pack, Offline(Standalone) And Online(Web Plugin/Extension) Players,
+                RetroFix(#1 Older/Retro Device Jailbreaker), Kernel, Operating System Helper, IDE, SDK, SpeedMode, Device Interpolation, And App Pack 4.</h5>
+            <div class="grid-3">
+                <p style="display: contents;">Coco Operating Systems (CocoOS) 16-64 Bit
+                     <div style="display: contents;">Note: "Coco Computer OS, SteamWorks, And "Coco DOS Are Based Of Of The Coco OS Framework"</div>
+                     <button class="special-button">Downloads For Coco OS</button>
+                    </p>
+                <p>Windows 16-64 Bit <button class="special-button">Downloads For Windows</button></p>
+                <p>MacOS 16-64 Bit <button class="special-button">Downloads For MacOS</button></p>
+                <p>Linux Operating Systems 16-64 Bit <button class="special-button">Downloads For Linux</button></p>
+                <p></p>
+            </div>
+            <a href="Universal Downloads.html"> <button class="special-button">Universal Downloads</button> </a>
+
+            <h5>Everyday User Package ($19.99):</h5> <button class="add-to-cart-button">Add To Cart</button> <h5>Full Language Pack, Offline(Standalone) And Online(Web Plugin/Extension) Players,
+                RetroFix(#1 Older/Retro Device Jailbreaker), Interpolation</h5>
+            <div class="grid-3">
+                <p>Windows 16-64 Bit <button class="special-button">Downloads For Windows</button></p>
+                <p>MacOS 16-64 Bit <button class="special-button">Downloads For MacOS</button></p>
+                <p></p>
+            </div>
+            <a href="Universal Downloads.html"> <button class="special-button">Universal Downloads</button> </a>
+
+        </div>
+
+        <script type="module" src="../../Scripts/CartScripts.js"></script>
+    </body>
+</html>

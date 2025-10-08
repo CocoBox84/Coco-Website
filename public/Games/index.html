@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Coco.ink</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="http://127.0.0.1:5500/Coco Icon/Old Coco Icon.ico">
+    <link href="http://127.0.0.1:5500/CSS/games.css" rel="stylesheet">
+    <link href="http://127.0.0.1:5500/CSS/header.css" rel="stylesheet">
+    <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+    <link href="http://127.0.0.1:5500/CSS/general.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: rgb(12, 153, 132);
+            font-family: Arial, Helvetica, sans-serif;
+            background-image: url("http://127.0.0.1:5500/Images/Background2.png");
+            margin: 0px;
+            padding: 0px;
+            height: 3000px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+
+        #webpage {
+            position: absolute;
+            margin-top: 50px;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            row-gap: 12px;
+            column-gap: 12px;
+            margin-top: 30px;
+            margin-left: 12px;
+            margin-right: 12px;
+            bottom: 0;
+        }
+
+        .header {
+            display: flex;
+            flex: 1;
+            height: 44px;
+            position: fixed;
+            z-index: 100;
+            margin-bottom: 50px;
+            background-color: lightgrey;
+            top: 0;
+            right: 0;
+            left: 0;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+            padding-top: 12px;
+            padding-left: 12px;
+            padding-bottom: 12px;
+            padding-right: 12px;
+        }
+
+
+        .box-product {
+            background-color: rgb(247, 243, 243);
+            white-space: nowrap;
+            padding: 30px 3px 30px 40px;
+            height: 100%;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+        }
+
+        #Coco {
+            z-index: 101;
+            height: 38px;
+            padding-bottom: -20px;
+            padding-right: -100px;
+            opacity: 1;
+            transition: opacity 1.0s;
+            transition: height 1.0s;
+        }
+
+
+        #Coco:hover {
+            opacity: 0.10;
+            cursor: pointer;
+            height: 50px;
+            transition: opacity 1.0s;
+            transition: height 1.0s;
+        }
+
+        .product-img {
+            height: 120px;
+            width: 120px;
+            margin-left: 40px;
+            max-width: 100%;
+        }
+
+        .Announcement {
+            background-color: wheat;
+            margin-top: 100px;
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="webpage">
+        <div id="header">
+            <header class="header">
+                <a href="http://127.0.0.1:5500/"><img id="Coco" src="http://127.0.0.1:5500/Coco.svg"
+                        onmouseover="/* Aa */ const audio = new Audio('../Coco.wav'); audio.play();"></a>
+
+                <div class="left-header">
+                    <div></div>
+                    <a class="content-only-a" href="">
+                        <button class="special-button">Games</button>
+                    </a>
+                    <button class="special-button">Productivity</button>
+                    <button class="special-button">Creation</button>
+                    <button class="special-button">Develop</button>
+
+                </div>
+
+                <div class="right-header">
+                    <button id="sign-in" class="special-button header-right">Sign In</button>
+                    <button class="special-button">Create Account</button>
+                </div>
+
+            </header>
+        </div>
+        <div id="welcome">
+
+            <div id="intro" class="info-box">
+                <img class="Coco-logo" src="http://127.0.0.1:5500/Coco.svg">
+                <p class="Welcome-text">Welcome To The Official Coco Games Page!</p>
+                <h2>Find A Game And Start Playing!</h2>
+                <h4>Some Games Are Not Free, And Need To Be Downloaded. Some Free Games Don't Run In The Browser. For
+                    Games That Run Right In The Browser, Go To: <a
+                        href="http://127.0.0.1:5500/Games/browser/">http://127.0.0.1:5500/Games/browser/</a></h4>
+
+            </div>
+        </div>
+
+        <div id="products">
+
+            <div id="games1" class="products">
+            </div>
+
+            <div id="Announcement1" class="Announcement"></div>
+
+            <div id="games2" class="products">
+            </div>
+
+            <div id="Announcement2" class="Announcement"></div>
+
+            <div id="games3" class="products">
+            </div>
+
+        </div>
+
+        Some Scripts Have Probably Crashed
+        <div id="error-container" class="error-container-hide">
+            <div id="e" class="error big-box"></div>
+        </div>
+        <!---->
+        <script src="http://127.0.0.1:5500/Ambler.mp3Sound.js"></script><!---->
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                /* Aa */
+                showError(); /* Aa */
+                /* Aa */
+                showMessage();
+            });
+            function showError() {
+                document.getElementById("e").innerHTML = `Oops! Something Crashed!`;
+                var errorContainer = document.getElementById("error-container");
+                errorContainer.classList.remove("error-container-hide");
+                errorContainer.classList.add("error-container-show");
+            }
+
+            function hideError() {
+                document.getElementById("e").innerHTML = ``;
+                var errorContainer = document.getElementById("error-container");
+                errorContainer.classList.remove("error-container-show");
+                errorContainer.classList.add("error-container-hide");
+            }
+
+            function showMessage(messageAtIndex) {
+                var messageBox;
+                switch (messageAtIndex) {
+                    case 5:
+                        //
+                        break;
+                }
+            }
+        </script>
+        <!--http://127.0.0.1:5500/-->
+        <script type="module" src="http://127.0.0.1:5500/Scripts/GamesBodyScripts.js"></script>
+        <script src="https://unpkg.com/dayjs@1.11.10/dayjs.min.js"></script>
+        <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
+</body>
+
+</html>

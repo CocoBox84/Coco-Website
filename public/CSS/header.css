@@ -1,0 +1,52 @@
+#header {
+    margin-bottom: 20px;
+}
+
+.header {
+    display: grid;
+    grid-template-columns: 1fr 10fr 10fr;
+    row-gap: 12px;
+    column-gap: 12px;
+    flex: 1;
+    height: 44px;
+    position: fixed;
+    z-index: 1000;
+    margin-bottom: 50px;
+    background-color: lightgrey;
+    top: 0;
+    right: 0;
+    left: 0;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+    padding-top: 12px;
+    padding-left: 12px;
+    padding-bottom: 12px;
+    padding-right: 12px;
+
+  
+background-image: url("https://web.archive.org/web/20110221164753im_/http://wwwimages.adobe.com/homepage/include/style/default/SiteHeader/tile.png");
+background-repeat: repeat-x;
+background-size: contain;
+
+    /* From https://css.glass */
+    background: rgba(211, 211, 211, 0.75);
+    /*border-radius: 16px;*/
+    
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.2px);
+    -webkit-backdrop-filter: blur(5.2px);
+    border: 1px solid rgba(211, 211, 211, 0.548);
+  }
+
+
+.left-header {
+    display: flex;
+    flex: 1;
+    background-color: aqua;
+    justify-content: start;
+}
+.right-header {
+    display: flex;
+    flex: 1;
+    background-color: red;
+    justify-content: end;
+}

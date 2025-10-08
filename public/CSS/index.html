@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="http://127.0.0.1:5500/CSS/sticker.css" rel="stylesheet">
+        <style>
+            .legal {
+                z-index: 30;
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: white;
+                display: none;
+            }
+
+            .legal-view {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Hello There!</h1>
+        <p>This Page Has (Almost) No CSS Styling Because This Is The Folder Where It's Saved!</p>
+        <h2 style="color: chartreuse;">Ignore Warning If You Don't Want To Browse Or Modify CSS Files!</h2>
+        <p style="color: red;"><h3 style="color: red;"><img src="http://127.0.0.1:5500/Stickers/Warning Sign.stikr" id="warning-sign" class="sticker"><a style="color: rgb(199, 199, 17);">A Note, Notice, And Warning!:</a> You Can Not Copy, Rip From Or  .css Files Entirely! Well... For Commercial Use At Least. (I Think... If Otherwise Don't, Just Don't.). But If You Want You Can Browse Through The Code So You Can Create Your Own UserStyles And Know How The Website Is Styled. But That Is All I'm Giving You Permission To Do! Please Do Not Do Otherwise Unless An Admin Gives You Permission To Do Otherwise!</h3></p>
+        <h4><a>Here Is Some Links To Help You Navigate From Here :) !</a> <a> :</a></h4>
+
+        <p>Link To Homepage:</p>
+        <a href="http://127.0.0.1:5500/">http://Coco.Ink/</a>
+        <h2></h2>
+
+        <p>Links To CSS:</p>
+        <p>Available To You Only IF You Agree To Our Terms.</p>
+        <button onclick="showLegal();">Terms/legal</button>
+        <div class="legal"></div>
+        <div class="links" style="display: none;">
+        <h2></h2>
+        </div>
+
+        <script>
+            function showLinks() {
+                document.querySelector(".links").innerHTML = `<a href="http://127.0.0.1:5500/CSS/general.css">http://127.0.0.1:5500/CSS/general.css</a>,
+        <a href="http://127.0.0.1:5500/CSS/.css">http://127.0.0.1:5500/CSS/.css</a>,`;
+            }
+
+            function showLegal() {
+                document.querySelector(".legal").innerHTML = `
+                <p>
+        (Copyed From Google <a href="http://google.com/">Google's Website</a>)<p></p>
+Learn more.
+Cascading Style Sheets (CSS) are considered intellectual property and are protected by copyright law, meaning that the code you write in CSS is automatically copyrighted once created, and unauthorized copying or distribution of that code could be considered copyright infringement; however, the basic functionality and structure of CSS itself is not typically considered copyrightable as it's a standard developed by the W3C. 
+Key points about CSS and copyright:
+Automatic protection:
+When you write CSS code, you automatically gain copyright protection over it. 
+Not just the design:
+While the visual appearance of a website designed using CSS might be protected by copyright, the underlying CSS code itself is also considered protected. 
+Not copyrightable aspects:
+The basic structure and functionality of CSS, as defined by the W3C standards, are not considered copyrightable. 
+Infringement concerns:
+If someone directly copies large portions of your unique CSS code without permission, it could be considered copyright infringement.
+                </p>
+                <p>Agree With Legal?</p>
+                <button onclick="agreeWithLegal();">Agree</button> <button onclick="disagree();">Disagree</button>
+                <p class="pop"></p>
+                `;
+                document.querySelector(".legal").classList.add("legal-view");
+            }
+
+            function agreeWithLegal() {
+                document.querySelector(".pop").innerHTML = "Thanks! Redirecting To Terms...";
+                setTimeout(function() {
+                    window.location.href = "http://127.0.0.1:5500/legal#CSS";
+                }, 5000);
+            }
+
+            console.log(typeof(await));
+        </script>
+    </body>
+</html>

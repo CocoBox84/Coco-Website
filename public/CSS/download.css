@@ -1,0 +1,7 @@
+#scroll-box {
+    overflow-y: hidden;
+    overflow-x: scroll;
+    min-width: 500px;
+    min-height: 500px;
+    border: 2px solid black;
+}

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Coco.ink</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="http://127.0.0.1:5500/Coco Icon/Old Coco Icon.ico">
+    <link href="http://127.0.0.1:5500/CSS/Testing/showcase.css" rel="stylesheet">
+    <link href="http://127.0.0.1:5500/CSS/header.css" rel="stylesheet">
+    <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+    <link href="http://127.0.0.1:5500/CSS/general.css" rel="stylesheet">
+    <link href="http://127.0.0.1:5500/CSS/sticker.css" rel="stylesheet">
+   <!--<script src="https://unpkg.com/@ruffle-rs/ruffle"></script>-->
+    <style>
+        body {
+            background-color: rgb(82, 12, 153);
+            font-family: Arial, Helvetica, sans-serif;
+            background-image: url("http://127.0.0.1:5500/Images/Background3.png");
+            margin: 0px;
+            padding: 0px;
+            /*height: 3000px;*/
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        #webpage {
+            position: absolute;
+            margin-top: 50px;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            row-gap: 12px;
+            column-gap: 12px;
+            margin-top: 30px;
+            margin-left: 12px;
+            margin-right: 12px;
+            bottom: 0;
+        }
+
+        /*#header {}*/
+
+        .header {
+            display: flex;
+            flex: 1;
+            height: 44px;
+            position: fixed;
+            z-index: 100;
+            margin-bottom: 50px;
+            background-color: lightgrey;
+            top: 0;
+            right: 0;
+            left: 0;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+            padding-top: 12px;
+            padding-left: 12px;
+            padding-bottom: 12px;
+            padding-right: 12px;
+        }
+
+
+        .box-product {
+            background-color: rgb(247, 243, 243);
+            white-space: nowrap;
+            /* grid-template-columns: 100px 1fr; */
+            /* width: 300px;
+                height: 300px; */
+            padding: 30px 3px 30px 40px;
+            /* display: grid; */
+            height: 100%;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+        }
+
+        #Coco {
+            z-index: 101;
+            height: 38px;
+            padding-bottom: -20px;
+            padding-right: -100px;
+            opacity: 1;
+            transition: opacity 1.0s;
+            transition: height 1.0s;
+        }
+
+
+        #Coco:hover {
+            opacity: 0.10;
+            cursor: pointer;
+            height: 50px;
+            transition: opacity 1.0s;
+            transition: height 1.0s;
+        }
+
+        .product-img {
+            height: 120px;
+            width: 120px;
+            margin-left: 40px;
+            max-width: 100%;
+        }
+
+        .Announcement {
+            background-color: wheat;
+            margin-top: 100px;
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="webpage">
+        <div id="header">
+            <header class="header">
+                <a href="http://127.0.0.1:5500/"><img id="Coco" src="http://127.0.0.1:5500/Coco.svg"
+                        onmouseover="/* Aa */ const audio = new Audio('../Coco.wav'); audio.play();"></a>
+
+                <div class="left-header">
+                    <div></div>
+                    <a class="content-only-a" href="">
+                        <button class="special-button">Games</button>
+                    </a>
+                    <button class="special-button">Productivity</button>
+                    <button class="special-button">Creation</button>
+                    <button class="special-button">Develop</button>
+
+                </div>
+
+                <div class="right-header">
+                    <button id="sign-in" class="special-button header-right">Sign In</button>
+                    <button class="special-button">Create Account</button>
+                </div>
+
+            </header>
+        </div>
+
+        <div id="page-wrapper">
+
+            <div class="showcase-container">
+                <div id="box-head" class="box-head">
+                    <div class="header-text">
+                        <h2 id="title">Coco SteamWorks 1990 V1.0</h2>
+                        <div id="author">
+                            By
+                            <a href="http://127.0.0.1:5500/Admin/Coco"><span id="owner">Coco</span></a>
+
+                        </div>
+                    </div>
+                    <div id="buttons">
+                        <div id="votes">
+                            <div class="vote"><img src=".png">10</div>
+                            <div class="vote"><img src=".png">3</div>
+                        </div>
+                        <div id="button-container">
+                            <a>
+                                <button id="See-code">
+                                    <span class="buttons-buttons-text"><img class="button-sticker"
+                                            src="http://127.0.0.1:5500/Stickers/See Inside.stikr">See Code</span>
+                                </button>
+                            </a>
+                            <a>
+
+                                <button id="Remix">
+                                    <span class="buttons-buttons-text"><img class="button-sticker"
+                                            src="http://127.0.0.1:5500/Stickers/Remix.stikr">Remix</span>
+                                </button>
+                            </a>
+                            <a>
+
+
+                                <button id="Teapot">
+                                    <span class="buttons-buttons-text"><img class="button-sticker"
+                                            src="http://127.0.0.1:5500/Stickers/Teapot.stikr">Teapot</span>
+                                </button>
+                            </a>
+                            <a>
+
+                                <button id="Share-with-others">
+                                    <span class="buttons-buttons-text2"><img class="button-sticker2"
+                                            src="http://127.0.0.1:5500/Stickers/Share With Others.stikr">Share With
+                                        Others</span>
+                                </button>
+
+                            </a>
+                            <a>
+
+                                <button id="Scratch-button"><span class="buttons-buttons-text2"><img
+                                            class="button-sticker2"
+                                            src="http://127.0.0.1:5500/Stickers/Scratch.stikr">View On
+                                        Scratch</span></button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="showcase-box">
+                    <div id="side"></div>
+                    <div id="project-showcase">
+                        <div id="stage">
+                            <object id="Player">
+                                    <object type="application/x-shockwave-flash"
+                                        adata="http://127.0.0.1:5500/Scratch Projects/Coco Steamworks In Editor.swf"
+                                        data="Scratch (2).swf"
+                                        id="scratch" style="visibility: visible;">
+                                        <param name="allowscriptaccess" value="always">
+                                        <param name="allowfullscreen" value="true">
+                                        <param name="wmode" value="direct">
+                                        <param name="menu" value="false">
+                                        <param name="flashvars" value="autostart=false&amp;project_creator=ScratchUser206827&amp;project_modifiedDate=2013-05-16 13:30:04&amp;project_isPublished=false&amp;project_isNew=true&amp;extensionDevMode=false&amp;microworldMode=false&amp;project_title=Untitled%20Project&amp;debugOps=true&amp;debugOpCmd=a28ece154d930633afaaeacbe1e10227">
+                                    </object>
+
+                                <div id="Player-buttons">
+                                    <button class="player-button reflection"
+                                        onclick="JSsetPresentationMode();">Enter/Exit Fullscreen</button>
+                                </div>
+                            </object>
+
+                        </div>
+                        <div id="right-side"></div>
+                    </div>
+                </div>
+                <div id="bottom">
+                    <div id="voting">
+                        <div id="upvote">
+                            <button>Upvote</button>
+                            <div class="scratch-2-tooltip">Upvote</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="userdata">
+                    <div id="comment-section">
+                        <div class="box-head" style="padding: 5px; padding-bottom: 20px;">
+                            <span class="s-sticker"></span><span>Comments</span> <span>(<span
+                                    class="comment-count">248</span>)</span>
+                        </div>
+                        <form id="comment-form" action=javascript:void(0);>
+                            <p>
+                                <textarea class="text-area" name="content" placeholder="Leave a comment"
+                                    ></textarea>
+                            <div class="inline">
+                                <div class="Select">
+                                    <!-- Snippet From w3 Schools -->
+                                    <!-- https://www.w3schools.com/howto/howto_custom_select.asp -->
+                                    <div class="custom-select" style="width:200px;">
+                                        <select>
+                                            <option value="0">Select Review Stars: 1-10</option>
+                                            <option value="1" style="background-image: url('Images/TextX.png');">1 Star</option>
+                                            <option value="2">2 Stars</option>
+                                            <option value="3">3 Stars</option>
+                                            <option value="4">4 Stars</option>
+                                            <option value="5">5 Stars</option>
+                                            <option value="6">6 Stars</option>
+                                            <option value="7">7 Stars</option>
+                                            <option value="8">8 Stars</option>
+                                            <option value="9">9 Stars</option>
+                                            <option value="10">10 Stars</option>
+                                            <option value="11">Upvote</option>
+                                            <option value="12">Downvote</option>
+                                        </select>
+                                    </div>
+                                    <style>
+                                        /* The container must be positioned relative: */
+                                        .custom-select {
+                                            position: relative;
+                                            font-family: Arial;
+                                        }
+                        
+                                        .custom-select select {
+                                            display: none;
+                                            /*hide original SELECT element: */
+                                        }
+                        
+                                        .select-selected {
+                                            background-color: #0f8bc0;
+                                        }
+                        
+                                        /* Style the arrow inside the select element: */
+                                        .select-selected:after {
+                                            position: absolute;
+                                            content: "";
+                                            top: 14px;
+                                            right: 10px;
+                                            width: 0;
+                                            height: 0;
+                                            border: 6px solid transparent;
+                                            border-color: #fff transparent transparent transparent;
+                                        }
+                        
+                                        /* Point the arrow upwards when the select box is open (active): */
+                                        .select-selected.select-arrow-active:after {
+                                            border-color: transparent transparent #fff transparent;
+                                            top: 7px;
+                                        }
+                        
+                                        /* style the items (options), including the selected item: */
+                                        .select-items div,
+                                        .select-selected {
+                                            color: #ffffff;
+                                            padding: 8px 16px;
+                                            border: 1px solid transparent;
+                                            border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+                                            cursor: pointer;
+                                        }
+                        
+                                        /* Style items (options): */
+                                        .select-items {
+                                            position: absolute;
+                                            background-color: #0f8bc0;
+                                            top: 100%;
+                                            left: 0;
+                                            right: 0;
+                                            z-index: 99;
+                                        }
+                        
+                                        /* Hide the items when the select box is closed: */
+                                        .select-hide {
+                                            display: none;
+                                        }
+                        
+                                        .select-items div:hover,
+                                        .same-as-selected {
+                                            background-color: rgba(0, 0, 0, 0.1);
+                                        }
+                                    </style>
+                                    <script>
+                        
+                                        //var x, i, j, l, ll, selElmnt, a, b, c;
+                                        /* Look for any elements with the class "custom-select": */
+                                        x = document.getElementsByClassName("custom-select");
+                                        l = x.length;
+                                        for (i = 0; i < l; i++) {
+                                            selElmnt = x[i].getElementsByTagName("select")[0];
+                                            ll = selElmnt.length;
+                                            /* For each element, create a new DIV that will act as the selected item: */
+                                            a = document.createElement("DIV");
+                                            a.setAttribute("class", "select-selected");
+                                            a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+                                            x[i].appendChild(a);
+                                            /* For each element, create a new DIV that will contain the option list: */
+                                            b = document.createElement("DIV");
+                                            b.setAttribute("class", "select-items select-hide");
+                                            for (j = 1; j < ll; j++) {
+                                                /* For each option in the original select element,
+                                                create a new DIV that will act as an option item: */
+                                                c = document.createElement("DIV");
+                                                c.innerHTML = selElmnt.options[j].innerHTML;
+                                                c.addEventListener("click", function (e) {
+                                                    /* When an item is clicked, update the original select box,
+                                                    and the selected item: */
+                                                    var y, i, k, s, h, sl, yl;
+                                                    s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+                                                    sl = s.length;
+                                                    h = this.parentNode.previousSibling;
+                                                    for (i = 0; i < sl; i++) {
+                                                        if (s.options[i].innerHTML == this.innerHTML) {
+                                                            s.selectedIndex = i;
+                                                            h.innerHTML = this.innerHTML;
+                                                            y = this.parentNode.getElementsByClassName("same-as-selected");
+                                                            yl = y.length;
+                                                            for (k = 0; k < yl; k++) {
+                                                                y[k].removeAttribute("class");
+                                                            }
+                                                            this.setAttribute("class", "same-as-selected");
+                                                            break;
+                                                        }
+                                                    }
+                                                    h.click();
+                                                });
+                                                b.appendChild(c);
+                                            }
+                                            x[i].appendChild(b);
+                                            a.addEventListener("click", function (e) {
+                                                /* When the select box is clicked, close any other select boxes,
+                                                and open/close the current select box: */
+                                                e.stopPropagation();
+                                                closeAllSelect(this);
+                                                this.nextSibling.classList.toggle("select-hide");
+                                                this.classList.toggle("select-arrow-active");
+                                            });
+                                        }
+                        
+                                        function closeAllSelect(elmnt) {
+                                            /* A function that will close all select boxes in the document,
+                                            except the current select box: */
+                                            var x, y, i, xl, yl, arrNo = [];
+                                            x = document.getElementsByClassName("select-items");
+                                            y = document.getElementsByClassName("select-selected");
+                                            xl = x.length;
+                                            yl = y.length;
+                                            for (i = 0; i < yl; i++) {
+                                                if (elmnt == y[i]) {
+                                                    arrNo.push(i)
+                                                } else {
+                                                    y[i].classList.remove("select-arrow-active");
+                                                }
+                                            }
+                                            for (i = 0; i < xl; i++) {
+                                                if (arrNo.indexOf(i)) {
+                                                    x[i].classList.add("select-hide");
+                                                }
+                                            }
+                                        }
+                        
+                                        /* If the user clicks anywhere outside the select box,
+                                        then close all select boxes: */
+                                        document.addEventListener("click", closeAllSelect);
+                        
+                                    </script>
+                                </div>
+                            </div>
+                            </p>
+                            <button class="player-button" onclick="postCommentToCookie();">Post</button>
+                            <button class="silver-button">
+                                <a>Cancel</a>
+                            </button>
+                        </form>
+                        <div id="comments"></div>
+                    </div>
+                    <div id="otherdata"></div>
+                </div>
+            </div>
+        </div>
+        
+        <script src="http://127.0.0.1:5500/Scripts/showcase.js"></script>
+        <script src="http://127.0.0.1:5500/Scripts/commentHandler.js"></script>
+</body>
+
+</html>

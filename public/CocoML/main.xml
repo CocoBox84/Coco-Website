@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Application>
+    <sprite id="Sprite-1">
+        <List>
+            <listitem index="1">
+                <Number>
+                    <int>1</int>
+                </Number>
+            </listitem>
+        </List>
+
+        <spritePos>
+            <xPos>340</xPos>
+            <yPos>549</yPos>
+        </spritePos>
+
+        <html>
+            <CocoHtml>
+                <Plug-in>
+                    <Applet></Applet>
+                    <JavaApplet></JavaApplet>
+                    <shockwave-flash></shockwave-flash>
+                    <Coco-Plugin-app></Coco-Plugin-app>
+                    <Coco-Splash></Coco-Splash>
+                    <Object type="Application/vm-teapot-system"></Object>
+                </Plug-in>
+            </CocoHtml>
+        </html>
+    </sprite>
+</Application>
