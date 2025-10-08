@@ -1,4 +1,4 @@
-/* Aa */ import { newStuff } from "http://127.0.0.1:5500/Data/Home Page Data/Newstuff.js"; /* Aa */
+/* Aa */ import { newStuff } from "/Data/Home Page Data/Newstuff.js"; /* Aa */
 /* Aa * export /* Aa */ function drawNewstuff() {
     /*const newStuff = `
         <div class="big-box">
@@ -35,7 +35,7 @@
             newCoolStuff += `
             <div class="big-box">
             <div class="big-box-header">
-                <img class="Coco-logo" src="http://127.0.0.1:5500/Coco.svg">
+                <img class="Coco-logo" src="/Coco.svg">
                 <p class="Welcome-text">Welcome To The Coco Website! Create An Account Or Sign In!</p>
             </div>
         <!----<dialog>Hello</dialog>-->
@@ -52,7 +52,7 @@
     
                 <div class="cool-description">A Quick Video For The Website!</div>
                 <div class="cool-image">
-                    <img src="http://127.0.0.1:5500/Coco Icon/Old Coco Icon.svg">
+                    <img src="/Coco Icon/Old Coco Icon.svg">
                 </div>
     
             </div>

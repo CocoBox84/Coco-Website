@@ -117,7 +117,7 @@ input:focus,
 body {
     background-color: grey;
     font-family: Arial, Helvetica, sans-serif;
-    background-image: url("http://127.0.0.1:5500/Images/Background.png");
+    background-image: url("/Images/Background.png");
     margin: 0px;
     padding: 0px;
     /*height: 3000px;*/

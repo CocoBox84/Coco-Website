@@ -1,6 +1,6 @@
 //import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
-import { products } from "../Data/Home Page Data/Products.js";
-import { newStuff } from "http://127.0.0.1:5500/Data/Home Page Data/Newstuff.js";
+import { products } from "/Data/Home Page Data/Products.js";
+import { newStuff } from "/Data/Home Page Data/Newstuff.js";
 
 //1 =
 

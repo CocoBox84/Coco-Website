@@ -3,7 +3,7 @@ export const newStuff = [{
     dataIf: `
         <div class="big-box">
             <div class="big-box-header">
-                <img class="Coco-logo" src="http://127.0.0.1:5500/Coco.svg">
+                <img class="Coco-logo" src="/Coco.svg">
                 <p class="Welcome-text">Welcome To The Coco Website! Create An Account Or Sign In!</p>
             </div>
         <!----<dialog>Hello</dialog>-->
@@ -11,7 +11,7 @@ export const newStuff = [{
     
                 <div class="inner-big-box-object">
                 <video width="750px" height="500px" controls>
-  <source src="http://127.0.0.1:5500/Videos/Movie on 9-4-24 at 5.34 PM.mov" type="video/mp4">
+  <source src="/Videos/Movie on 9-4-24 at 5.34 PM.mov" type="video/mp4">
   <!--<source src="movie.ogg" type="video/ogg">-->
   Your browser does not support the video tag.
 </video>
@@ -24,7 +24,7 @@ export const newStuff = [{
     
                 <div class="cool-description">A Quick Video For The Website!</div>
                 <div class="cool-image">
-                    <img src="http://127.0.0.1:5500/Coco Icon/Old Coco Icon.svg">
+                    <img src="/Coco Icon/Old Coco Icon.svg">
                 </div>
     
             </div>
