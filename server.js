@@ -21,4 +21,5 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Coco Website server initialized on 
+  console.log(`Coco Website server initialized on ${APP_URL}`);
+});
