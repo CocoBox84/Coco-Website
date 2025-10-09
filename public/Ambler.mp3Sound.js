@@ -1,4 +1,4 @@
-const Ambler = new Audio("http://127.0.0.1:5500/Ambler.mp3");
+const Ambler = new Audio("/Ambler.mp3");
 Ambler.loop = true;
 Ambler.volume = 0.1;
 

@@ -15,6 +15,30 @@ app.use(express.static(path.join(__dirname, "public"))); // serves existing asse
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+  const user = {
+    name: "user",
+    age: 15,
+    birthday: {
+      date: "3/31/2010", 
+      month: {
+        text: "march",
+        num: "3"
+      },
+      day: "31",
+      year: "2010"
+    },
+    description: `Hello, I'm Nino (Jose).`,
+    //role: "admin"
+  };
+
+app.get("", (req, res) => {
+  res.render('home', {user: user});
+})
+
+app.get("/", (req, res) => {
+  res.render('home', {user: user});
+})
+
 app.get('/users/:user', (req, res) => {
   res.render('user', { username: req.params.user, color: 'blue' });
 });
