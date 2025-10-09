@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Coco user <%= username %>
+    </title>
+    <link rel="icon" type="image/x-icon" href="/Coco Icon/Old Coco Icon.ico">
+    <link href="/CSS/homepage.css" rel="stylesheet">
+    <link href="/CSS/header.css" rel="stylesheet">
+    <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+    <link href="/CSS/general.css" rel="stylesheet">
+    <link href="/CSS/general.css" rel="stylesheet">
+    <link href="/CSS/header.css" rel="stylesheet">
+    <link href="/CSS/teapot.css" rel="stylesheet">
+    <link href="/CSS/download.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: grey;
+            font-family: Arial, Helvetica, sans-serif;
+            background-image: url("Images/Background.png");
+        }
+
+        #webpage {
+            position: absolute;
+            margin-top: 50px;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            row-gap: 12px;
+            column-gap: 12px;
+            margin-top: 30px;
+            margin-left: 12px;
+            margin-right: 12px;
+            bottom: 0;
+        }
+
+        /*#header {}*/
+
+        .header {
+            display: flex;
+            flex: 1;
+            height: 44px;
+            position: fixed;
+            z-index: 100;
+            margin-bottom: 50px;
+            background-color: lightgrey;
+            top: 0;
+            right: 0;
+            left: 0;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+            padding-top: 12px;
+            padding-left: 12px;
+            padding-bottom: 12px;
+            padding-right: 12px;
+        }
+
+
+        .box-product {
+            background-color: rgb(247, 243, 243);
+            white-space: nowrap;
+            /* grid-template-columns: 100px 1fr; */
+            /* width: 300px;
+                    height: 300px; */
+            padding: 30px 3px 30px 40px;
+            /* display: grid; */
+            height: 100%;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+        }
+
+        #Coco {
+            z-index: 101;
+            height: 38px;
+            padding-bottom: -20px;
+            padding-right: -100px;
+            opacity: 1;
+            transition: opacity 1.0s;
+            transition: height 1.0s;
+        }
+
+
+        #Coco:hover {
+            opacity: 0.10;
+            cursor: pointer;
+            height: 50px;
+            transition: opacity 1.0s;
+            transition: height 1.0s;
+        }
+
+        .product-img {
+            height: 120px;
+            width: 120px;
+            margin-left: 40px;
+            max-width: 100%;
+        }
+
+        .Announcement {
+            background-color: wheat;
+            margin-top: 100px;
+            margin-bottom: 50px;
+        }
+
+        #user-box {
+            display: block;
+        }
+
+        #user-info {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+        }
+
+        .user-box {
+            display: block;
+            background: white;
+            padding: 5px;
+            border-radius: 5px;
+            border: 2px solid rgb(211, 211, 211);
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+        }
+
+        .user-box-head {
+            border-radius: 7px;
+            border: 2px solid rgb(230, 230, 230);
+            background-color: rgb(199, 199, 199);
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            padding: 2px 10px;
+        }
+
+        .user-box-head h3 {
+            color: rgb(128, 128, 128);
+        }
+
+        .box-push-into-left {
+                --pericles-word-background: rgba(9, 46, 140, 0.92);
+    --pericles-section-background: rgba(255, 254, 219, 1.54);
+    text-shadow: 0 1px #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: white;
+    margin: 12px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0px !important;
+    margin: -3px;
+        }
+
+    </style>
+</head>
+
+<body style="background-image: url(/Images/Background.png);">
+
+    <div id="webpage">
+        <div id="header">
+            <header class="header">
+                <!--<button onclick="cocoSound();">Test</button>-->
+                <a href="/"><img id="Coco" src="/Coco.svg"
+                        onmouseover="/* Aa */ const audio = new Audio('/Coco.wav'); audio.play();/* Aa */ /* Aa * cocoSound();/* Aa */"></a>
+                <!--<select title="Bob">
+                        <option selected value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        </select>-->
+
+                <div class="left-header">
+                    <div></div>
+                    <a class="content-only-a" href="/Games/">
+                        <button class="special-button">Games</button>
+                    </a>
+                    <button class="special-button">Productivity</button>
+                    <button class="special-button">Creation</button>
+                    <button class="special-button">Develop</button>
+
+                </div>
+
+                <div id="user-controls" class="right-header">
+                    <button id="sign-in" class="special-button header-right">Sign In</button>
+                    <button class="special-button">Create Account</button>
+                </div>
+
+            </header>
+        </div>
+
+        <div id="container">
+            <div id="user-box">
+                <div class="user-box-head">
+                    <h3>
+                        <span><%= username %></span>
+                        <span style="float: right;">
+                            <button class="special-button">Follow</button>
+                            <button class="special-button">Request friend</button>
+                        </span>
+                    </h3>
+                </div>
+                <div class="user-box" id="user-info">
+                    <div>
+                        <div class="box-push-into-left" style="padding: 10px !important;">
+                            <h4>Some stuff to know about <br><a href="/users/<%= username %>/"><%= username %></a>!: </h4>
+                            <img src="/Coco Icon/Coco The Coconut.png" style="border: black 2px solid;" width="100px" height="100px">
+                            <div style="padding: 3px; margin: 9px;">
+                                <span>Joined: 10/8/2025 (AD) At 8:01:44 PM EST</span>
+                                <p>Following: <%= username %></p>
+                                <p>Gender: male</p>
+                                <p>Age: 15</p>
+                                <p>Birthday: 3/31/2010 (AD) At unknown time, around 6-8 AM</p>
+                                <p>status: Admin, Online</p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div>User content</div>
+                </div>
+            </div>
+
+            <script src="/Scripts/user.js"></script>
+            <script src="/Ambler.mp3Sound.js"></script>
+</body>
+
+</html>

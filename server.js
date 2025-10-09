@@ -10,10 +10,13 @@ const APP_URL = `http://127.0.0.1:${PORT}`;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public"))); // serves your existing assets
+app.use(express.static(path.join(__dirname, "public"))); // serves existing assets
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.get('/users/:user', (req, res) => {
-  res.sendFile(path.join(__dirname, "public", 'user.html'));
+  res.render('user', { username: req.params.user, color: 'blue' });
 });
 
 app.use((req, res) => {

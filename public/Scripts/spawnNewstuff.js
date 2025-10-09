@@ -64,24 +64,7 @@
     });
 
     const html = newCoolStuff;
-    newsObject.innerHTML = html + `
-    <div id="products">
-
-    <div id="products1" class="products">
-    </div>
-
-    <div id="Announcement1" class="Announcement"></div>
-
-    <div id="products2" class="products">
-    </div>
-
-    <div id="Announcement2" class="Announcement"></div>
-
-    <div id="products3" class="products">
-    </div>
-
-</div>
-    `;
+    newsObject.innerHTML = html + ``;
 }
 
 //console.log("Hello");

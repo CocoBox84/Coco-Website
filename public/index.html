@@ -195,17 +195,46 @@
           Ambler Kevin MacLeod (incompetech.com)
           Licensed under Creative Commons: By Attribution 3.0 License
           http://creativecommons.org/licenses/by/3.0/</h3>
+        <div class="big-box">
+          <div class="big-box-header">
+            <img class="Coco-logo" src="/Coco.svg">
+            <p class="Welcome-text">Welcome To The Coco Website! Create An Account Or Sign In!</p>
+          </div>
+          <!----<dialog>Hello</dialog>-->
+          <div class="cool-stuff">
+
+            <div class="inner-big-box-object">
+              <video width="750px" height="500px" controls>
+                <source src="/Videos/Movie on 9-4-24 at 5.34 PM.mov" type="video/mp4">
+                <!--<source src="movie.ogg" type="video/ogg">-->
+                Your browser does not support the video tag.
+              </video>
+            </div>
+
+            <div class="cool-text">Hello! Welcome To The Coco Website!
+              Find Any Applications You Would Like, Then Sign In Or Create An Account To
+              Purchase Them! (You Can Also Find Links To External Websites).
+            </div>
+
+            <div class="cool-description">A Quick Video For The Website!</div>
+            <div class="cool-image">
+              <img src="/Coco Icon/Old Coco Icon.svg">
+            </div>
+
+          </div>
+        </div>
       </div>
 
-      Some Scripts Have Probably Crashed
+
       <div id="error-container" class="error-container-hide">
+        Some Scripts Have Probably Crashed
         <div id="e" class="error big-box"></div>
       </div>
       <!---->
       <script src="/Ambler.mp3Sound.js"></script><!---->
       <script>
         document.addEventListener("DOMContentLoaded", () => {
-          /* Aa */
+          /* Aa *
           showError(); /* Aa */
           /* Aa */
           showMessage();
@@ -234,11 +263,24 @@
         }
       </script>
       <script>console.log(`At: ${window.location.pathname}`); if (window.location.pathname.includes('index.html')) window.location.href = window.location.pathname.replace('index.html', '');</script>
-      <script src="/Scripts/spawnNewstuff.js" type="module"></script>
+      <!--<script src="/Scripts/spawnNewstuff.js" type="module"></script>-->
       <script src="https://unpkg.com/dayjs@1.11.10/dayjs.min.js"></script>
-      <script type="module" src="/Scripts/bodyScripts.js"></script>
+      <!--<script type="module" src="/Scripts/bodyScripts.js"></script>-->
       <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
+      <script>
+        const errorMessageContainer = document.getElementById("error-container");
 
+        function clearError() {
+          errorMessageContainer.classList.remove("error-container-show");
+          errorMessageContainer.classList.add("error-container-hide");
+          document.getElementById("e").innerHTML = ``;
+          var errorContainer = document.getElementById("error-container");
+          errorContainer.classList.remove("error-container-show");
+          errorContainer.classList.add("error-container-hide");
+        };
+
+        clearError();
+      </script>
 </body>
 
 </html>
