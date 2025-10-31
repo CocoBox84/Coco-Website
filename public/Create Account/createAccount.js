@@ -1,1 +1,0 @@
-JSON.parse(localStorage.getItem("hasReadTerms"));

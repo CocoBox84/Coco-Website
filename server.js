@@ -142,6 +142,12 @@ app.get('/users/:user', (req, res) => {
   res.render('user', { username: req.params.user, color: 'blue', currentUser: sessionUser });
 });
 
+app.get("/faq", (req, res) => {
+  // attach session user to template if available
+  const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
+  res.render('faq', { user: sessionUser || user, products: products, news: news });
+})
+
 // --- Auth routes ---
 app.get('/register', (req, res) => {
   res.render('register');

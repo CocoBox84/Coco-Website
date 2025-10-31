@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Coco.ink</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="/Coco Icon/Old Coco Icon.ico">
+  <link href="/CSS/homepage.css" rel="stylesheet">
+  <link href="/CSS/header.css" rel="stylesheet">
+  <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+  <link href="/CSS/general.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: grey;
+      font-family: Arial, Helvetica, sans-serif;
+      background-image: url("/Images/Background2.png");
+      margin: 0px;
+      padding: 0px;
+      /*height: 3000px;*/
+      width: 100%;
+      /*max-width: 1200px;*/
+    }
+
+    #webpage {
+      position: absolute;
+      margin-top: 50px;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-left: 12px;
+      margin-right: 12px;
+      bottom: 0;
+    }
+
+    /*#header {}*/
+
+    .header {
+      display: flex;
+      flex: 1;
+      height: 44px;
+      position: fixed;
+      z-index: 100;
+      margin-bottom: 50px;
+      background-color: lightgrey;
+      top: 0;
+      right: 0;
+      left: 0;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+      padding-top: 12px;
+      padding-left: 12px;
+      padding-bottom: 12px;
+      padding-right: 12px;
+      /* From https://css.glass */
+      background: rgba(211, 211, 211, 0.75);
+      /*border-radius: 16px;*/
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5.2px);
+      -webkit-backdrop-filter: blur(5.2px);
+      border: 1px solid rgba(211, 211, 211, 0.548);
+      border-bottom: 2px solid rgba(211, 211, 211, 0.548);
+    }
+
+
+    /*.box-product {
+            background-color: rgb(247, 243, 243);
+            /* grid-template-columns: 100px 1fr; */
+    /* width: 300px;
+                height: 300px; *
+            /*padding: 30px 3px 30px 40px;*
+            /* display: grid; *
+
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+            width: 300px;
+            height: 300px;
+
+            overflow-y: scroll;
+            overflow-x: scroll;
+        }*/
+
+    .box-product {
+      background-color: wheat;
+      /*margin-bottom: 50px;*/
+      border-radius: 30px;
+      padding: 12px;
+      margin: 12px;
+      margin-top: 100px;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: 1fr 4fr;
+    }
+
+    #Coco {
+      z-index: 101;
+      height: 38px;
+      padding-bottom: -20px;
+      padding-right: -100px;
+      opacity: 1;
+      transition: height 1.0s;
+      transition: opacity 1.0s;
+      /**/
+      transition: opacity 1.0s ease-in-out, height 1.0s ease-in-out;
+      /**/
+    }
+
+
+    #Coco:hover {
+      opacity: 0.10;
+      cursor: pointer;
+      height: 50px;
+      transition: opacity 1.0s;
+      transition: height 1.0s;
+      /**/
+      transition: opacity 1.0s ease-in-out, height 1.0s ease-in-out;
+      /**/
+    }
+
+    .product-img {
+      height: 120px;
+      width: 120px;
+      margin-left: 40px;
+      max-width: 100%;
+    }
+
+    .Welcome-text-left {
+      color: rgb(80, 80, 80);
+      font-size: 40px;
+      display: inline;
+      float: left;
+    }
+
+    #Welcome-text {
+      color: rgb(80, 80, 80);
+      font-size: 40px;
+      text-align: center;
+    }
+
+    /*
+                .Announcement {
+                    background-color: wheat;
+                    margin-top: 100px;
+                    margin-bottom: 50px;
+                }
+                    */
+  </style>
+</head>
+
+<body>
+  <div id="webpage">
+    <div id="header">
+      <header class="header">
+        <!--<button onclick="cocoSound();">Test</button>-->
+        <a href="/index.html" style="margin-right: 5px !important;"><img id="Coco" src="/Coco.svg"
+            onmouseover="const audio = new Audio(`/Coco.wav`); audio.play()"></a>
+
+        <div class="left-header">
+          <% if (false) { %>
+            <div></div>
+            <a class="content-only-a" href="/Games/">
+              <button class="special-button">Games</button>
+            </a>
+            <button class="special-button">Productivity</button>
+            <button class="special-button">Creation</button>
+            <button class="special-button">Develop</button>
+            <% } else { %>
+              <a class="content-only-a" href="/about">
+                <button class="special-button">About</button>
+              </a>
+              <a class="content-only-a" href="/Steamworks.html?id=1#player">
+                <button class="special-button">Test project 1</button>
+              </a>
+              <% } %>
+        </div>
+
+        <div id="user-controls" class="right-header">
+          <script>
+            console.log("User data:", <% - JSON.stringify(user) %>);
+          </script>
+          <% if (user.username !=null && user.username !=="" ) { %>
+            <ul style="align-items: center; justify-content: center; color: goldenrod;">
+              Welcome back <a href="/users/<%= user.username %>">
+                <%= user.username %>
+              </a>!
+            </ul>
+            <a class="content-only-a" href="">
+              <button class="special-button header-right">Manage account</button>
+            </a>
+
+            <% if (user.role==="admin" ) { %>
+              <a class="content-only-a" href="/admin/">
+                <button class="special-button">Open Admin Panel</button>
+              </a>
+              <% } %>
+
+                <% } else { %>
+                  <a class="content-only-a" href="/login/">
+                    <button id="sign-in" class="special-button header-right">Sign In</button>
+                  </a>
+                  <a class="content-only-a" href="/register/">
+                    <button class="special-button">Create Account</button>
+                  </a>
+                  <% } %>
+
+        </div>
+
+      </header>
+    </div>
+    <div id="welcome">
+
+      <div id="main-nav-box" class="navigation-box navigation-box-closed">
+        <div id="sidebar-buttons">
+          <button class="sidebar-button"><img src="/Coco Icon/Old Coco Icon.png">Coco</button>
+          <button class="sidebar-button"><img src="/.png">Code</button>
+        </div>
+        <div id="sidebar-content">
+
+          <!-- Page 1 Of Sidebar Navigation -->
+          <div id="sidebar-content-page-1">
+            <img src="/Coco Icon/Coco The Coconut.png">
+            <h3 class="cool-text">Hello! And Welcome To Coco!</h3>
+          </div>
+
+
+        </div>
+      </div>
+
+      <div id="intro" class="info-box">
+        <div>
+          <p class="Welcome-text center">Facts, Questions And Answers!</p>
+          <hr>
+          <h2>General/Random Questions</h2>
+          <hr>
+          <h3>What is Coco.ink?</h3>
+          <p>My website that you are currently visiting.</p>
+          <p>The company is called "Coco Ink Software" or just "Coco ink"</p>
+          <hr>
+          <h3>Fine then. What is Coco ink?</h3>
+          <p>Coco ink is a software company that makes games, productivity software, creation software and development
+            software.</p>
+          <hr>
+          <h3>Who made Coco.ink?</h3>
+          <p>Me. My name is Jose, But everyone calls me Nino.</p>
+          <hr>
+          <h3>Red or blue?</h3>
+          <p>In what sense? My favorite color is Cyan. Which is a light blue turquoise.</p>
+          <p>In Other things I guess red.</p>
+          <hr>
+          <h3>What programming languages do you use?</h3>
+          <p>
+            By Heart I know: Scratch, HTML, CSS, JavaScript,<br>
+            A little bit of ActionScript(flex 3.0), Some Java (I mainly used it for swing),
+            Ok at Python (mainly used for... I don't know. I guess I know django and flask).<br>
+            Confused at Rust, Horrified at C and C++. (I think C++ is cool though)<br>
+            C# is weird, Don't know how to use it. Tried JavaFX but I don't like it.<br>
+            I don't know Ruby, PHP, Go, Kotlin, Swift, Objective-C, Lua, Perl, Haskell, R, Dart or any other programming
+            languages.<br>
+            I'm making my own programming language called...<br>
+            guess it's name...<br>
+          <h4>Coco! Named after... The Company I guess.</h4>
+          </p>
+          <p>For web development I use HTML, CSS, JavaScript and EJS.</p>
+          <hr>
+          <h3>What products are available?</h3>
+          <p>None (for now). However. i'm working on<br>
+            Games, A Programming Language, And the website. When I have time I will work on more.<br>
+            Oh wait! I'm Also recreating The Scratch 2.0 website! You can find the repository here: <a>Scratch 2.0 after
+              1/2/2019 AD</a>
+            <hr>
+          <h3>Where can I ask more questions?</h3>
+          <p>You can visit the new FAQ system at <a href="/faq/new/ask/">http://Coco.ink/faq/new/ask/</a> to see more
+            questions and
+            answers.</p>
+          <hr>
+          <h2>Coco Characters</h2>
+          <hr>
+          <h3>Are Any Coco Characters Copyrighted?</h3>
+          <p>Not yet. However, I plan to copyright Coco The Coconut and other characters in the future (And I will
+            protect them).</p>
+          <hr>
+          <h3>
+            Who is Coco The Coconut?
+          </h3>
+          <p>
+            A Coconut. He is the mascot of Coco Ink Software. He is a fun loving coconut who loves to code and create
+            software.<br>
+            PS: He is not sentient...
+          <h4 style="color: red;">Yet.</h4>
+          PSS: He is not alive... <h4 style="color: red;">Yet.</h4>
+          PSSS: He likes to roll around.
+          </p>
+          <hr>
+          <h3>Are there any other Coco Characters?</h3>
+          <p>Yes! Zoey the Elephant, and... Ok, thats all I have for now.</p>
+          <hr>
+          <h2>About Rule 34</h2>
+          <hr>
+          <h3>That one rule. (34)</h3>
+          <p>No. Just no.</p>
+          <p>
+            They say "If you search it, there is probably rule 34 of it".<br>
+            Well. Not for Coco The Coconut. or any other Coco Characters. (Well as long as you want your account)<br>
+            Doing this will not get your account banned from the website, it will get your account <a
+              href="#execution">Executed</a>!
+              <h3>Not Execution like that! Read this to know what I mean: <a href="#execution">User Execution</a>.</h3>
+          </p>
+          <hr>
+          <h2>
+            Penalty system
+          </h2>
+          <hr>
+          <h3>What is the penalty system?</h3>
+          <p>
+            The penalty system is a system that I use to punish users who break the rules of the website.<br>
+            The penalties are as follows:</p>
+          <ul>
+            <li>1st big Offense: Warning</li>
+            <li>2nd big Offense: 1 Day Ban</li>
+            <li>3rd big Offense: 3 Day Ban</li>
+            <!-- Put the id here for the link above to not be hidden under the header. -->
+            <li id="execution">4th big Offense: 7 Day Ban</li>
+            <li>5th big Offense: 30 Day Ban</li>
+            <li>6th big Offense: Permanent Ban</li>
+            <li>Extreme Offense: Permanent Ban</li>
+            <li>Rule 34/Execution worthy Offense: <a href="#execution">Execution</a></li>
+          </ul>
+          <hr>
+          <h3>What is user Execution?</h3>
+          <h3>Not Execution like that! Read this to know what I mean: <a href="#execution">User Execution</a>.</h3>
+          <p>
+            User Execution is the most severe penalty that I can give to a user.<br>
+            This penalty is reserved for users who break the most severe rules of the website, such as rule 34.<br>
+            When a user is executed, their account is permanently deleted from the website, and they are banned from
+            creating a new account.<br>
+            All of their: <br>
+          <ul>
+            <li>Posts</li>
+            <li>Comments</li>
+            <li>Messages</li>
+            <li>Projects</li>
+            <li>Groups</li>
+            <li>Etc... Anything that had to do with the user</li>
+          </ul>
+          then get deleted permanently from the website. Their username is now available for new users to register.<br>
+          <br>
+          Their IP address is also banned from the website.<br>
+          There is no appeal process for user execution once a user is executed (because all their data is already
+          gone).
+          </p>
+          <p>
+            There is a process for executing users, it starts with "<a href="#justice">court</a>"<br>
+            where the user can defend themselves and try to appeal.
+            Then "<a href="#deathrow">Death row</a>" where the user is given a final chance to
+            appeal before execution. Then execution.
+          </p>
+          <hr>
+          <h3>Auto user ban</h3>
+          <p>
+            Auto user ban is a system that automatically bans users who break the rules of the website.<br>
+            This system is used for users who commit any type of offenses, such as spamming, hacking, etc...<br>
+            The system will automatically ban the user for a certain amount of time depending on the severity of the
+            offense.<br>
+            The user will be notified of the ban and the reason for the ban.<br>
+            The user can appeal the ban by contacting the moderators.<br>
+            the moderators will review the ban and decide whether to lift the ban or not.<br>
+            If the ban is lifted, the user can use the website again.<br>
+            If the ban is not lifted, the user will have to wait until the ban is over to use the website again.<br>
+            If the system permanently bans the user, the user will have to contact the moderators to appeal the ban.<br>
+            The moderators will review the ban and decide whether to lift the ban or not.<br>
+          </p>
+          <hr>
+          <h3>Low Offenses</h3>
+          <p>
+            Low offenses are minor rule violations that do not warrant a big offense penalty.<br>
+            Examples of low offenses include:
+          <ul>
+            <li>Spamming</li>
+            <li>Soft
+              harassment (jokingly)</li>
+            <li>Mildly inappropriate content (jokingly)</li>
+            </li>
+          </ul>
+          Low offenses will result in a warning from the moderators.
+          </p>
+          <hr>
+          <h3>
+            Normal Offenses
+          </h3>
+          <p>
+            Normal offenses are small rules violations that I expect and warrant a normal offense penalty.<br>
+            Examples of normal offenses include:
+          <ul>
+            <li>Harassment</li>
+            <li>Hate speech (Non jokingly)</li>
+            <li>Mildly inappropriate content</li>
+            <li>Spamming repeatedly after warning</li>
+            <li>Etc...</li>
+          </ul>
+          Normal offenses will result in a 1 day ban from the website.
+          </p>
+          <hr>
+          <h3>
+            Medium Offenses
+          </h3>
+          <p>
+            Medium offenses are moderate rule violations that warrant a medium offense penalty.<br>
+            Examples of medium offenses include:
+          <ul>
+            <li>Repeated harassment</li>
+            <li>Repeated hate speech</li>
+            <li>Inappropriate content</li>
+            <li>Spamming repeatedly after 1 day ban</li>
+            <li>Etc...</li>
+          </ul>
+          Medium offenses will result in a 3-70 day ban from the website.
+          </p>
+          <hr>
+          <h3>
+            Big Offenses
+          </h3>
+          <p>
+            Big offenses are major rule violations that warrant a big offense penalty.<br>
+            Examples of big offenses include:<br>
+          <ul>
+            <li>Severe harassment</li>
+            <li>Severe hate speech</li>
+            <li>Inappropriate content</li>
+            <li>Hacking attempts</li>
+            <li>Rule 34 (Adult content with cartoon characters) using non-Coco Characters. (Still can get you executed)</li>
+            <li>Etc...</li>
+          </ul>
+          Big offenses will result in a ban from the website ranging from 10 days to permanent ban depending on the
+          severity of the offense.
+          </p>
+          <hr>
+          <h3>Extreme offenses
+          </h3>
+          <p>
+            Why?
+            <ul>
+              <li>Rule 34 (Adult content with cartoon characters) using Coco Characters.</li>
+              <li>Hacking</li>
+              <li>Mass reproducing of my software.</li>
+              <li>Child... Oh no. (That will get you reported to the authorities)</li>
+            </ul>
+            All Extreme offenses will get the user/user's "family" <a href="#execution">Executed</a>.
+            <h3>Not Execution like that! Read this to know what I mean: <a href="#execution">User Execution</a>.</h3>
+          </p>
+          <hr>
+          <p>More coming soon! If you want to ask me a question, visit <a
+              href="/faq/new/ask/">http://Coco.ink/faq/new/ask</a>.</p>
+          <hr>
+          <p>Want to know more about me? <a href="/family">See my family</a>.</p>
+          <hr>
+        </div>
+        <div>
+          <img src="/Coco Icon/Coco The Coconut.png" width="200px" height="250px">
+          <h5>Last updated:</h5>
+          <h5>10/31/2025 (AD) At 3:58:33 PM EST</h5>
+        </div>
+
+      </div>
+
+      <footer class="box-product">
+        <div id="footer-content">
+          <p>Coco.ink © 2025 Coco Ink Software. All rights reserved.</p>
+        </div>
+        <h4>
+          Want to know more about me? <a href="/faq">FactsAndQuestions</a>.
+          You can also see my <a href="/family">family</a>.
+        </h4>
+      </footer>
+
+    </div>
+
+    <div id="error-container" class="error-container-hide">
+      Some Scripts Have Probably Crashed
+      <div id="e" class="error big-box"></div>
+    </div>
+    <!---->
+    <script src="/Ambler.mp3Sound.js"></script>
+    <script src="/JS/global.js"></script>
+    <!---->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        /* Aa *
+        showError(); /* Aa */
+        /* Aa */
+        showMessage();
+      });
+
+      function showError() {
+        document.getElementById("e").innerHTML = `Oops! Something Crashed!`;
+        var errorContainer = document.getElementById("error-container");
+        errorContainer.classList.remove("error-container-hide");
+        errorContainer.classList.add("error-container-show");
+      }
+
+      function hideError() {
+        document.getElementById("e").innerHTML = ``;
+        var errorContainer = document.getElementById("error-container");
+        errorContainer.classList.remove("error-container-show");
+        errorContainer.classList.add("error-container-hide");
+      }
+
+      function showMessage(messageAtIndex) {
+        var messageBox;
+        switch (messageAtIndex) {
+          case 5:
+            //
+            break;
+        }
+      }
+    </script>
+    <script>
+      console.log(`At: ${window.location.pathname}`);
+      if (window.location.pathname.includes('index.html')) window.location.href = window.location.pathname.replace('index.html', '');
+    </script>
+    <!--<script src="/Scripts/spawnNewstuff.js" type="module"></script>-->
+    <script src="https://unpkg.com/dayjs@1.11.10/dayjs.min.js"></script>
+    <!--<script type="module" src="/Scripts/bodyScripts.js"></script>-->
+    <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
+    <script>
+      const errorMessageContainer = document.getElementById("error-container");
+
+      function clearError() {
+        errorMessageContainer.classList.remove("error-container-show");
+        errorMessageContainer.classList.add("error-container-hide");
+        document.getElementById("e").innerHTML = ``;
+        var errorContainer = document.getElementById("error-container");
+        errorContainer.classList.remove("error-container-show");
+        errorContainer.classList.add("error-container-hide");
+      };
+
+      clearError();
+    </script>
+</body>
+
+</html>
