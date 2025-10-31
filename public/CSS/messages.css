@@ -1,0 +1,41 @@
+body {
+    height: auto !important;
+}
+
+/*
+#messages-box {
+    background-color: #0f8bc0;
+    color: white;
+}
+*/
+
+#messages-box li {
+    background-color: #e0e0e0 !important;
+    color: black !important;
+    padding: 10px !important;
+    border-radius: 20px !important;
+    margin-bottom: 15px !important;
+    border-bottom: solid 2px #c0c0c0 !important;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+}
+
+#messages-box li.unread {
+    background-color: #424e4e !important;
+    color: rgb(241, 241, 241) !important;
+    padding: 10px !important;
+    border-radius: 20px !important;
+    margin-bottom: 15px !important;
+    border-bottom: solid 2px #026875 !important;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+}
+
+#user-messages {
+    /* Make message container expand with content instead of scrolling */
+    position: static !important;
+    height: auto !important;
+    max-height: none !important;
+    display: block !important;
+    overflow-y: visible !important;
+    overflow-x: visible !important;
+    bottom: 20px !important;
+}

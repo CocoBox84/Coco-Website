@@ -1,0 +1,190 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Login</title>
+  <link href="/CSS/general.css" rel="stylesheet">
+  <link href="/CSS/header.css" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="/Coco Icon/Old Coco Icon.ico">
+  <style>
+    body {
+      background-color: grey;
+      font-family: Arial, Helvetica, sans-serif;
+      background-image: url("/Images/Background4.png");
+      margin: 0px;
+      padding: 0px;
+      /*height: 3000px;*/
+      width: 100%;
+      /*max-width: 1200px;*/
+    }
+
+    #webpage {
+      position: absolute;
+      margin-top: 50px;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-left: 12px;
+      margin-right: 12px;
+      bottom: 0;
+    }
+
+    /*#header {}*/
+
+    .header {
+      display: flex;
+      flex: 1;
+      height: 44px;
+      position: fixed;
+      z-index: 100;
+      margin-bottom: 50px;
+      background-color: lightgrey;
+      top: 0;
+      right: 0;
+      left: 0;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+      padding-top: 12px;
+      padding-left: 12px;
+      padding-bottom: 12px;
+      padding-right: 12px;
+      /* From https://css.glass */
+      background: rgba(211, 211, 211, 0.75);
+      /*border-radius: 16px;*/
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5.2px);
+      -webkit-backdrop-filter: blur(5.2px);
+      border: 1px solid rgba(211, 211, 211, 0.548);
+      border-bottom: 2px solid rgba(211, 211, 211, 0.548);
+    }
+
+
+    /*.box-product {
+            background-color: rgb(247, 243, 243);
+            /* grid-template-columns: 100px 1fr; */
+    /* width: 300px;
+                height: 300px; *
+            /*padding: 30px 3px 30px 40px;*
+            /* display: grid; *
+
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+            width: 300px;
+            height: 300px;
+
+            overflow-y: scroll;
+            overflow-x: scroll;
+        }*/
+
+    .box-product {
+      background-color: wheat;
+      /*margin-bottom: 50px;*/
+      border-radius: 30px;
+      padding: 12px;
+      margin: 12px;
+      margin-top: 100px;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: 1fr 4fr;
+    }
+
+    #Coco {
+      z-index: 101;
+      height: 38px;
+      padding-bottom: -20px;
+      padding-right: -100px;
+      opacity: 1;
+      transition: height 1.0s;
+      transition: opacity 1.0s;
+      /**/
+      transition: opacity 1.0s ease-in-out, height 1.0s ease-in-out;
+      /**/
+    }
+
+
+    #Coco:hover {
+      opacity: 0.10;
+      cursor: pointer;
+      height: 50px;
+      transition: opacity 1.0s;
+      transition: height 1.0s;
+      /**/
+      transition: opacity 1.0s ease-in-out, height 1.0s ease-in-out;
+      /**/
+    }
+
+    .product-img {
+      height: 120px;
+      width: 120px;
+      margin-left: 40px;
+      max-width: 100%;
+    }
+
+    .Welcome-text-left {
+      color: rgb(80, 80, 80);
+      font-size: 40px;
+      display: inline;
+      float: left;
+    }
+
+    /*
+                .Announcement {
+                    background-color: wheat;
+                    margin-top: 100px;
+                    margin-bottom: 50px;
+                }
+                    */
+  </style>
+</head>
+
+<body>
+  <div id="header">
+    <header class="header">
+      <!--<button onclick="cocoSound();">Test</button>-->
+      <a href="/index.html" style="margin-right: 5px !important;"><img id="Coco" src="/Coco.svg"
+          onmouseover="const audio = new Audio(`/Coco.wav`); audio.play()"></a>
+
+      <div class="left-header">
+        <% if (false) { %>
+          <div></div>
+          <a class="content-only-a" href="/Games/">
+            <button class="special-button">Games</button>
+          </a>
+          <button class="special-button">Productivity</button>
+          <button class="special-button">Creation</button>
+          <button class="special-button">Develop</button>
+          <% } else { %>
+            <a class="content-only-a" href="/about">
+              <button class="special-button">About</button>
+            </a>
+            <a class="content-only-a" href="/Steamworks.html?id=1#player">
+              <button class="special-button">Test project 1</button>
+            </a>
+            <% } %>
+      </div>
+
+    </header>
+  </div>
+  <div id="webpage" class="centered-container">
+    <div id="welcome" class="big-box">
+      <h1 class="big-box-header">Login</h1>
+      <form method="post" action="/login">
+        <label>Username: <input name="username" required></label><br>
+        <label>Password: <input name="password" type="password" required></label><br>
+        <button type="submit">Login</button>
+      </form>
+      <p>Don't have an account? <a href="/register">Register</a></p>
+    </div>
+  </div>
+
+  <script src="/Ambler.mp3Sound.js"></script>
+</body>
+
+</html>

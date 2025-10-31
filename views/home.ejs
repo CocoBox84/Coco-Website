@@ -13,12 +13,12 @@
     body {
       background-color: grey;
       font-family: Arial, Helvetica, sans-serif;
-      background-image: url("Images/Background.png");
+      background-image: url("/Images/Background.png");
       margin: 0px;
       padding: 0px;
-      height: 3000px;
+      /*height: 3000px;*/
       width: 100%;
-      max-width: 1200px;
+      /*max-width: 1200px;*/
     }
 
     #webpage {
@@ -129,6 +129,13 @@
       max-width: 100%;
     }
 
+    .Welcome-text-left {
+      color: rgb(80, 80, 80);
+      font-size: 40px;
+      display: inline;
+      float: left;
+    }
+
     /*
                 .Announcement {
                     background-color: wheat;
@@ -144,26 +151,37 @@
     <div id="header">
       <header class="header">
         <!--<button onclick="cocoSound();">Test</button>-->
-        <a href="/index.html"><img id="Coco" src="/Coco.svg"
+        <a href="/index.html" style="margin-right: 5px !important;"><img id="Coco" src="/Coco.svg"
             onmouseover="const audio = new Audio(`/Coco.wav`); audio.play()"></a>
 
         <div class="left-header">
-          <div></div>
-          <a class="content-only-a" href="/Games/">
-            <button class="special-button">Games</button>
-          </a>
-          <button class="special-button">Productivity</button>
-          <button class="special-button">Creation</button>
-          <button class="special-button">Develop</button>
-
+          <% if (false) { %>
+            <div></div>
+            <a class="content-only-a" href="/Games/">
+              <button class="special-button">Games</button>
+            </a>
+            <button class="special-button">Productivity</button>
+            <button class="special-button">Creation</button>
+            <button class="special-button">Develop</button>
+            <% } else { %>
+              <a class="content-only-a" href="/about">
+                <button class="special-button">About</button>
+              </a>
+              <a class="content-only-a" href="/Steamworks.html?id=1#player">
+                <button class="special-button">Test project 1</button>
+              </a>
+              <% } %>
         </div>
 
         <div id="user-controls" class="right-header">
-          <% if (user.name !=null && user.name !=="" ) { %>
+          <script>
+            console.log("User data:", <%- JSON.stringify(user) %>);
+          </script>
+          <% if (user.username !=null && user.username !=="" ) { %>
             <ul style="align-items: center; justify-content: center; color: goldenrod;">
-              Welcome back <a href="/users/<%= user.name %>">
-                <%= user.name %>
-              </a>
+              Welcome back <a href="/users/<%= user.username %>">
+                <%= user.username %>
+              </a>!
             </ul>
             <a class="content-only-a" href="">
               <button class="special-button header-right">Manage account</button>
@@ -176,10 +194,10 @@
               <% } %>
 
                 <% } else { %>
-                  <a class="content-only-a" href="/Create Account/">
+                  <a class="content-only-a" href="/login/">
                     <button id="sign-in" class="special-button header-right">Sign In</button>
                   </a>
-                  <a class="content-only-a" href="/Create Account/">
+                  <a class="content-only-a" href="/register/">
                     <button class="special-button">Create Account</button>
                   </a>
                   <% } %>
@@ -215,43 +233,123 @@
           Ambler Kevin MacLeod (incompetech.com)
           Licensed under Creative Commons: By Attribution 3.0 License
           http://creativecommons.org/licenses/by/3.0/</h3>
-        <div class="big-box">
-          <div class="big-box-header">
-            <img class="Coco-logo" src="/Coco.svg">
-            <p class="Welcome-text">Welcome To The Coco Website! Create An Account Or Sign In!</p>
+        <% if (user.username===null || user.username==="" ) { %>
+          <div class="big-box">
+            <div class="big-box-header">
+              <img class="Coco-logo" src="/Coco.svg">
+              <p class="Welcome-text">Welcome To The Coco Website! Create An Account Or Sign In!</p>
+            </div>
+            <!----<dialog>Hello</dialog>-->
+            <div class="cool-stuff">
+
+              <div class="inner-big-box-object">
+                <video width="750px" height="500px" controls>
+                  <source src="/Videos/Movie on 9-4-24 at 5.34 PM.mov" type="video/mp4">
+                  <!--<source src="movie.ogg" type="video/ogg">-->
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+
+              <div class="cool-text">
+                Hello! Welcome To The Coco Website! (You Can Also Find Links To External Websites).
+              </div>
+
+              <div class="cool-description">A Quick Video For The Website!</div>
+              <div class="cool-image">
+                <img src="/Coco Icon/Old Coco Icon.svg">
+              </div>
+
+            </div>
           </div>
-          <!----<dialog>Hello</dialog>-->
-          <div class="cool-stuff">
+          <% } %>
+            <div>
+              <div id="news-box" class="big-box">
+                <div class="big-box-header">
+                  <p class="Welcome-text-left">Coco News</p>
+                  <img src="Coco Icon/Coco News.svg">
+                </div>
+                <% news.forEach(function(box){ %>
+                  <div class="big-box">
+                    <div class="big-box-header">
+                      <img class="Coco-logo" src="<%- box.icon.src %>" height="132.78px">
+                      <p class="Welcome-text">
+                        <%= box.name %>
+                      </p>
+                    </div>
+                    <!----<dialog>Hello</dialog>-->
+                    <div class="cool-stuff">
 
-            <div class="inner-big-box-object">
-              <video width="750px" height="500px" controls>
-                <source src="/Videos/Movie on 9-4-24 at 5.34 PM.mov" type="video/mp4">
-                <!--<source src="movie.ogg" type="video/ogg">-->
-                Your browser does not support the video tag.
-              </video>
+                      <div class="inner-big-box-object">
+                        <% if (box.media_type==="img" ) { %>
+                          <img src="<%- box.img.src %>" width="750px" height="500px" style="<%- box.img.styles %>"
+                            alt="<% box.img.alt %>">
+                          <% } else if (box.media_type==="video" ) { %>
+                            <video width="750px" height="500px" controls>
+                              <source src="<%- box.video.src %>" type="video/mp4">
+                              <!--<source src="movie.ogg" type="video/ogg">-->
+                              Your browser does not support the video tag.
+                            </video>
+                            <% } else {%>
+                              <div width="750px" height="500px"></div>
+                              <% } %>
+                      </div>
+
+                      <div class="cool-text">
+                        <%- box.description %>
+                      </div>
+
+                      <div class="cool-description"><%- box.media_description %></div>
+                      <div class="cool-image">
+                        <img src="/Coco Icon/Old Coco Icon.svg">
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="box-product">
+                    <h3 class="cool-text">
+                      <%= box.name %>
+                    </h3>
+                    <%- box.description %>
+                      <% box.imgs.forEach(function(img) { %>
+                        <img src="<%- img.src %>" width="<%- img.width %>" height="<%- img.height %>"
+                          style="<%- img.styles %>" alt="<% img.alt %>">
+                        <% }); %>
+                          <% }); %>
+                  </div>
+              </div>
+              <div id="user-messages" class="big-box">
+                <div class="big-box-header">
+                  <p class="Welcome-text-left">
+                    Your Messages
+                  </p>
+                  <p class="Welcome-text">
+                    <a href="/messages">View All</a>
+                  </p>
+                </div>
+              </div>
             </div>
-
-            <div class="cool-text">Hello! Welcome To The Coco Website!
-              Find Any Applications You Would Like, Then Sign In Or Create An Account To
-              Purchase Them! (You Can Also Find Links To External Websites).
-            </div>
-
-            <div class="cool-description">A Quick Video For The Website!</div>
-            <div class="cool-image">
-              <img src="/Coco Icon/Old Coco Icon.svg">
-            </div>
-
-          </div>
-        </div>
       </div>
 
+      <footer class="box-product">
+        <div id="footer-content">
+          <p>Coco.ink © 2025 Coco Ink Software. All rights reserved.</p>
+        </div>
+        <h4>
+          Want to know more about me? <a href="/faq">FactsAndQuestions</a>.
+          You can also see my <a href="/family">family</a>.
+        </h4>
+      </footer>
+
+    </div>
 
       <div id="error-container" class="error-container-hide">
         Some Scripts Have Probably Crashed
         <div id="e" class="error big-box"></div>
       </div>
       <!---->
-      <script src="/Ambler.mp3Sound.js"></script><!---->
+      <script src="/Ambler.mp3Sound.js"></script>
+      <script src="/JS/global.js"></script>
+      <!---->
       <script>
         document.addEventListener("DOMContentLoaded", () => {
           /* Aa *
@@ -259,6 +357,7 @@
           /* Aa */
           showMessage();
         });
+
         function showError() {
           document.getElementById("e").innerHTML = `Oops! Something Crashed!`;
           var errorContainer = document.getElementById("error-container");
@@ -282,7 +381,10 @@
           }
         }
       </script>
-      <script>console.log(`At: ${window.location.pathname}`); if (window.location.pathname.includes('index.html')) window.location.href = window.location.pathname.replace('index.html', '');</script>
+      <script>
+        console.log(`At: ${window.location.pathname}`);
+        if (window.location.pathname.includes('index.html')) window.location.href = window.location.pathname.replace('index.html', '');
+      </script>
       <!--<script src="/Scripts/spawnNewstuff.js" type="module"></script>-->
       <script src="https://unpkg.com/dayjs@1.11.10/dayjs.min.js"></script>
       <!--<script type="module" src="/Scripts/bodyScripts.js"></script>-->
