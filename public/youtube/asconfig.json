@@ -1,0 +1,21 @@
+{
+	"config": "air",
+	"compilerOptions": {
+		"source-path": [
+			"src"
+		],
+		"library-path": [
+			"libs"
+		],
+		"output": "bin/youtube.swf",
+		"default-background-color": "#000000",
+		"default-frame-rate": 12,
+		"default-size": {
+			"width": 640,
+			"height": 640
+		},
+		"swf-version": 17
+	},
+	"application": "src/youtube-app.xml",
+	"mainClass": "com.google.youtube.application.WatchPageVideoApplication"
+}

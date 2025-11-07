@@ -1,7 +1,12 @@
-#scroll-box {
+/*#scroll-box {
     overflow-y: hidden;
     overflow-x: scroll;
     min-width: 500px;
     min-height: 500px;
     border: 2px solid black;
+}*/
+
+.products {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
 }

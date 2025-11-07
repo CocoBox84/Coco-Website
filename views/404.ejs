@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>404 File Not Found!</title>
+    <link rel="icon" type="image/x-icon" href="/Coco Icon/Old Coco Icon.ico">
+    <link href="/CSS/homepage.css" rel="stylesheet">
+    <link href="/CSS/header.css" rel="stylesheet">
+    <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+    <link href="/CSS/general.css" rel="stylesheet">
+    <link href="/CSS/general.css" rel="stylesheet">
+    <link href="/CSS/header.css" rel="stylesheet">
+    <link href="/CSS/teapot.css" rel="stylesheet">
+    <link href="/CSS/download.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: grey;
+            font-family: Arial, Helvetica, sans-serif;
+            background-image: url("/Images/Background.png");
+        }
+
+        #webpage {
+            position: absolute;
+            margin-top: 50px;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            row-gap: 12px;
+            column-gap: 12px;
+            margin-top: 30px;
+            margin-left: 12px;
+            margin-right: 12px;
+            bottom: 0;
+        }
+
+        /*#header {}*/
+
+        .header {
+            display: flex;
+            flex: 1;
+            height: 44px;
+            position: fixed;
+            z-index: 100;
+            margin-bottom: 50px;
+            background-color: lightgrey;
+            top: 0;
+            right: 0;
+            left: 0;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+            padding-top: 12px;
+            padding-left: 12px;
+            padding-bottom: 12px;
+            padding-right: 12px;
+        }
+
+
+        .box-product {
+            background-color: rgb(247, 243, 243);
+            white-space: nowrap;
+            /* grid-template-columns: 100px 1fr; */
+            /* width: 300px;
+                    height: 300px; */
+            padding: 30px 3px 30px 40px;
+            /* display: grid; */
+            height: 100%;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+        }
+
+        #Coco {
+            z-index: 101;
+            height: 38px;
+            padding-bottom: -20px;
+            padding-right: -100px;
+            opacity: 1;
+            transition: opacity 1.0s, height 1.0s !important;
+        }
+
+
+        #Coco:hover {
+            opacity: 0.10;
+            cursor: pointer;
+            height: 50px;
+            transition: opacity 1.0s, height 1.0s !important;
+        }
+
+        .product-img {
+            height: 120px;
+            width: 120px;
+            margin-left: 40px;
+            max-width: 100%;
+        }
+
+        .Announcement {
+            background-color: wheat;
+            margin-top: 100px;
+            margin-bottom: 50px;
+        }
+
+        footer {
+            position: fixed !important;
+            bottom: 0 !important;
+            border-radius: 20px !important;
+            border-bottom-left-radius: 0px !important;
+            border-bottom-right-radius: 0px !important;
+            height: 100px !important;
+            width: 1030px !important;
+        }
+    </style>
+</head>
+
+<body style="background-image: url(/Images/Background.png);">
+
+    <div id="webpage">
+        <div id="header">
+            <header class="header">
+                <!--<button onclick="cocoSound();">Test</button>-->
+                <a href="/index.html" style="margin-right: 5px !important;"><img id="Coco" src="/Coco.svg"
+                        onmouseover="const audio = new Audio(`/Coco.wav`); audio.play()"></a>
+
+                <div class="left-header">
+                    <% if (false) { %>
+                        <div></div>
+                        <a class="content-only-a" href="/Games/">
+                            <button class="special-button">Games</button>
+                        </a>
+                        <button class="special-button">Productivity</button>
+                        <button class="special-button">Creation</button>
+                        <button class="special-button">Develop</button>
+                        <% } else { %>
+                            <a class="content-only-a" href="/about">
+                                <button class="special-button">About</button>
+                            </a>
+                            <a class="content-only-a" href="/Steamworks.html?id=1#player">
+                                <button class="special-button">Test project 1</button>
+                            </a>
+                            <% } %>
+                </div>
+
+                <div id="user-controls" class="right-header">
+                    <script>
+                        console.log("User data:", <% - JSON.stringify(user) %>);
+                    </script>
+                    <% if (user.username !=null && user.username !=="" ) { %>
+                        <ul style="align-items: center; justify-content: center; color: goldenrod;">
+                            Welcome back <a href="/users/<%= user.username %>">
+                                <%= user.username %>
+                            </a>!
+                        </ul>
+                        <a class="content-only-a" href="">
+                            <button class="special-button header-right">Manage account</button>
+                        </a>
+
+                        <% if (user.role==="admin" ) { %>
+                            <a class="content-only-a" href="/admin/">
+                                <button class="special-button">Open Admin Panel</button>
+                            </a>
+                            <% } %>
+
+                                <% } else { %>
+                                    <a class="content-only-a" href="/login/">
+                                        <button id="sign-in" class="special-button header-right">Sign In</button>
+                                    </a>
+                                    <a class="content-only-a" href="/register/">
+                                        <button class="special-button">Create Account</button>
+                                    </a>
+                                    <% } %>
+
+                </div>
+
+            </header>
+        </div>
+
+        <div id="container">
+            <div class="product-box"
+                style="display: grid; align-items: center; justify-content: center; place-items: center;">
+                <h1>Oh no! 404!</h1>
+                <h4>Oof! Yikes! Looks like we have absolutely no idea what you just put as a URL; but this page does not
+                    exist.</h4>
+                <div class="circle grey-border" style="width: 100px; height: 100px; padding: 10px; border-width: 10px;">
+                    <img height="100px" src="/Coco Icon/Coco The Coconut Dead Gray.png"></div>
+                <p>How about we go back <a href="/">home</a>?</p>
+
+            </div>
+
+                  <footer class="box-product">
+        <div id="footer-content">
+          <p>Coco.ink © 2025 Coco Ink Software. All rights reserved.</p>
+        </div>
+        <h4>
+          Want to know more about me? <a href="/faq">FactsAndQuestions</a>.
+          You can also see my <a href="/family">family</a>.
+        </h4>
+      </footer>
+
+            <script src="/Scripts/user.js"></script>
+            <script src="/Ambler.mp3Sound.js"></script>
+</body>
+
+</html>

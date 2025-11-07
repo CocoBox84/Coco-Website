@@ -151,56 +151,55 @@
     <div id="header">
       <header class="header">
         <!--<button onclick="cocoSound();">Test</button>-->
-        <a href="/index.html" style="margin-right: 5px !important;"><img id="Coco" src="/Coco.svg"
-            onmouseover="const audio = new Audio(`/Coco.wav`); audio.play()"></a>
+        <a href="/index.html" style="margin-right: 5px !important;"><img id="Coco" src="/Coco.svg" onmouseover="const audio = new Audio(`/Coco.wav`); audio.play()"></a>
 
         <div class="left-header">
           <% if (false) { %>
-            <div></div>
-            <a class="content-only-a" href="/Games/">
-              <button class="special-button">Games</button>
-            </a>
-            <button class="special-button">Productivity</button>
-            <button class="special-button">Creation</button>
-            <button class="special-button">Develop</button>
-            <% } else { %>
-              <a class="content-only-a" href="/about">
-                <button class="special-button">About</button>
-              </a>
-              <a class="content-only-a" href="/Steamworks.html?id=1#player">
-                <button class="special-button">Test project 1</button>
-              </a>
-              <% } %>
+          <div></div>
+          <a class="content-only-a" href="/Games/">
+            <button class="special-button">Games</button>
+          </a>
+          <button class="special-button">Productivity</button>
+          <button class="special-button">Creation</button>
+          <button class="special-button">Develop</button>
+          <% } else { %>
+          <a class="content-only-a" href="/about">
+            <button class="special-button">About</button>
+          </a>
+          <a class="content-only-a" href="/Downloads/">
+            <button class="special-button">Downloads</button>
+          </a>
+          <% } %>
         </div>
 
         <div id="user-controls" class="right-header">
           <script>
-            console.log("User data:", <%- JSON.stringify(user) %>);
+            console.log("User data:", <% - JSON.stringify(user) %>);
           </script>
           <% if (user.username !=null && user.username !=="" ) { %>
-            <ul style="align-items: center; justify-content: center; color: goldenrod;">
-              Welcome back <a href="/users/<%= user.username %>">
-                <%= user.username %>
-              </a>!
-            </ul>
-            <a class="content-only-a" href="">
-              <button class="special-button header-right">Manage account</button>
-            </a>
+          <ul style="align-items: center; justify-content: center; color: goldenrod;">
+            Welcome back <a href="/users/<%= user.username %>">
+              <%= user.username %>
+            </a>!
+          </ul>
+          <a class="content-only-a" href="">
+            <button class="special-button header-right">Manage account</button>
+          </a>
 
-            <% if (user.role==="admin" ) { %>
-              <a class="content-only-a" href="/admin/">
-                <button class="special-button">Open Admin Panel</button>
-              </a>
-              <% } %>
+          <% if (user.role==="admin" ) { %>
+          <a class="content-only-a" href="/admin/">
+            <button class="special-button">Open Admin Panel</button>
+          </a>
+          <% } %>
 
-                <% } else { %>
-                  <a class="content-only-a" href="/login/">
-                    <button id="sign-in" class="special-button header-right">Sign In</button>
-                  </a>
-                  <a class="content-only-a" href="/register/">
-                    <button class="special-button">Create Account</button>
-                  </a>
-                  <% } %>
+          <% } else { %>
+          <a class="content-only-a" href="/login/">
+            <button id="sign-in" class="special-button header-right">Sign In</button>
+          </a>
+          <a class="content-only-a" href="/register/">
+            <button class="special-button">Create Account</button>
+          </a>
+          <% } %>
 
         </div>
 
@@ -234,100 +233,98 @@
           Licensed under Creative Commons: By Attribution 3.0 License
           http://creativecommons.org/licenses/by/3.0/</h3>
         <% if (user.username===null || user.username==="" ) { %>
-          <div class="big-box">
-            <div class="big-box-header">
-              <img class="Coco-logo" src="/Coco.svg">
-              <p class="Welcome-text">Welcome To The Coco Website! Create An Account Or Sign In!</p>
+        <div class="big-box">
+          <div class="big-box-header">
+            <img class="Coco-logo" src="/Coco.svg">
+            <p class="Welcome-text">Welcome To The Coco Website! Create An Account Or Sign In!</p>
+          </div>
+          <!----<dialog>Hello</dialog>-->
+          <div class="cool-stuff">
+
+            <div class="inner-big-box-object">
+              <video width="750px" height="500px" controls>
+                <source src="/Videos/Movie on 9-4-24 at 5.34 PM.mov" type="video/mp4">
+                <!--<source src="movie.ogg" type="video/ogg">-->
+                Your browser does not support the video tag.
+              </video>
             </div>
-            <!----<dialog>Hello</dialog>-->
-            <div class="cool-stuff">
 
-              <div class="inner-big-box-object">
-                <video width="750px" height="500px" controls>
-                  <source src="/Videos/Movie on 9-4-24 at 5.34 PM.mov" type="video/mp4">
-                  <!--<source src="movie.ogg" type="video/ogg">-->
-                  Your browser does not support the video tag.
-                </video>
+            <div class="cool-text">
+              Hello! Welcome To The Coco Website! (You Can Also Find Links To External Websites).
+            </div>
+
+            <div class="cool-description">A Quick Video For The Website!</div>
+            <div class="cool-image">
+              <img src="/Coco Icon/Old Coco Icon.svg">
+            </div>
+
+          </div>
+        </div>
+        <% } %>
+        <div>
+          <div id="news-box" class="big-box">
+            <div class="big-box-header">
+              <p class="Welcome-text-left">Coco News</p>
+              <img src="Coco Icon/Coco News.svg">
+            </div>
+            <% news.forEach(function(box){ %>
+            <div class="big-box">
+              <div class="big-box-header">
+                <img class="Coco-logo" src="<%- box.icon.src %>" height="132.78px">
+                <p class="Welcome-text">
+                  <%= box.name %>
+                </p>
               </div>
+              <!----<dialog>Hello</dialog>-->
+              <div class="cool-stuff">
 
-              <div class="cool-text">
-                Hello! Welcome To The Coco Website! (You Can Also Find Links To External Websites).
+                <div class="inner-big-box-object">
+                  <% if (box.media_type==="img" ) { %>
+                  <img src="<%- box.img.src %>" width="750px" height="500px" style="<%- box.img.styles %>" alt="<% box.img.alt %>">
+                  <% } else if (box.media_type==="video" ) { %>
+                  <video width="750px" height="500px" controls>
+                    <source src="<%- box.video.src %>" type="video/mp4">
+                    <!--<source src="movie.ogg" type="video/ogg">-->
+                    Your browser does not support the video tag.
+                  </video>
+                  <% } else {%>
+                  <div width="750px" height="500px"></div>
+                  <% } %>
+                </div>
+
+                <div class="cool-text">
+                  <%- box.description %>
+                </div>
+
+                <div class="cool-description"><%- box.media_description %></div>
+                <div class="cool-image">
+                  <img src="/Coco Icon/Old Coco Icon.svg">
+                </div>
+
               </div>
-
-              <div class="cool-description">A Quick Video For The Website!</div>
-              <div class="cool-image">
-                <img src="/Coco Icon/Old Coco Icon.svg">
-              </div>
-
+            </div>
+            <div class="box-product">
+              <h3 class="cool-text">
+                <%= box.name %>
+              </h3>
+              <%- box.description %>
+              <% box.imgs.forEach(function(img) { %>
+              <img src="<%- img.src %>" width="<%- img.width %>" height="<%- img.height %>" style="<%- img.styles %>" alt="<% img.alt %>">
+              <% }); %>
+              <% }); %>
             </div>
           </div>
-          <% } %>
-            <div>
-              <div id="news-box" class="big-box">
-                <div class="big-box-header">
-                  <p class="Welcome-text-left">Coco News</p>
-                  <img src="Coco Icon/Coco News.svg">
-                </div>
-                <% news.forEach(function(box){ %>
-                  <div class="big-box">
-                    <div class="big-box-header">
-                      <img class="Coco-logo" src="<%- box.icon.src %>" height="132.78px">
-                      <p class="Welcome-text">
-                        <%= box.name %>
-                      </p>
-                    </div>
-                    <!----<dialog>Hello</dialog>-->
-                    <div class="cool-stuff">
-
-                      <div class="inner-big-box-object">
-                        <% if (box.media_type==="img" ) { %>
-                          <img src="<%- box.img.src %>" width="750px" height="500px" style="<%- box.img.styles %>"
-                            alt="<% box.img.alt %>">
-                          <% } else if (box.media_type==="video" ) { %>
-                            <video width="750px" height="500px" controls>
-                              <source src="<%- box.video.src %>" type="video/mp4">
-                              <!--<source src="movie.ogg" type="video/ogg">-->
-                              Your browser does not support the video tag.
-                            </video>
-                            <% } else {%>
-                              <div width="750px" height="500px"></div>
-                              <% } %>
-                      </div>
-
-                      <div class="cool-text">
-                        <%- box.description %>
-                      </div>
-
-                      <div class="cool-description"><%- box.media_description %></div>
-                      <div class="cool-image">
-                        <img src="/Coco Icon/Old Coco Icon.svg">
-                      </div>
-
-                    </div>
-                  </div>
-                  <div class="box-product">
-                    <h3 class="cool-text">
-                      <%= box.name %>
-                    </h3>
-                    <%- box.description %>
-                      <% box.imgs.forEach(function(img) { %>
-                        <img src="<%- img.src %>" width="<%- img.width %>" height="<%- img.height %>"
-                          style="<%- img.styles %>" alt="<% img.alt %>">
-                        <% }); %>
-                          <% }); %>
-                  </div>
-              </div>
-              <div id="user-messages" class="big-box">
-                <div class="big-box-header">
-                  <p class="Welcome-text-left">
-                    Your Messages
-                  </p>
-                  <p class="Welcome-text">
-                    <a href="/messages">View All</a>
-                  </p>
-                </div>
-              </div>
+          <div id="user-messages" class="big-box">
+            <div class="big-box-header">
+              <p class="Welcome-text-left">
+                Your Messages
+              </p>
+              <p class="Welcome-text">
+                <a href="/messages">View All</a>
+              </p>
             </div>
+          </div>
+        </div>
       </div>
 
       <footer class="box-product">
@@ -342,67 +339,67 @@
 
     </div>
 
-      <div id="error-container" class="error-container-hide">
-        Some Scripts Have Probably Crashed
-        <div id="e" class="error big-box"></div>
-      </div>
-      <!---->
-      <script src="/Ambler.mp3Sound.js"></script>
-      <script src="/JS/global.js"></script>
-      <!---->
-      <script>
-        document.addEventListener("DOMContentLoaded", () => {
-          /* Aa *
-          showError(); /* Aa */
-          /* Aa */
-          showMessage();
-        });
+    <div id="error-container" class="error-container-hide">
+      Some Scripts Have Probably Crashed
+      <div id="e" class="error big-box"></div>
+    </div>
+    <!---->
+    <script src="/Ambler.mp3Sound.js"></script>
+    <script src="/JS/global.js"></script>
+    <!---->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        /* Aa *
+        showError(); /* Aa */
+        /* Aa */
+        showMessage();
+      });
 
-        function showError() {
-          document.getElementById("e").innerHTML = `Oops! Something Crashed!`;
-          var errorContainer = document.getElementById("error-container");
-          errorContainer.classList.remove("error-container-hide");
-          errorContainer.classList.add("error-container-show");
+      function showError() {
+        document.getElementById("e").innerHTML = `Oops! Something Crashed!`;
+        var errorContainer = document.getElementById("error-container");
+        errorContainer.classList.remove("error-container-hide");
+        errorContainer.classList.add("error-container-show");
+      }
+
+      function hideError() {
+        document.getElementById("e").innerHTML = ``;
+        var errorContainer = document.getElementById("error-container");
+        errorContainer.classList.remove("error-container-show");
+        errorContainer.classList.add("error-container-hide");
+      }
+
+      function showMessage(messageAtIndex) {
+        var messageBox;
+        switch (messageAtIndex) {
+          case 5:
+            //
+            break;
         }
+      }
+    </script>
+    <script>
+      console.log(`At: ${window.location.pathname}`);
+      if (window.location.pathname.includes('index.html')) window.location.href = window.location.pathname.replace('index.html', '');
+    </script>
+    <!--<script src="/Scripts/spawnNewstuff.js" type="module"></script>-->
+    <script src="https://unpkg.com/dayjs@1.11.10/dayjs.min.js"></script>
+    <!--<script type="module" src="/Scripts/bodyScripts.js"></script>-->
+    <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
+    <script>
+      const errorMessageContainer = document.getElementById("error-container");
 
-        function hideError() {
-          document.getElementById("e").innerHTML = ``;
-          var errorContainer = document.getElementById("error-container");
-          errorContainer.classList.remove("error-container-show");
-          errorContainer.classList.add("error-container-hide");
-        }
+      function clearError() {
+        errorMessageContainer.classList.remove("error-container-show");
+        errorMessageContainer.classList.add("error-container-hide");
+        document.getElementById("e").innerHTML = ``;
+        var errorContainer = document.getElementById("error-container");
+        errorContainer.classList.remove("error-container-show");
+        errorContainer.classList.add("error-container-hide");
+      };
 
-        function showMessage(messageAtIndex) {
-          var messageBox;
-          switch (messageAtIndex) {
-            case 5:
-              //
-              break;
-          }
-        }
-      </script>
-      <script>
-        console.log(`At: ${window.location.pathname}`);
-        if (window.location.pathname.includes('index.html')) window.location.href = window.location.pathname.replace('index.html', '');
-      </script>
-      <!--<script src="/Scripts/spawnNewstuff.js" type="module"></script>-->
-      <script src="https://unpkg.com/dayjs@1.11.10/dayjs.min.js"></script>
-      <!--<script type="module" src="/Scripts/bodyScripts.js"></script>-->
-      <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
-      <script>
-        const errorMessageContainer = document.getElementById("error-container");
-
-        function clearError() {
-          errorMessageContainer.classList.remove("error-container-show");
-          errorMessageContainer.classList.add("error-container-hide");
-          document.getElementById("e").innerHTML = ``;
-          var errorContainer = document.getElementById("error-container");
-          errorContainer.classList.remove("error-container-show");
-          errorContainer.classList.add("error-container-hide");
-        };
-
-        clearError();
-      </script>
+      clearError();
+    </script>
 </body>
 
 </html>

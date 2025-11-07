@@ -76,7 +76,7 @@ function getProjectById(id) {
 
 /**const user = {name: null}/* */
 
-/**/
+/**
 const user = {
   name: "Nino",
   age: 15,
@@ -97,11 +97,42 @@ const user = {
 };/**/
 
 const products = [{
-  name: "Coco",
+  name: "Welcome to Coco!",
   id: 1,
-  description: ``,
-  imgs: ["links to images..."],
-  //...
+  description: `Description here.`,
+  imgs: [{ src: "/movingApi/news/images/Coco The Coconut.png", width: 100, height: 120, styles: ``, alt: "Coco The Coconut" }],
+  img: { src: "/movingApi/news/images/Coco The Coconut.png", width: 100, height: 120, styles: ``, alt: "Coco The Coconut" },
+  media_type: "video",
+  video: { src: "/Videos/Movie on 9-4-24 at 5.34 PM.mov" },
+  media_description: `About the download`,
+  icon: { src: "/Coco.svg", width: 100, height: 120, styles: ``, alt: "Coco Logo" },
+  creator: { username: "Coco" },
+  date: {
+    month: 11,
+    day: 6,
+    year: 2025,
+  },
+  metadata: {
+    downloads: 0,
+  }
+},
+{
+  name: "Welcome to Coco!",
+  id: 1,
+  description: `<p>So you decided to Drop by!\n<br>
+  Want to see what i've been working on? Click <a href="previews/Coco">here</a> for a preview!</p>`,
+  imgs: [{ src: "/movingApi/news/images/Coco The Coconut.png", width: 100, height: 120, styles: ``, alt: "Coco The Coconut" }],
+  img: { src: "/movingApi/news/images/Coco The Coconut.png", width: 100, height: 120, styles: ``, alt: "Coco The Coconut" },
+  media_type: "video",
+  video: { src: "/Videos/Movie on 9-4-24 at 5.34 PM.mov" },
+  media_description: `Welcome! The site is still new if this is the first news box that you see.`,
+  icon: { src: "/Coco.svg", width: 100, height: 120, styles: ``, alt: "Coco Logo" },
+  creator: { username: "Coco" },
+  date: {
+    month: 11,
+    day: 6,
+    year: 2025,
+  },
 }];
 
 const news = [{
@@ -218,10 +249,14 @@ app.post("/api/user/messages", (req, res) => {
 });
 
 app.get("/previews/Coco", (req, res) => {
-  console.log("box");
     // attach session user to template if available
-  const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
-  res.render('Steamworks', { user: sessionUser || user, products: products, news: news });
+  const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : false;
+  res.render('Steamworks', { user: sessionUser });
+});
+
+app.get("/downloads/", (req, res) => {
+  const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : false;
+  res.render('downloads', { user: sessionUser, products });
 });
 
 app.get("/:user/projects/:projectname", (req, res) => {
@@ -233,7 +268,9 @@ app.get("/:user/projects/:projectname", (req, res) => {
 /* Every thing after will be a 404! */
 
 app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, "public", '404.html'));
+  // attach session user to template if available
+  const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
+  res.status(404).render('404', { user: sessionUser || user, products: products, news: news });
 });
 
 /* Streaming video helper */

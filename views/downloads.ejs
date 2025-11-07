@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Coco.ink</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="/Coco Icon/Old Coco Icon.ico">
+  <link href="/CSS/homepage.css" rel="stylesheet">
+  <link href="/CSS/header.css" rel="stylesheet">
+  <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+  <link href="/CSS/general.css" rel="stylesheet">
+  <link href="/CSS/download.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: grey;
+      font-family: Arial, Helvetica, sans-serif;
+      background-image: url("/Images/Background.png");
+      margin: 0px;
+      padding: 0px;
+      /*height: 3000px;*/
+      width: 100%;
+      /*max-width: 1200px;*/
+    }
+
+    #webpage {
+      position: absolute;
+      margin-top: 50px;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-left: 12px;
+      margin-right: 12px;
+      bottom: 0;
+    }
+
+    /*#header {}*/
+
+    .header {
+      display: flex;
+      flex: 1;
+      height: 44px;
+      position: fixed;
+      z-index: 100;
+      margin-bottom: 50px;
+      background-color: lightgrey;
+      top: 0;
+      right: 0;
+      left: 0;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+      padding-top: 12px;
+      padding-left: 12px;
+      padding-bottom: 12px;
+      padding-right: 12px;
+      /* From https://css.glass */
+      background: rgba(211, 211, 211, 0.75);
+      /*border-radius: 16px;*/
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5.2px);
+      -webkit-backdrop-filter: blur(5.2px);
+      border: 1px solid rgba(211, 211, 211, 0.548);
+      border-bottom: 2px solid rgba(211, 211, 211, 0.548);
+    }
+
+
+    /*.box-product {
+            background-color: rgb(247, 243, 243);
+            /* grid-template-columns: 100px 1fr; */
+    /* width: 300px;
+                height: 300px; *
+            /*padding: 30px 3px 30px 40px;*
+            /* display: grid; *
+
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+            width: 300px;
+            height: 300px;
+
+            overflow-y: scroll;
+            overflow-x: scroll;
+        }*/
+
+    .box-product {
+      background-color: wheat;
+      /*margin-bottom: 50px;*/
+      border-radius: 30px;
+      padding: 12px;
+      margin: 12px;
+      margin-top: 100px;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: 1fr 4fr;
+    }
+
+    #Coco {
+      z-index: 101;
+      height: 38px;
+      padding-bottom: -20px;
+      padding-right: -100px;
+      opacity: 1;
+      transition: height 1.0s;
+      transition: opacity 1.0s;
+      /**/
+      transition: opacity 1.0s ease-in-out, height 1.0s ease-in-out;
+      /**/
+    }
+
+
+    #Coco:hover {
+      opacity: 0.10;
+      cursor: pointer;
+      height: 50px;
+      transition: opacity 1.0s;
+      transition: height 1.0s;
+      /**/
+      transition: opacity 1.0s ease-in-out, height 1.0s ease-in-out;
+      /**/
+    }
+
+    .product-img {
+      height: 120px;
+      width: 120px;
+      margin-left: 40px;
+      max-width: 100%;
+    }
+
+    .Welcome-text-left {
+      color: rgb(80, 80, 80);
+      font-size: 40px;
+      display: inline;
+      float: left;
+    }
+
+    /*
+                .Announcement {
+                    background-color: wheat;
+                    margin-top: 100px;
+                    margin-bottom: 50px;
+                }
+                    */
+  </style>
+</head>
+
+<body>
+  <div id="webpage">
+    <div id="header">
+      <header class="header">
+        <!--<button onclick="cocoSound();">Test</button>-->
+        <a href="/index.html" style="margin-right: 5px !important;"><img id="Coco" src="/Coco.svg" onmouseover="const audio = new Audio(`/Coco.wav`); audio.play()"></a>
+
+        <div class="left-header">
+          <% if (false) { %>
+          <div></div>
+          <a class="content-only-a" href="/Games/">
+            <button class="special-button">Games</button>
+          </a>
+          <button class="special-button">Productivity</button>
+          <button class="special-button">Creation</button>
+          <button class="special-button">Develop</button>
+          <% } else { %>
+          <a class="content-only-a" href="/about">
+            <button class="special-button">About</button>
+          </a>
+          <a class="content-only-a" href="/Steamworks.html?id=1#player">
+            <button class="special-button">Test project 1</button>
+          </a>
+          <% } %>
+        </div>
+
+        <div id="user-controls" class="right-header">
+          <script>
+            console.log("User data:", <%- JSON.stringify(user) %>);
+          </script>
+          <% if (user.username !=null && user.username !=="" ) { %>
+          <ul style="align-items: center; justify-content: center; color: goldenrod;">
+            Welcome back <a href="/users/<%= user.username %>">
+              <%= user.username %>
+            </a>!
+          </ul>
+          <a class="content-only-a" href="">
+            <button class="special-button header-right">Manage account</button>
+          </a>
+
+          <% if (user.role==="admin" ) { %>
+          <a class="content-only-a" href="/admin/">
+            <button class="special-button">Open Admin Panel</button>
+          </a>
+          <% } %>
+
+          <% } else { %>
+          <a class="content-only-a" href="/login/">
+            <button id="sign-in" class="special-button header-right">Sign In</button>
+          </a>
+          <a class="content-only-a" href="/register/">
+            <button class="special-button">Create Account</button>
+          </a>
+          <% } %>
+
+        </div>
+
+      </header>
+    </div>
+    <div id="welcome">
+
+      <div id="main-nav-box" class="navigation-box navigation-box-closed">
+        <div id="sidebar-buttons">
+          <button class="sidebar-button"><img src="/Coco Icon/Old Coco Icon.png">Coco</button>
+          <button class="sidebar-button"><img src="/.png">Code</button>
+        </div>
+        <div id="sidebar-content">
+
+          <!-- Page 1 Of Sidebar Navigation -->
+          <div id="sidebar-content-page-1">
+            <img src="/Coco Icon/Coco The Coconut.png">
+            <h3 class="cool-text">Hello! And Welcome To Coco!</h3>
+          </div>
+
+
+        </div>
+      </div>
+
+      <div id="intro" class="info-box">
+        <p class="Welcome-text center">Downloads</p>
+        <% if (!user) { %>
+        <h2><a href="/register/">Create an account</a> or <a href="/login/">Sign in</a> to view downloads</h2>
+        <% } else { %>
+        <div class="products">
+          <% console.log(user) %>
+          <% products.forEach(function(box){ %>
+          <div class="big-box">
+            <div class="big-box-header" style="display: block !important; margin: 0px !important; margin-left: 0px !important; margin-right: 0px !important; height: auto !important;">
+              <img class="Coco-logo" src="<%- box.icon.src %>" height="132.78px" style="max-width: 150px !important; display: block !important;">
+              <p class="Welcome-text center" style="margin: 5px; padding: 5px !important;">
+                <%= box.name %>
+              </p>
+            </div>
+            <h3><p>by <a href="/users/<%= box.creator.username %>/"><%= box.creator.username %></a></p></h3>
+            <!----<dialog>Hello</dialog>-->
+            <div class="cool-stuff">
+
+              <div class="inner-big-box-object" style="overflow-x: scroll !important; width: 500px; height: 400px;">
+                <% if (box.media_type==="img" ) { %>
+                <img src="<%- box.img.src %>" width="550px" height="400px" style="<%- box.img.styles %>" alt="<% box.img.alt %>">
+                <% } else if (box.media_type==="video" ) { %>
+                <video width="550px" height="400px" controls>
+                  <source src="<%- box.video.src %>" type="video/mp4">
+                  <!--<source src="movie.ogg" type="video/ogg">-->
+                  Your browser does not support the video tag.
+                </video>
+                <% } else {%>
+                <div width="550px" height="400px"></div>
+                <% } %>
+              </div>
+
+              <div class="cool-text" style="border-bottom-left-radius: 0px !important; border-bottom-right-radius: 0px !important;">
+                <%- box.description %>
+              </div>
+
+              <div class="cool-description" style="width: auto !important;">
+                <%- box.media_description %>
+                <a href="/usds/Coco/Coco">Download here.</a>
+              </div>
+              <div class="cool-image">
+                <img src="/Coco Icon/Old Coco Icon.svg">
+              </div>
+            </div>
+          </div>
+          <% }); %>
+          <% } %>
+        </div>
+      </div>
+      <footer class="box-product">
+        <div id="footer-content">
+          <p>Coco.ink © 2025 Coco Ink Software. All rights reserved.</p>
+        </div>
+        <h4>
+          Want to know more about me? <a href="/faq">FactsAndQuestions</a>.
+          You can also see my <a href="/family">family</a>.
+        </h4>
+      </footer>
+    </div>
+
+    <div id="error-container" class="error-container-hide">
+      Some Scripts Have Probably Crashed
+      <div id="e" class="error big-box"></div>
+    </div>
+    <!---->
+    <script src="/Ambler.mp3Sound.js"></script>
+    <script src="/JS/global.js"></script>
+    <!---->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        /* Aa *
+        showError(); /* Aa */
+        /* Aa */
+        showMessage();
+      });
+
+      function showError() {
+        document.getElementById("e").innerHTML = `Oops! Something Crashed!`;
+        var errorContainer = document.getElementById("error-container");
+        errorContainer.classList.remove("error-container-hide");
+        errorContainer.classList.add("error-container-show");
+      }
+
+      function hideError() {
+        document.getElementById("e").innerHTML = ``;
+        var errorContainer = document.getElementById("error-container");
+        errorContainer.classList.remove("error-container-show");
+        errorContainer.classList.add("error-container-hide");
+      }
+
+      function showMessage(messageAtIndex) {
+        var messageBox;
+        switch (messageAtIndex) {
+          case 5:
+            //
+            break;
+        }
+      }
+    </script>
+    <script>
+      console.log(`At: ${window.location.pathname}`);
+      if (window.location.pathname.includes('index.html')) window.location.href = window.location.pathname.replace('index.html', '');
+    </script>
+    <!--<script src="/Scripts/spawnNewstuff.js" type="module"></script>-->
+    <script src="https://unpkg.com/dayjs@1.11.10/dayjs.min.js"></script>
+    <!--<script type="module" src="/Scripts/bodyScripts.js"></script>-->
+    <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
+    <script>
+      const errorMessageContainer = document.getElementById("error-container");
+
+      function clearError() {
+        errorMessageContainer.classList.remove("error-container-show");
+        errorMessageContainer.classList.add("error-container-hide");
+        document.getElementById("e").innerHTML = ``;
+        var errorContainer = document.getElementById("error-container");
+        errorContainer.classList.remove("error-container-show");
+        errorContainer.classList.add("error-container-hide");
+      };
+
+      clearError();
+    </script>
+</body>
+
+</html>
