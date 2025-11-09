@@ -1,3 +1,4 @@
+// An older file. I tried doing security on the front end.
 const warning = "Trying To Bypass The Terms Means You Agree! I Recommend You Read Are Terms And Agree To Them Or Decline!";
 
 function warn(warning) {

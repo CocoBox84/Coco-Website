@@ -174,15 +174,15 @@
 
         <div id="user-controls" class="right-header">
           <script>
-            console.log("User data:", <% - JSON.stringify(user) %>);
+            console.log("User data:", <% JSON.stringify(user) %>);
           </script>
-          <% if (user.username !=null && user.username !=="" ) { %>
+          <% if (user !=null && user !=="" ) { %>
           <ul style="align-items: center; justify-content: center; color: goldenrod;">
             Welcome back <a href="/users/<%= user.username %>">
               <%= user.username %>
             </a>!
           </ul>
-          <a class="content-only-a" href="">
+          <a class="content-only-a" href="/manage">
             <button class="special-button header-right">Manage account</button>
           </a>
 
@@ -232,7 +232,7 @@
           Ambler Kevin MacLeod (incompetech.com)
           Licensed under Creative Commons: By Attribution 3.0 License
           http://creativecommons.org/licenses/by/3.0/</h3>
-        <% if (user.username===null || user.username==="" ) { %>
+        <% if (user===null || user==="" ) { %>
         <div class="big-box">
           <div class="big-box-header">
             <img class="Coco-logo" src="/Coco.svg">

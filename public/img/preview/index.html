@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Upload</title>
+</head>
+
+<body>
+  <h1>Upload an Image</h1>
+  <form id="imageForm">
+    <input type="file" id="imageInput" accept="image/*" />
+    <div id="previewContainer">
+      <img id="imagePreview" src="" alt="Image Preview" style="max-width: 300px; display: none;" />
+    </div>
+    <button type="submit">Upload</button>
+  </form>
+
+  <script>
+    const username = localStorage.getItem("poopUsername");
+    document.addEventListener("DOMContentLoaded", () => {
+      const imageInput = document.getElementById("imageInput");
+      const imagePreview = document.getElementById("imagePreview");
+      const imageForm = document.getElementById("imageForm");
+
+      // Preview the image
+      imageInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            imagePreview.src = e.target.result;
+            imagePreview.style.display = "block";
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // Handle form submission
+      imageForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const file = imageInput.files[0];
+        if (!file) {
+          alert("Please select an image to upload.");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("pfp", file);
+
+        try {
+          const response = await fetch(`/users/${username}/changePfp/`, {
+            method: "POST",
+            body: formData,
+          });
+
+          if (response.ok) {
+            alert("Image uploaded successfully!");
+          } else {
+            alert("Failed to upload image.");
+          }
+        } catch (error) {
+          console.error("Error uploading image:", error);
+          alert("An error occurred while uploading the image.");
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

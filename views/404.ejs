@@ -147,13 +147,13 @@
                     <script>
                         console.log("User data:", <% - JSON.stringify(user) %>);
                     </script>
-                    <% if (user.username !=null && user.username !=="" ) { %>
+                    <% if (user !=null && user !=="" ) { %>
                         <ul style="align-items: center; justify-content: center; color: goldenrod;">
                             Welcome back <a href="/users/<%= user.username %>">
                                 <%= user.username %>
                             </a>!
                         </ul>
-                        <a class="content-only-a" href="">
+                        <a class="content-only-a" href="/manage">
                             <button class="special-button header-right">Manage account</button>
                         </a>
 

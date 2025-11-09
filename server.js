@@ -10,7 +10,7 @@ const bcrypt = require('bcryptjs');
 const db = require('./backend/db');
 const multer = require('multer');
 const { exec } = require('child_process');
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ storage: multer.memoryStorage() });
 
 const app = express();
 
@@ -152,7 +152,7 @@ const news = [{
 app.get("", (req, res) => {
   // attach session user to template if available
   const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
-  res.render('home', { user: sessionUser || user, products: products, news: news });
+  res.render('home', { user: sessionUser, products: products, news: news });
 })
 
 app.get("/index.html", (req, res) => {
@@ -164,19 +164,140 @@ app.get("/messages/", (req, res) => {
   res.render('messages', { user: sessionUser || user, products: products, news: news });
 });
 
-app.get("/user/messages/", (req, res) => {
-  return req
-});
-
 app.get('/users/:user', (req, res) => {
   const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
-  res.render('user', { username: req.params.user, color: 'blue', currentUser: sessionUser });
+  let isEditable = false;
+  if (!db.getUserByUsername(req.params.user)) return res.redirect("/noUser/"); // this will be a 404 page.
+  console.log("User is private: ", db.getUserByUsername(req.params.user).isPrivate);
+  if ((!sessionUser || sessionUser.username !== req.params.user) && db.getUserByUsername(req.params.user).isPrivate === 1) {
+    return res.status(405).send("Not your profile. Weirdo. This profile has been privated.");
+  }
+  if (sessionUser && sessionUser.username === req.params.user) isEditable = true;
+  const following = db.getFollowing(db.getUserByUsername(req.params.user).id);
+  res.render('user', { username: req.params.user, user: sessionUser, isEditable, user2: db.getUserByUsername(req.params.user), following });
+});
+
+app.get("/manage", (req, res) => {
+  return res.status(302).redirect("/account/users/manage/");
+});
+
+app.get("/account/users/manage", (req, res) => {
+  if (!req.session.userId) return res.status(302).redirect("/");
+  const sessionUser = (req.session.userId) ? db.getUserById(req.session.userId) : null;
+  return res.status(200).render("manage_user", { user: sessionUser });
+});
+
+app.get("/users/:username/pfp", async (req, res) => {
+  await db.init();
+  const user = db.getUserByUsername(req.params.username);
+  const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
+
+  // Only check username if sessionUser exists
+  if (sessionUser && sessionUser.username !== req.params.username) {
+    if (user && user.isPrivate === 1) {
+      return res.status(404).sendFile(path.join(__dirname, "public", "Coco Icon", "Coco The Coconut.png"));
+    }
+  }
+
+  if (!user || !user.pfp) {
+    return res.status(404).sendFile(path.join(__dirname, "public", "Coco Icon", "Coco The Coconut.png"));
+  }
+
+  const filePath = path.resolve(user.pfp);
+
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).sendFile(path.join(__dirname, "public", "Coco Icon", "Coco The Coconut.png"));
+  }
+
+  res.sendFile(filePath);
+});
+
+app.post("/users/:username/changePfp", upload.single("pfp"), (req, res) => {
+  const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
+  if (!sessionUser || sessionUser.username !== req.params.username) {
+    return res.status(405).send("Not your profile. Weirdo.");
+  }
+
+  if (!req.file) {
+    return res.status(400).send("No file uploaded.");
+  }
+
+  const ext = path.extname(req.file.originalname).toLowerCase();
+  const allowed = [".png", ".jpg", ".jpeg", ".gif"];
+  if (!allowed.includes(ext)) {
+    return res.status(400).send("Invalid file type.");
+  }
+
+  const pfpPath = path.join(__dirname, "private", "users", req.params.username, "pfp");
+  fs.mkdirSync(pfpPath, { recursive: true });
+
+  const filePath = path.join(pfpPath, `pfp${ext}`);
+  fs.writeFileSync(filePath, req.file.buffer);
+
+  // 🔗 Update the database record
+  db.updateUserPfp(sessionUser.id, filePath);
+
+  return res.send("Profile picture updated.");
+});
+
+app.get('/users/:username/changePfp', (req, res) => {
+  const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
+  console.log(sessionUser);
+  if (!sessionUser || sessionUser.username != req.params.username) return res.status(405).send("Not your profile. Weirdo.");
+
+  return res.send("Ok");
+});
+
+app.get('/api/follow/:username', (req, res) => {
+  if (!req.session.userId) return res.status(401).send("Not logged in");
+
+  const targetUser = db.getUserByUsername(req.params.username);
+  if (!targetUser) return res.status(404).send("User not found");
+  if (targetUser.isPrivate === 1) return res.status(405).send("Target user is not public.");
+
+  db.followUser(req.session.userId, targetUser.id);
+  res.send("Followed successfully");
+});
+
+app.get('/api/unfollow/:username', (req, res) => {
+  if (!req.session.userId) return res.status(401).send("Not logged in");
+
+  const targetUser = db.getUserByUsername(req.params.username);
+  if (!targetUser) return res.status(404).send("User not found");
+  if (targetUser.isPrivate === 1) return res.status(405).send("Target user is not public.");
+
+  db.unfollowUser(req.session.userId, targetUser.id);
+  res.send("Unfollowed successfully");
+});
+
+app.get('/api/set/public', (req, res) => {
+  const sessionUser = (req.session.userId) ? db.getUserById(req.session.userId) : null;
+  if (!sessionUser || sessionUser.username === "") return res.status(405).send("Sign in to change this.");
+  db.makeUserPublic(sessionUser.id);
+  res.status(200).send("You are now public!");
+});
+
+app.get('/api/set/private', (req, res) => {
+  const sessionUser = (req.session.userId) ? db.getUserById(req.session.userId) : null;
+  if (!sessionUser || sessionUser.username === "") return res.status(405).send("Sign in to change this.");
+  db.makeUserPrivate(sessionUser.id);
+  res.status(200).send("You are now private!");
+});
+
+app.post('/api/set/description', (req, res) => {
+  const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
+  const { description } = req.body;
+  if (!sessionUser || !sessionUser.username) {
+    return res.status(405).json({ error: "Sign in to change this." });
+  }
+  db.updateUserDescription(sessionUser.id, description);
+  return res.status(200).json({ message: "Updated" });
 });
 
 app.get("/faq", (req, res) => {
   // attach session user to template if available
   const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
-  res.render('faq', { user: sessionUser || user, products: products, news: news });
+  res.render('faq', { user: sessionUser, products: products, news: news });
 })
 
 // --- Auth routes ---
@@ -220,6 +341,12 @@ app.post('/login', async (req, res) => {
   }
 });
 
+app.get('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/');
+  });
+});
+
 app.post('/logout', (req, res) => {
   req.session.destroy(() => {
     res.redirect('/');
@@ -228,14 +355,14 @@ app.post('/logout', (req, res) => {
 
 app.post("/api/user/messages", (req, res) => {
   const messages = [
-    {"sender": "System", "title": "The First Message!", "content": "Hello! This is the first message! <br> So, yeah. Not much more to say other then that."}
-    ,{"sender": "Admin", "title": "Welcome to Coco!", "content": "Welcome to the Coco Website! We hope you enjoy your stay here. <br> If you have any questions, feel free to reach out to us!"}
-    ,{"sender": "Nino", "title": "Site Updates", "content": "Hey! Just wanted to let you know that we have some new updates coming soon! <br> Stay tuned for more info."}
-    ,{"sender": "System", "title": "Maintenance Notice", "content": "The site will be undergoing maintenance on Saturday at 2 AM UTC. <br> Please plan accordingly."}
-    ,{"sender": "Admin", "title": "New Features!", "content": "We have added some new features to the site! <br> Check them out and let us know what you think!"}
-    ,{"sender": "Nino", "title": "Community Guidelines", "content": "Please remember to follow our community guidelines while using the site. <br> Let's keep it a friendly place for everyone!"}
-    ,{"sender": "System", "title": "Password Reset", "content": "If you have requested a password reset, please check your email for instructions. <br> If you did not request this, please ignore this message."}
-    ,{"sender": "System", "title": "Test", "content": "You should only be seeing this message after the 5th load messages click."}
+    { "sender": "System", "title": "The First Message!", "content": "Hello! This is the first message! <br> So, yeah. Not much more to say other then that." }
+    , { "sender": "Admin", "title": "Welcome to Coco!", "content": "Welcome to the Coco Website! We hope you enjoy your stay here. <br> If you have any questions, feel free to reach out to us!" }
+    , { "sender": "Nino", "title": "Site Updates", "content": "Hey! Just wanted to let you know that we have some new updates coming soon! <br> Stay tuned for more info." }
+    , { "sender": "System", "title": "Maintenance Notice", "content": "The site will be undergoing maintenance on Saturday at 2 AM UTC. <br> Please plan accordingly." }
+    , { "sender": "Admin", "title": "New Features!", "content": "We have added some new features to the site! <br> Check them out and let us know what you think!" }
+    , { "sender": "Nino", "title": "Community Guidelines", "content": "Please remember to follow our community guidelines while using the site. <br> Let's keep it a friendly place for everyone!" }
+    , { "sender": "System", "title": "Password Reset", "content": "If you have requested a password reset, please check your email for instructions. <br> If you did not request this, please ignore this message." }
+    , { "sender": "System", "title": "Test", "content": "You should only be seeing this message after the 5th load messages click." }
   ];
   const messageIndex = req.body.start || 0;
   const numberOfMessagesToSend = 5;
@@ -245,11 +372,11 @@ app.post("/api/user/messages", (req, res) => {
     messagesToSend.push(messages[i]);
     if (i >= messages.length) break;
   }
-  return res.json({messages: messagesToSend});
+  return res.json({ messages: messagesToSend });
 });
 
 app.get("/previews/Coco", (req, res) => {
-    // attach session user to template if available
+  // attach session user to template if available
   const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : false;
   res.render('Steamworks', { user: sessionUser });
 });
@@ -270,7 +397,7 @@ app.get("/:user/projects/:projectname", (req, res) => {
 app.use((req, res) => {
   // attach session user to template if available
   const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
-  res.status(404).render('404', { user: sessionUser || user, products: products, news: news });
+  res.status(404).render('404', { user: sessionUser, products: products, news: news });
 });
 
 /* Streaming video helper */
@@ -287,7 +414,6 @@ app.post('/uploadVideo', upload.single('video'), (req, res) => {
     res.send('Video uploaded and processed!');
   });
 });
-
 
 app.get('/files/processed/:filename', (req, res) => {
   const filePath = path.join(__dirname, 'processed', "videos", req.params.filename);

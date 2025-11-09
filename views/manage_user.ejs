@@ -175,7 +175,7 @@
 
         <div id="user-controls" class="right-header">
           <script>
-            console.log("User data:", <%- JSON.stringify(user) %>);
+            console.log("User data:", "<%- JSON.stringify(user) %>");
           </script>
           <% if (user !=null && user !=="" ) { %>
             <ul style="align-items: center; justify-content: center; color: goldenrod;">
@@ -183,7 +183,7 @@
                 <%= user.username %>
               </a>!
             </ul>
-            <a class="content-only-a" href="/manage">
+            <a class="content-only-a" href="">
               <button class="special-button header-right">Manage account</button>
             </a>
 
@@ -226,14 +226,16 @@
       </div>
 
       <div id="intro" class="info-box">
-        <img class="Coco-logo" src="/Coco.svg">
-        <p class="Welcome-text">Welcome To The Official Coco Website!</p>
-        <h2>Homepage music:</h2>
-        <h3>
-          Ambler Kevin MacLeod (incompetech.com)
-          Licensed under Creative Commons: By Attribution 3.0 License
-          http://creativecommons.org/licenses/by/3.0/</h3>
-          <div>Webpage goes here...</div>
+        <p class="Welcome-text center">Manage your account</p>
+        You can logout here: <a href="/logout/"><button class="special-button">Logout</button></a>
+          <% if (user.isPrivate === 1) { %>
+            Your account is currently private. Click here to make your account public: <button class="special-button" onclick="fetch('/api/set/public/')">Activate Account</button>;
+          <% } else { %>
+            Your account is currently public. To hide your data, click here: <button class="special-button" onclick="fetch('/api/set/private/')">Private Account</button>
+          <% } %>
+          <h2>Your description:</h2>
+          <%- user.description %>
+          <div>Strikes: 0</div>
       </div>
 
       <footer class="box-product">
