@@ -37,14 +37,16 @@ async function unfollowUser(username) {
 
 function updateProfile() {
   const descriptionDiv = document.getElementById("description");
+  const CocoScriptCodeDiv = document.getElementById("Coco-Script-area");
   const description = descriptionDiv.value;
+  const CocoScriptCode = CocoScriptCodeDiv.value;
 
   fetch("/api/set/description", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ description })
+    body: JSON.stringify({ description, CocoScriptCode })
   })
     .then((response) => response.json())
-    .then((result) => console.log("Success:", result))
+    .then((result) => {console.log("Success:", result); window.location.href = window.location.href;})
     .catch((error) => console.error("Error:", error));
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>CocoScript testing</title>
+  <link rel="stylesheet" href="/CSS/general.css">
+</head>
+
+<body>
+  <div style="margin: auto !important; width: 750px !important;">
+    <h1>CocoScript Interpreter V0.1</h1>
+    <div>
+      <textarea id="code-input"></textarea>
+      <button onclick="RunCocoScript()">Run</button>
+    </div>
+    <ul id="CocoScript's-special-output"></ul>
+  </div>
+  <script src="./CocoScript.js"></script>
+  <script>
+    function RunCocoScript() {
+        CocoScript.run(document.getElementById("code-input").value);
+    }
+  </script>
+</body>
+
+</html>

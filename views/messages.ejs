@@ -152,56 +152,52 @@
     <div id="header">
       <header class="header">
         <!--<button onclick="cocoSound();">Test</button>-->
-        <a href="/index.html" style="margin-right: 5px !important;"><img id="Coco" src="/Coco.svg"
-            onmouseover="const audio = new Audio(`/Coco.wav`); audio.play()"></a>
+        <a href="/index.html" style="margin-right: 5px !important;"><img id="Coco" src="/Coco.svg" onmouseover="const audio = new Audio(`/Coco.wav`); audio.play()"></a>
 
         <div class="left-header">
           <% if (false) { %>
-            <div></div>
-            <a class="content-only-a" href="/Games/">
-              <button class="special-button">Games</button>
-            </a>
-            <button class="special-button">Productivity</button>
-            <button class="special-button">Creation</button>
-            <button class="special-button">Develop</button>
-            <% } else { %>
-              <a class="content-only-a" href="/about">
-                <button class="special-button">About</button>
-              </a>
-              <a class="content-only-a" href="/Steamworks.html?id=1#player">
-                <button class="special-button">Test project 1</button>
-              </a>
-              <% } %>
+          <div></div>
+          <a class="content-only-a" href="/Games/">
+            <button class="special-button">Games</button>
+          </a>
+          <button class="special-button">Productivity</button>
+          <button class="special-button">Creation</button>
+          <button class="special-button">Develop</button>
+          <% } else { %>
+          <a class="content-only-a" href="/about">
+            <button class="special-button">About</button>
+          </a>
+          <a class="content-only-a" href="/Steamworks.html?id=1#player">
+            <button class="special-button">Test project 1</button>
+          </a>
+          <% } %>
         </div>
 
         <div id="user-controls" class="right-header">
-          <script>
-            console.log("User data:", <% - JSON.stringify(user) %>);
-          </script>
-          <% if (user.username !=null && user.username !=="" ) { %>
-            <ul style="align-items: center; justify-content: center; color: goldenrod;">
-              Welcome back <a href="/users/<%= user.username %>">
-                <%= user.username %>
-              </a>!
-            </ul>
-            <a class="content-only-a" href="">
-              <button class="special-button header-right">Manage account</button>
-            </a>
+          <% if (user && (user.username !=null && user.username !=="") ) { %>
+          <ul style="align-items: center; justify-content: center; color: goldenrod;">
+            Welcome back <a href="/users/<%= user.username %>">
+              <%= user.username %>
+            </a>!
+          </ul>
+          <a class="content-only-a" href="">
+            <button class="special-button header-right">Manage account</button>
+          </a>
 
-            <% if (user.role==="admin" ) { %>
-              <a class="content-only-a" href="/admin/">
-                <button class="special-button">Open Admin Panel</button>
-              </a>
-              <% } %>
+          <% if (user.role==="admin" ) { %>
+          <a class="content-only-a" href="/admin/">
+            <button class="special-button">Open Admin Panel</button>
+          </a>
+          <% } %>
 
-                <% } else { %>
-                  <a class="content-only-a" href="/login/">
-                    <button id="sign-in" class="special-button header-right">Sign In</button>
-                  </a>
-                  <a class="content-only-a" href="/register/">
-                    <button class="special-button">Create Account</button>
-                  </a>
-                  <% } %>
+          <% } else { %>
+          <a class="content-only-a" href="/login/">
+            <button id="sign-in" class="special-button header-right">Sign In</button>
+          </a>
+          <a class="content-only-a" href="/register/">
+            <button class="special-button">Create Account</button>
+          </a>
+          <% } %>
 
         </div>
 
@@ -297,37 +293,55 @@
     let messageIndex = 0;
 
     function loadMessages() {
+      const start = messageIndex;
+      const count = 5;
+
       fetch('api/user/messages', {
-        method: 'POST', headers:
-        {
-          'Content-Type': 'application/json',
-          'body': JSON.stringify({ start: messageIndex, count: 5 }),
-          'Accept': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest',
-          'Credentials': 'include',
-          'Cache': 'no-cache',
-          'Mode': 'cors',
-          'ReferrerPolicy': 'no-referrer',
-          'Method': 'POST'
-        }
-      })
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            start,
+            count
+          })
+        })
         .then(response => response.json())
         .then(data => {
           console.log("received response");
           const messagesBox = document.getElementById('messages-box');
           data.messages.forEach(message => {
             messageIndex++;
-            message.isRead = Boolean(true);
+            if (!message) return;
             const messageElement = document.createElement('div');
             messageElement.classList.add('message');
             messageElement.innerHTML = `<li class="${(message.isRead) ? "" : "un"}read"><h2>${message.title}</h2><h3>${message.sender}:</h3>${message.content}</li>`;
-            messagesBox.innerHTML = messageElement.innerHTML + messagesBox.innerHTML;
+            messagesBox.innerHTML += messageElement.innerHTML;
           });
         })
         .catch(error => {
           console.error('Error loading messages:', error);
           showError();
         });
+    }
+
+    function sendMessage(toUsername) {
+      const title = document.getElementById("msg-title").value;
+      const content = document.getElementById("msg-content").value;
+
+      fetch(`/api/send/message/${toUsername}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            title,
+            content
+          })
+        })
+        .then(res => res.json())
+        .then(data => console.log(data.message))
+        .catch(err => console.error("Error sending message:", err));
     }
   </script>
   <script>

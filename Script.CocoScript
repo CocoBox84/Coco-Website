@@ -1,0 +1,28 @@
+!a = 4; // ! defines a variable
+diplay(a); // diplay (not display) is the command to print to console.
+a = false;
+// In CocoScript if statements are different. To compare a variable, first store the result, then check if it's true; like this.
+!b = a == 5;
+!c = false;
+// the ? is the if, "not" is the else
+?a {
+    diplay("A is 5");
+} not ?c {
+    diplay("C is true");
+} not {
+    diplay("A is not five, and C is false");
+}
+
+// Style webpage:
+!s = diplay.Stage();
+
+s->style {
+    html {
+        background-color: white;
+    }
+    body {
+        /* more css */
+    }
+}
+
+diplay("End of program");

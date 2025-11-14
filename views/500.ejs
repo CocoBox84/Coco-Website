@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head><title>Server error</title></head>
+<body>
+  <h1>500 — Something went wrong</h1>
+  <p><%= message %></p>
+  <% if (stack) { %>
+    <pre><%= stack %></pre>
+  <% } %>
+  <a href="/">Go home</a>
+</body>
+</html>

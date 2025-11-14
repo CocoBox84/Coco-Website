@@ -109,6 +109,7 @@ hr {
     float: left !important;
 }
 
+::-webkit-file-upload-button,
 .special-button {
     text-align: left;
     word-wrap: break-word;
@@ -127,10 +128,13 @@ hr {
     background-image: linear-gradient(to bottom, #849fc2 0, #6683b3 100%);
 }
 
+::-webkit-file-upload-button:hover,
 .special-button:hover {
     background-image: none;
+    cursor: pointer;
 }
 
+::-webkit-file-upload-button:active,
 .special-button:active {
     background-color: #4b6288;
 }

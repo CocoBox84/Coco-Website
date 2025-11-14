@@ -17,7 +17,7 @@
     body {
       background-color: grey;
       font-family: Arial, Helvetica, sans-serif;
-      background-image: url("Images/Background.png");
+      background-image: url("/Images/Background.png");
     }
 
     #webpage {
@@ -223,7 +223,7 @@
             <span><%= username %>'s profile</span>
             <span style="float: right;">
               <a href="/api/follow/<%= username %>/"><button class="special-button">Follow</button></a>
-              <button class="special-button">Request friend</button>
+              <% if (username != user.username) { %><button class="special-button">Send Message</button><% } %>
             </span>
           </h3>
         </div>
@@ -232,28 +232,121 @@
             <div class="box-push-into-left" style="padding: 10px !important;">
               <h4>Some stuff to know about <br><a href="/users/<%= username %>/"><%= username %></a>!: </h4>
               <% if (isEditable) { %>
-                <button class="special-button" onclick="document.getElementById('edit-img-box').classList.toggle('edit')">Edit</button><br>
-                <style>#edit-img-box {
+              <button class="special-button" onclick="document.getElementById('edit-img-box').classList.toggle('edit'); document.getElementById('edit-des-box').classList.toggle('edit'); document.getElementById('user-description').classList.toggle('edit');">Edit</button><br>
+              <style>
+                #edit-img-box {
                   display: none !important;
-                } #edit-img-box.edit {
+                }
+
+                #edit-img-box.edit {
                   display: block !important;
                   border: 2px black solid !important;
                   width: 300px !important;
                   height: 300px !important;
-                }</style>
-                <iframe id="edit-img-box" src="/img/preview/"></iframe>
+                }
+
+                #edit-des-box {
+                  display: none !important;
+                }
+
+                #user-description {
+                  display: block !important;
+                }
+
+                #edit-des-box.edit {
+                  display: block !important;
+                }
+
+                #user-description.edit {
+                  display: none !important;
+                }
+              </style>
+
+              </style>
+              <div id="edit-img-box" style="max-width: 300px !important; max-height: 300px !important; overflow-y: scroll !important; overflow-x: scroll !important;">
+                <h1>Upload an Image</h1>
+                <form id="imageForm">
+                  <input type="file" id="imageInput" accept="image/*" />
+                  <div id="previewContainer">
+                    <img id="imagePreview" src="" alt="Image Preview" style="max-width: 300px; display: none;" />
+                  </div>
+                  <button class="special-button" type="submit">Upload</button>
+                </form>
+
+                <script>
+                  const username = "<%= user.username %>";
+                  document.addEventListener("DOMContentLoaded", () => {
+                    const imageInput = document.getElementById("imageInput");
+                    const imagePreview = document.getElementById("imagePreview");
+                    const imageForm = document.getElementById("imageForm");
+
+                    // Preview the image
+                    imageInput.addEventListener("change", (event) => {
+                      const file = event.target.files[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                          imagePreview.src = e.target.result;
+                          imagePreview.style.display = "block";
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    });
+
+                    // Handle form submission
+                    imageForm.addEventListener("submit", async (event) => {
+                      event.preventDefault();
+
+                      const file = imageInput.files[0];
+                      if (!file) {
+                        alert("Please select an image to upload.");
+                        return;
+                      }
+
+                      const formData = new FormData();
+                      formData.append("pfp", file);
+
+                      try {
+                        const response = await fetch(`/users/${username}/changePfp/`, {
+                          method: "POST",
+                          body: formData,
+                        });
+
+                        if (response.ok) {
+                          alert("Image uploaded successfully!");
+                          window.location.href = window.location.href;
+                        } else {
+                          alert("Failed to upload image.");
+                        }
+                      } catch (error) {
+                        console.error("Error uploading image:", error);
+                        alert("An error occurred while uploading the image.");
+                      }
+                    });
+                  });
+                </script>
+              </div>
               <% } %>
               <img src="/users/<%= username %>/pfp" style="border: black 2px solid;" width="100px" height="100px">
               <div style="padding: 3px; margin: 9px;">
                 <span>Joined: <%= user2.created_at %></span>
                 <% if (isEditable) { %>
                 <h4>My description: </h4>
-              <% } %>
+                <% } %>
+                <p id="user-description"><%= user2.description %></p>
                 <% if (isEditable) { %>
-                  <textarea width="218px" height="135px" inputmode="url" id="description"><%= user2.description %></textarea>
-                  <button onclick="updateProfile();">Update</button>
-                <% } else { %>
-                  <p><%- user2.description %></p>
+                <div id="edit-des-box">
+                  <textarea inputmode="url" id="description" style="min-width: 218px !important; min-height: 135px !important"><%= user2.description %></textarea>
+                  <h3>CocoScript:</h3>
+                  <p>Use CocoScript to style your pages and add interactivity.</p>
+                  <textarea id="Coco-Script-area" wrap="off" style="white-space: pre; overflow-x: auto; min-width: 279px !important; min-height: 233px !important;"><% if (user2.script) { %><%- user2.script %> <% } %></textarea>
+                  <br>
+                  <button onclick="RunCocoScript()">Test Script</button>
+                  <h4>CocoScript Output:</h4>
+                  <ul id="CocoScript's-special-output"></ul>
+                  <button onclick="window.document.getElementById('CocoScript\'s-special-output').innerHTML = '';">Clear Output</button>
+                  <button class="special-button" onclick="updateProfile();">Update</button>
+                </div>
                 <% } %>
               </div>
 
@@ -284,8 +377,31 @@
         localStorage.setItem("poopUsername", "<%= user.username %>");
       </script>
       <% } %>
+      <script src="/CocoScript.js"></script>
+      <script>
+        function RunCocoScript() {
+          CocoScript.run(document.getElementById("Coco-Script-area").value);
+        }
+      </script>
+      <% if (user) { %>
+      <script>
+        CocoScript.run(`!username = "<%= user.username %>";`)
+      </script>
+      <% } %>
+      <% if (user2.script) { %><script>
+        setTimeout(function(event) {
+          RunCocoScript()
+        }, 2000);
+      </script><% } %>
       <script src="/Scripts/user.js"></script>
       <script src="/Ambler.mp3Sound.js"></script>
+      <!-- Initialize @.js -->
+      <script src="/JS/@.js"></script>
+      <script>
+        setTimeout(function() {
+          window.document.getElementById("user-description").innerHTML = new Amp().linkify(window.document.getElementById("user-description").innerHTML);
+        })
+      </script>
 </body>
 
 </html>
