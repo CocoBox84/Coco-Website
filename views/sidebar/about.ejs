@@ -12,7 +12,7 @@
       <% if (isLoggedIn) { %>
       <h4>Welcome, <%= user.username %>!</h4>
       <% } else { %>
-      <h4>Welcome User!</h4>
+      <h4>Welcome, User!</h4>
       <% } %>
       <a href="/sidebar/help/screens/about/"><button>About Coco</button></a>
       <a href="/sidebar/help/screens/help/"><button>Help with Coco</button></a>
@@ -22,12 +22,45 @@
     </header>
     <div id="webpage">
       <main id="main">
-        <h3>Content</h3>
+        <h2>About Coco:</h2>
+        <ul>
+          <li>
+            <h3>What is Coco?</h3>
+            <p>Coco is a few things. There is Coco The Coconut, Coco my website, and Coco the programming language.</p>
+            <p>The Coco website is like a main base for other Coco products or websites.</p>
+          </li>
+          <li>
+            <h3>What products are currently available?</h3>
+            <p>None. Although you can watch a preview of things i've been working on <a href="/sidebar/help/screens/preview/">here</a>.</p>
+          </li>
+          <li>
+            <h3>If no products are currently available, then what can I do with the website?</h3>
+            <p>You can upload your own projects, products and make posts. You can also send other users messages, however</p>
+            <p>due to almost no moderation yet, all of your messages are public.</p>
+          </li>
+          <li>
+            <h3>Why does this website exist?</h3>
+            <p>Because I made it. Also to share my own products, while having a user base.</p>
+          </li>
+          <li>
+            <h3>What is CocoScript?</h3>
+            <p>
+              CocoScript is my own programming language, it's currently very broken. It is
+              also open source on Github.
+            </p>
+          </li>
+        </ul>
+        <img src="/Stickers/Old Coco Icon.svg">
       </main>
       <aside id="sidebar">
         <h4>About this page:</h4>
         <ul>
-          Links
+          <li>
+            <a href="/sidebar/help/screens/help/">Help with Coco</a>
+          </li>
+          <li>
+            <a href="/sidebar/help/screens/mailbox/">Your mailbox</a>
+          </li>
         </ul>
 
       </aside>

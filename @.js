@@ -4,6 +4,7 @@
     // @.js
 
     @.js is an library for cleaning users's names, and turning '@'s into links
+    Also there is 0% clanker code here!
 */
 
 class Amp {

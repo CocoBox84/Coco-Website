@@ -1,3 +1,4 @@
+// There is some clanker code here, sorry!
 class CocoScriptEngine {
     constructor() {
         this.env = {}; // variable storage
