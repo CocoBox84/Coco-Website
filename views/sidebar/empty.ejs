@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Coco Sidebar page <%  %></title>
+  <link rel="stylesheet" href="/sidebar/main.css">
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <% if (isLoggedIn) { %>
+      <h4>Welcome, <%= user.username %>!</h4>
+      <% } else { %>
+      <h4>Welcome User!</h4>
+      <% } %>
+      <a href="/sidebar/help/screens/about/"><button>About Coco</button></a>
+      <a href="/sidebar/help/screens/help/"><button>Help with Coco</button></a>
+      <a href="/sidebar/help/screens/mailbox/"><button>Mailbox</button></a>
+      <img id="sun" alt="" src="/Stickers/Sun.stikr">
+      <p id="sun-text">The Coco Help Screens</p>
+    </header>
+    <div id="webpage">
+      <main id="main">
+        <h3>Content</h3>
+      </main>
+      <aside id="sidebar">
+        <h4>About this page:</h4>
+        <ul>
+          Links
+        </ul>
+
+      </aside>
+    </div>
+    <footer>
+      <h4>Footer:<br></h4>
+      <div id="footer-content">
+        <a href="/sidebar/help/screens/about/">About</a>
+        <a href="/sidebar/help/screens/help/">Help</a>
+        <a href="/sidebar/help/screens/mailbox/">Messages</a>
+        <br>
+        <h5>Help:</h5>
+        <a href="/sidebar/help/screens/login/">Help with Login</a>,
+        <a href="/sidebar/help/screens/signup/">Help with Creating an account</a>,
+        and <a href="/sidebar/help/screens/editUser/">Help with changing user settings</a>
+      </div>
+    </footer>
+  </div>
+</body>
+
+</html>

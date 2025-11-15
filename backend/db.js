@@ -377,4 +377,6 @@ function deleteMessage(messageId, userId) {
   persist();
 }
 
+function hiddenPlace() {}
+
 module.exports = { init, createUser, getUserByUsername, getUserById, updateUserPfp, followUser, makeUserPrivate, makeUserPublic, unfollowUser, getFollowers, getFollowing, updateUserDescription, updateUserScript, setDefaultScriptForAllUsers, resetAllScripts, addMessage, getMessages, markMessageRead, sendMessage, deleteMessage };

@@ -72,7 +72,7 @@ function onPageLoad() {
     
     document.getElementById("sidebar-help-button").addEventListener("click", function () {navBoxOpen("help");});
 
-    document.getElementById("sidebar-messages-button").addEventListener("click", function () {navBoxOpen("help");});
+    document.getElementById("sidebar-messages-button").addEventListener("click", function () {navBoxOpen("messages");});
 
     document.getElementById("sidebar-close-button").addEventListener("click", function () {navBoxOpen("close");});
 

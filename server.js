@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, "public"))); // serves existing asse
 // Initialize session BEFORE routes/static so handlers can read/write session and cookie is set correctly.
 app.use(session({
   store: new FileStore({
-    path: path.join(__dirname, 'sessions'), 
+    path: path.join(__dirname, 'sessions'),
     retries: 1,
     // ttl in seconds
     ttl: 60 * 60 * 24
@@ -1023,7 +1023,18 @@ app.get("/sidebar/help/screens/:screen", (req, res) => {
     default:
       return res.status(404).redirect("/sidebar/help/404/");
   };
-  return res.status(200).render(`/sidebar/${screen}/`);
+  const user = (req.session.userId) ? db.getUserById(req.session.userId) : false;
+  //console.log(path.join(__dirname, "views", "sidebar", `${screen}.ejs`));
+  if (fs.existsSync(path.join(__dirname, "views", "sidebar", `${screen}.ejs`))) {
+    return res.status(200).render(path.join("sidebar", screen), { user, isLoggedIn: !!user });
+  } else {
+    return res.status(404).redirect("/sidebar/help/404/");
+  }
+});
+
+app.get("/sidebar/help/404/", (req, res) => {
+  const user = (req.session.userId) ? db.getUserById(req.session.userId) : false;
+  return res.render(path.join("sidebar", "404"), { user, isLoggedIn: !!user });
 });
 
 /* Streaming video helper */
