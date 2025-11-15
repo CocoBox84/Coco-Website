@@ -42,7 +42,7 @@ function navBoxOpen(page) {
             document.getElementById("sidebar-content").src = "/sidebar/help/screens/help/";
         } break;
         case "messages": {
-            document.getElementById("sidebar-content").src = "/sidebar/help/screens/messages/";
+            document.getElementById("sidebar-content").src = "/sidebar/help/screens/mailbox/";
         } break;
         case "close": {
             document.getElementById("sidebar-content").src = "about:blank";
@@ -76,6 +76,12 @@ function onPageLoad() {
 
     document.getElementById("sidebar-close-button").addEventListener("click", function () {navBoxOpen("close");});
 
-    // Optionally open by default
-    navBoxOpen("");
+    // Remove both closed and open, this will push it offscreen
+    sidebar.style.transition = "none";
+    sidebar.classList.remove("closed");
+    sidebar.classList.remove("open");
+
+    // Add the show class, it will automatically close because the parameter is blank
+    setTimeout(function() {sidebar.style.transition = ""; navBoxOpen("");}, 1000);
+    
 }

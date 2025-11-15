@@ -1011,6 +1011,21 @@ app.get('/api/list/projects/:user', (req, res) => {
   return res.status(200).json(projects);
 });
 
+/*--- Sidebar API ---*/
+
+app.get("/sidebar/help/screens/:screen", (req, res) => {
+  const screen = req.params.screen;
+  switch (screen) {
+    case "about":
+    case "help":
+    case "mailbox":
+      break;
+    default:
+      return res.status(404).redirect("/sidebar/help/404/");
+  };
+  return res.status(200).render(`/sidebar/${screen}/`);
+});
+
 /* Streaming video helper */
 
 // Upload and process video
