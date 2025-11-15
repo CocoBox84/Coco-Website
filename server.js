@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, "public"))); // serves existing asse
 // Initialize session BEFORE routes/static so handlers can read/write session and cookie is set correctly.
 app.use(session({
   store: new FileStore({
-    path: path.join(__dirname, 'sessions'),
+    path: path.join(__dirname, 'sessions'), 
     retries: 1,
     // ttl in seconds
     ttl: 60 * 60 * 24
@@ -182,7 +182,7 @@ app.get("/index.html", (req, res) => {
 app.get("/messages/", (req, res) => {
   const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
   if (!sessionUser) return res.status(300).redirect("/");
-  res.render('messages', { user: sessionUser, products: products, news: news });
+  res.render('messages', { user: sessionUser });
 });
 
 app.get('/users/:user', (req, res) => {
@@ -195,7 +195,8 @@ app.get('/users/:user', (req, res) => {
   }
   if (sessionUser && sessionUser.username === req.params.user) isEditable = true;
   const following = db.getFollowing(db.getUserByUsername(req.params.user).id);
-  res.render('user', { username: req.params.user, user: sessionUser, isEditable, user2: db.getUserByUsername(req.params.user), following });
+  const followers = db.getFollowers(db.getUserByUsername(req.params.user).id);
+  res.render('user', { username: req.params.user, user: sessionUser, isEditable, user2: db.getUserByUsername(req.params.user), following, followers });
 });
 
 app.get("/manage", (req, res) => {
@@ -699,7 +700,7 @@ app.get('/api/follow/:username', (req, res) => {
   if (targetUser.isPrivate === 1) return res.status(405).send("Target user is not public.");
 
   db.followUser(req.session.userId, targetUser.id);
-  res.send("Followed successfully");
+  return res.status(200).redirect(`/users/${req.params.username}/`);
 });
 
 app.get('/api/unfollow/:username', (req, res) => {
@@ -710,7 +711,7 @@ app.get('/api/unfollow/:username', (req, res) => {
   if (targetUser.isPrivate === 1) return res.status(405).send("Target user is not public.");
 
   db.unfollowUser(req.session.userId, targetUser.id);
-  res.send("Unfollowed successfully");
+  return res.status(200).redirect(`/users/${req.params.username}/`);
 });
 
 app.get('/api/set/public', (req, res) => {
@@ -812,6 +813,8 @@ app.post('/logout', (req, res) => {
   });
 });
 
+/*-- Messaging API --*/
+
 app.post("/api/user/messages", (req, res) => {
   const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
   if (!sessionUser) {
@@ -824,6 +827,21 @@ app.post("/api/user/messages", (req, res) => {
   return res.json({ messages });
 });
 
+app.post("/api/messages/read/:id", (req, res) => {
+  const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
+  if (!sessionUser) {
+    return res.status(401).json({ error: "Not logged in" });
+  }
+
+  const messageId = Number(req.params.id);
+  if (!messageId) {
+    return res.status(400).json({ error: "Invalid message ID" });
+  }
+
+  db.markMessageRead(messageId, sessionUser.id);
+  return res.status(200).json({ message: "Message marked as read" });
+});
+
 app.post("/api/send/message/:toUsername", (req, res) => {
   const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
   if (!sessionUser) {
@@ -831,8 +849,17 @@ app.post("/api/send/message/:toUsername", (req, res) => {
   }
 
   const targetUser = db.getUserByUsername(req.params.toUsername);
+
   if (!targetUser) {
     return res.status(404).json({ error: "Recipient not found" });
+  }
+
+  if (targetUser.isPrivate === 1) {
+    return res.status(405).json({ error: "User is private" });
+  }
+
+  if (targetUser.isPrivate === 1) {
+    return res.status(405).json({ error: "Stop! Your blocked." });
   }
 
   const { title, content } = req.body;
@@ -843,6 +870,24 @@ app.post("/api/send/message/:toUsername", (req, res) => {
   db.sendMessage(targetUser.id, sessionUser.id, title, content);
   return res.status(200).json({ message: "Message sent successfully" });
 });
+
+// Delete a message
+app.post("/api/messages/delete/:id", (req, res) => {
+  const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
+  if (!sessionUser) {
+    return res.status(401).json({ error: "Not logged in" });
+  }
+
+  const messageId = Number(req.params.id);
+  if (!messageId) {
+    return res.status(400).json({ error: "Invalid message ID" });
+  }
+
+  db.deleteMessage(messageId, sessionUser.id);
+  return res.status(200).json({ message: "Message deleted" });
+});
+
+// Preview
 
 app.get("/previews/Coco", (req, res) => {
   // attach session user to template if available

@@ -315,7 +315,20 @@
             if (!message) return;
             const messageElement = document.createElement('div');
             messageElement.classList.add('message');
-            messageElement.innerHTML = `<li class="${(message.isRead) ? "" : "un"}read"><h2>${message.title}</h2><h3>${message.sender}:</h3>${message.content}</li>`;
+            messageElement.innerHTML = `
+  <li data-message-id="${message.id}" class="${message.isRead ? "read" : "unread"}">
+    <h2>${message.title}</h2>
+    <h3>${message.sender}:</h3>
+    ${message.content}
+  ${(message.sender !== "System") ? `
+    <div>
+      <button class="special-button" onclick="">Report Message</button>
+      <button class="special-button" onclick="deleteMessage(${message.id})">Delete</button>
+    </div>
+` : ` <div>
+      <button class="special-button" onclick="deleteMessage(${message.id})">Delete</button>
+    </div>`}
+    </li>`;
             messagesBox.innerHTML += messageElement.innerHTML;
           });
         })
@@ -329,7 +342,10 @@
       const title = document.getElementById("msg-title").value;
       const content = document.getElementById("msg-content").value;
 
-      fetch(`/api/send/message/${toUsername}`, {
+      fetch(` /api/send/message/${
+                    toUsername
+                  }
+                  `, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -363,6 +379,25 @@
       errorContainer.classList.remove("error-container-show");
       errorContainer.classList.add("error-container-hide");
     };
+
+    function markAsRead(messageId) {
+      fetch(`/api/messages/read/${messageId}`, {
+          method: "POST"
+        })
+        .then(res => res.json())
+        .then((data) => {
+          console.log(data.message)
+        })
+        .catch(err => console.error("Error marking message:", err));
+    }
+
+    function deleteMessage(messageId) {
+      fetch(`/api/messages/delete/${messageId}`, {
+          method: "POST"
+        })
+        .then(res => res.json())
+        .then(data => console.log(data.message));
+    }
 
     clearError();
     loadMessages();

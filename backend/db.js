@@ -171,14 +171,24 @@ async function init() {
 
       CREATE TABLE messages (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER NOT NULL,          -- who owns this inbox
+        user_id INTEGER NOT NULL,
         sender TEXT NOT NULL,
         title TEXT NOT NULL,
         content TEXT NOT NULL,
         isRead INTEGER DEFAULT 0,
+        isTrashed INTEGER DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id)
       );
+
+
+      CREATE TABLE project (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        creator TEXT DEFAULT "",
+        workers TEXT DEFAULT "",
+        BASE_64 TEXT DEFAULT "",
+        name TEXT DEFAULT ""
+      )
 
     `);
     persist();
@@ -360,4 +370,11 @@ function sendMessage(toUserId, fromUserId, title, content) {
   persist();
 }
 
-module.exports = { init, createUser, getUserByUsername, getUserById, updateUserPfp, followUser, makeUserPrivate, makeUserPublic, unfollowUser, getFollowers, getFollowing, updateUserDescription, updateUserScript, setDefaultScriptForAllUsers, resetAllScripts, addMessage, getMessages, markMessageRead, sendMessage };
+function deleteMessage(messageId, userId) {
+  const stmt = db.prepare('DELETE FROM messages WHERE id = ? AND user_id = ?');
+  stmt.run([messageId, userId]);
+  stmt.free();
+  persist();
+}
+
+module.exports = { init, createUser, getUserByUsername, getUserById, updateUserPfp, followUser, makeUserPrivate, makeUserPublic, unfollowUser, getFollowers, getFollowing, updateUserDescription, updateUserScript, setDefaultScriptForAllUsers, resetAllScripts, addMessage, getMessages, markMessageRead, sendMessage, deleteMessage };

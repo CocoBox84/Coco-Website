@@ -352,22 +352,82 @@
 
             </div>
           </div>
-          <div style="display: grid; grid-template-columns: 1fr 10fr; column-gap: 20px;">
-            <div>
-              <h3>Following (<%= following.length %>)</h3>
-              <ul>
-                <% let followingList = [];
+          <div style="  display: flex; 
+  flex-direction: column-reverse !important;
+  height: 100%;">
+            <div style="display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  /* Critical: allow inner flex items to shrink so scrolling works */
+  min-height: 0;
+  /* Stretch between header and footer */
+  flex: 1;
+  flex-direction: row !important;
+  ">
+              <div id="following" style="border: black 2px solid !important;   /* Stretch in the remaining horizontal space */
+  flex: 1;
+  /* Critical: enable vertical scrolling inside */
+  overflow: auto;
+  /* Critical: allow the scrolling area to shrink within the flex container */
+  min-height: 0;
+  /* Optional styling */
+  background: white;
+  border: 1px solid #ddd;
+  padding: 1rem;">
+                <h3>Following (<%= following.length %>)</h3>
+                <ul>
+                  <% let followingList = [];
                 try { followingList = following } catch(e) {} %>
-                <% followingList.forEach(function(user) { %>
-                <li style="border: 2px solid black; height: 120px; display: flex; align-items: center; padding: 5px; margin-bottom: 10px;">
-                  <img style="border: 2px solid black; margin-right: 15px;" width="100" height="100" src="/users/<%= user.username %>/pfp">
-                  <h3><a href="/users/<%= user.username %>/"><%= user.username %></a> <span><a href="/api/follow/<%= user.username %>/"><button class="special-button">Follow User</button></a></span></h3>
-                </li>
-                <% }); %>
-              </ul>
+                  <% followingList.forEach(function(user) { %>
+                  <li style="border: 2px solid black; height: 120px; display: flex; align-items: center; padding: 5px; margin-bottom: 10px;">
+                    <img style="border: 2px solid black; margin-right: 15px;" width="100" height="100" src="/users/<%= user.username %>/pfp">
+                    <h3><a href="/users/<%= user.username %>/"><%= user.username %></a> <span><a href="/api/follow/<%= user.username %>/"><button class="special-button">Follow User</button></a></span></h3>
+                  </li>
+                  <% }); %>
+                </ul>
+              </div>
+              <div id="followers" style="border: black 2px solid !important;   /* Stretch in the remaining horizontal space */
+  flex: 1;
+  /* Critical: enable vertical scrolling inside */
+  overflow: auto;
+  /* Critical: allow the scrolling area to shrink within the flex container */
+  min-height: 0;
+  /* Optional styling */
+  background: white;
+  border: 1px solid #ddd;
+  padding: 1rem;">
+                <h3>Followers (<%= followers.length %>)</h3>
+                <ul>
+                  <% let followerList = [];
+                try { followerList = followers } catch(e) {} %>
+                  <% followerList.forEach(function(user) { %>
+                  <li style="border: 2px solid black; height: 120px; display: flex; align-items: center; padding: 5px; margin-bottom: 10px;">
+                    <img style="border: 2px solid black; margin-right: 15px;" width="100" height="100" src="/users/<%= user.username %>/pfp">
+                    <h3><a href="/users/<%= user.username %>/"><%= user.username %></a> <span><a href="/api/follow/<%= user.username %>/"><button class="special-button">Follow User</button></a></span></h3>
+                  </li>
+                  <% }); %>
+                </ul>
+              </div>
             </div>
-            <div>
-              <h3>Projects</h3>
+            <div id="projects" style="display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  /* Critical: allow inner flex items to shrink so scrolling works */
+  min-height: 0;
+  /* Stretch between header and footer */
+  flex: 1;">
+              <div style="border: black 2px solid !important;   /* Stretch in the remaining horizontal space */
+  flex: 1;
+  /* Critical: enable vertical scrolling inside */
+  overflow: auto;
+  /* Critical: allow the scrolling area to shrink within the flex container */
+  min-height: 0;
+  /* Optional styling */
+  background: white;
+  border: 1px solid #ddd;
+  padding: 1rem;">
+                <h3>Projects</h3>
+              </div>
             </div>
           </div>
         </div>
@@ -395,6 +455,7 @@
       </script><% } %>
       <script src="/Scripts/user.js"></script>
       <script src="/Ambler.mp3Sound.js"></script>
+      <script src="/JS/global.js"></script>
       <!-- Initialize @.js -->
       <script src="/JS/@.js"></script>
       <script>
