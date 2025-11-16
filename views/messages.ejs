@@ -318,7 +318,7 @@
             messageElement.innerHTML = `
   <li data-message-id="${message.id}" class="${message.isRead ? "read" : "unread"}">
     <h2>${message.title}</h2>
-    <h3>${message.sender}:</h3>
+    <h3>${JSON.parse(message.sender).}:</h3>
     ${message.content}
   ${(message.sender !== "System") ? `
     <div>

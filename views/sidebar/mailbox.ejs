@@ -4,6 +4,7 @@
 <head>
   <title>Coco Sidebar page <%  %></title>
   <link rel="stylesheet" href="/sidebar/main.css">
+  <link rel="stylesheet" href="/sidebar/mailbox.css">
 </head>
 
 <body>
@@ -23,9 +24,38 @@
     <div id="webpage">
       <main id="main">
         <h3>Welcome to your Mailbox!</h3>
+        <h4>Send and receive messages.</h4>
+        <img height="100px" src="/Stickers/Mailman.svg" alt="Mailman Coconut">
+        <div id="post-office">
+          <div id="inbox">
+            <h3><img src="/Stickers/Mailbox.stikr" height="50px"> Mailbox (Your messages):</h3>
+            <ul id="messages"></ul>
+          </div>
+          <div id="outbox">
+            <h3>Send a message:</h3>
+            <div id="message-station">
+              <img src="/Stickers/Message Sender.stikr" height="70px" alt="Coco Sends a message">
+              <form id="message-form">
+                <br>
+                Title: <br>
+                <input type="text" id="message-title" placeholder="Enter message title...">
+                <br>
+                Write: <br>
+                <textarea id="your-text" placeholder="Enter text here..." name="to"></textarea>
+                <br>
+                To:
+                <input id="message-to" type="text" placeholder="Example: @Coco, or @Nino">
+                <br>
+                From: @<%= user.username %><br> As: <input type="text" name="from" id="Sender-Nickname" placeholder="Enter a nickname">
+                <button onclick="sendMessage();">Send</button>
+              </form>
+            </div>
+            <ul id="sent-messages"></ul>
+          </div>
+        </div>
       </main>
       <aside id="sidebar">
-        <h4>About this page:</h4>
+        <h4>Inbox</h4>
         <ul>
           Links
         </ul>
@@ -46,6 +76,23 @@
       </div>
     </footer>
   </div>
+
+  <script>
+    async function sendMessage() {
+      const formData = new FormData();
+      formData.append("to", window.document.getElementById("message-to"));
+      formData.append("text", window.document.getElementById("your-text").value);
+      formData.append("fromNickname", window.document.getElementById("Sender-Nickname").value);
+      formData.append("title", window.document.getElementById("message-title").value);
+      fetch("/api/send/message/", { method: "POST", body: formData }).then(response => {
+        console.log(response);
+      });
+    }
+
+    window.document.getElementById("message-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+    });
+  </script>
 </body>
 
 </html>

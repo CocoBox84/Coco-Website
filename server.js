@@ -4,6 +4,7 @@ const fs = require("fs");
 const fsp = require("fs/promises");
 const { json } = require('stream/consumers');
 const { NONAME } = require('dns');
+
 const { render } = require('ejs');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
@@ -821,7 +822,10 @@ app.post("/api/user/messages", (req, res) => {
     return res.status(401).json({ error: "Not logged in" });
   }
 
-  const { start, count } = req.body;
+  //const { start, count } = req.body;
+  const { start } = req.body;
+  const count = 5;
+
   const messages = db.getMessages(sessionUser.id, Number(start), Number(count));
 
   return res.json({ messages });
@@ -842,7 +846,24 @@ app.post("/api/messages/read/:id", (req, res) => {
   return res.status(200).json({ message: "Message marked as read" });
 });
 
-app.post("/api/send/message/:toUsername", (req, res) => {
+app.post("/api/send/message", (req, res) => {
+  const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
+  const amp = new Amp(); // Create username cleaner.
+  if (!sessionUser) return res.status(401).send("Be logged in, then we'll talk.");
+  const { to, text, fromNickname, title } = req.body;
+  const from = { user: { username: sessionUser.username, id: sessionUser.id }, nickname: fromNickname || sessionUser.username };
+  if ((!text || !to) || !title) return res.status(400).send("Malformed form, text content, title, and target user is required");
+
+  const targetUser = req.session.userId ? db.getUserByUsername(amp.cleanNameNonSplit(to)) : null;
+  if (!targetUser) return res.status(402).send("Who? This user does not exist. Remember their username is different form their real name.");
+
+  if (fromNickname.length > 500 || text.length > 500 || title.length > 500) return res.status(400).send("Your message or other entries are not allowed to be more then 500 characters.");
+
+  db.addMessage(targetUser.id, JSON.stringify(from), title, text);
+  return res.status(200).send("Ok");
+});
+
+/*app.post("/api/send/message/:toUsername", (req, res) => {
   const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
   if (!sessionUser) {
     return res.status(401).json({ error: "Not logged in" });
@@ -867,9 +888,9 @@ app.post("/api/send/message/:toUsername", (req, res) => {
     return res.status(400).json({ error: "Title and content required" });
   }
 
-  db.sendMessage(targetUser.id, sessionUser.id, title, content);
+  db.sendMessage(targetUser.id, sessionUser.id, title, content, nickname);
   return res.status(200).json({ message: "Message sent successfully" });
-});
+});*/
 
 // Delete a message
 app.post("/api/messages/delete/:id", (req, res) => {
