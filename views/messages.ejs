@@ -313,23 +313,51 @@
           data.messages.forEach(message => {
             messageIndex++;
             if (!message) return;
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('message');
+
+            // Parse sender once
+            let senderObj;
+            if (typeof message.sender === "string" && message.sender !== "System") {
+              try {
+                senderObj = JSON.parse(message.sender);
+              } catch {
+                senderObj = {
+                  nickname: message.sender,
+                  user: {
+                    username: message.sender
+                  }
+                };
+              }
+            } else {
+              senderObj = {
+                nickname: message.sender,
+                user: {
+                  username: message.sender
+                }
+              };
+            }
+
+            const senderDisplay =
+              senderObj.nickname === senderObj.user.username ?
+              senderObj.nickname :
+              `<img src="/users/${senderObj.user.username}/pfp/" alt="${senderObj.user.username}'s Profile Picture" height="50px" width="70px" border="2px solid black"> From <a href="/users/${senderObj.user.username}/">@${senderObj.user.username}</a> as "${senderObj.nickname}"`;
+
+            // Build element
+            const messageElement = document.createElement("li");
+            messageElement.dataset.messageId = message.id;
+            messageElement.className = message.isRead ? "read" : "unread";
             messageElement.innerHTML = `
-  <li data-message-id="${message.id}" class="${message.isRead ? "read" : "unread"}">
     <h2>${message.title}</h2>
-    <h3>${JSON.parse(message.sender).}:</h3>
-    ${message.content}
-  ${(message.sender !== "System") ? `
+    <h3>${senderDisplay}:</h3>
+    <p>${message.content}</p>
     <div>
-      <button class="special-button" onclick="">Report Message</button>
+      ${((message.sender !== "System") || (message.sender !== "Admin")) ? `
+        <button class="special-button">Report Message</button>
+      ` : ""}
       <button class="special-button" onclick="deleteMessage(${message.id})">Delete</button>
     </div>
-` : ` <div>
-      <button class="special-button" onclick="deleteMessage(${message.id})">Delete</button>
-    </div>`}
-    </li>`;
-            messagesBox.innerHTML += messageElement.innerHTML;
+  `;
+
+            messagesBox.appendChild(messageElement);
           });
         })
         .catch(error => {

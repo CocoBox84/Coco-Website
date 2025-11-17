@@ -22,12 +22,12 @@ button {
 
 button:hover {
     background-color: rgb(46, 146, 146);
-    border-width: 2px;
+    border-width: 3px;
 }
 
 button:active {
     background-color: rgb(41, 100, 90);
-    border: 2px rgb(0, 100, 139) inset;
+    border: 3px rgb(0, 100, 139) inset;
 }
 
 header {

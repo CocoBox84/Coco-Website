@@ -150,6 +150,20 @@ class Amp {
         return string;
     }
 
+        // Sanitize message to prevent html injection
+    cleanMessage(name) {
+        console.log("cleaning");
+        let string = "";
+        for (let i = 0; i < name.length; i++) {
+            if (this.isHtml(name[i], true)) {
+                continue;
+            }
+            else string += name[i];
+        }
+        console.log("Cleaned");
+        return string;
+    }
+
     // Normalize arrays into strings
     normalize(array) {
         let string = "";
