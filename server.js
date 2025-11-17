@@ -853,7 +853,7 @@ app.post("/api/send/message", (req, res) => {
   if (!sessionUser) return res.status(401).send("Be logged in, then we'll talk.");
   const { to, text, fromNickname, title } = req.body;
   const from = { user: { username: sessionUser.username, id: sessionUser.id }, nickname: fromNickname || sessionUser.username };
-  if ((!text || !to) || !title) return res.status(400).send("Malformed form, text content, title, and target user is required");
+  if ((!text || !to) || !title) return res.status(400).send("Malformed form; text content; title, and target user is required");
 
   const targetUser = req.session.userId ? db.getUserByUsername(amp.cleanNameNonSplit(to)) : null;
   if (!targetUser) return res.status(402).send("Who? This user does not exist. Remember their username is different form their real name.");
@@ -861,7 +861,8 @@ app.post("/api/send/message", (req, res) => {
   if (fromNickname.length > 500 || text.length > 500 || title.length > 500) return res.status(400).send("Your message or other entries are not allowed to be more then 500 characters.");
 
   db.addMessage(targetUser.id, JSON.stringify(from), title, text);
-  return res.status(200).send("Ok");
+  db.addFromMessage(targetUser.id, JSON.stringify(from), title, text);
+  return res.status(200).send("Message successfully sent.");
 });
 
 /*app.post("/api/send/message/:toUsername", (req, res) => {

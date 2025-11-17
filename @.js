@@ -41,10 +41,10 @@ class Amp {
 
     at(text) {
         if (!text.includes("@")) {
-            console.log("skip at");
+            //console.log("skip at");
             return text;
         }
-        console.log("at");
+        //console.log("at");
 
         const i = text.indexOf("@");
 
@@ -116,7 +116,7 @@ class Amp {
 
     // Sanitize usernames and split it at invalid characters
     cleanNameSplit(name) {
-        console.log("cleaning");
+        //console.log("cleaning");
         let string = "";
         let inv = "";
         let i2;
@@ -132,13 +132,13 @@ class Amp {
         for (let i = i2; i < name.length; i++) {
             inv += name[i];
         }
-        console.log("Cleaned");
+        //console.log("Cleaned");
         return [string, inv];
     }
 
     // Sanitize usernames without splitting it at invalid characters
     cleanNameNonSplit(name) {
-        console.log("cleaning");
+        //console.log("cleaning");
         let string = "";
         for (let i = 0; i < name.length; i++) {
             if (this.invalidChar(name[i], true)) {
@@ -146,13 +146,13 @@ class Amp {
             }
             else string += name[i];
         }
-        console.log("Cleaned");
+        //console.log("Cleaned");
         return string;
     }
 
         // Sanitize message to prevent html injection
     cleanMessage(name) {
-        console.log("cleaning");
+        //console.log("cleaning");
         let string = "";
         for (let i = 0; i < name.length; i++) {
             if (this.isHtml(name[i], true)) {
@@ -160,7 +160,7 @@ class Amp {
             }
             else string += name[i];
         }
-        console.log("Cleaned");
+        //console.log("Cleaned");
         return string;
     }
 
@@ -176,9 +176,9 @@ class Amp {
     linkify(text) {
         this.arrayifyWS(text).forEach(block => {
             this.textArray.push(this.at(block));
-            console.log("pushing");
+            //console.log("pushing");
         });
-        console.log("normalizing");
+        //console.log("normalizing");
         const text2 = this.normalize(this.textArray);
         this.textArray = [];
         return text2;
