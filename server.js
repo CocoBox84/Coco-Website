@@ -19,7 +19,8 @@ const app = express();
 
 // Config
 const PORT = process.env.PORT || 5500;
-const APP_URL = `http://127.0.0.1:${PORT}`;
+const HOST = '0.0.0.0'; // listen on all network interfaces
+const APP_URL = `http://${HOST}:${PORT}`;
 
 // Middleware
 app.use(express.json());
@@ -1086,7 +1087,7 @@ app.use((req, res) => {
 
 // Initialize DB then start server
 db.init().then(() => {
-  app.listen(PORT, () => {
+  app.listen(PORT, HOST, () => {
     console.log(`Coco Website server initialized on ${APP_URL}`);
   });
 }).catch(err => {
