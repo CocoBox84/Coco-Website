@@ -347,6 +347,8 @@
                   <button onclick="window.document.getElementById('CocoScript\'s-special-output').innerHTML = '';">Clear Output</button>
                   <button class="special-button" onclick="updateProfile();">Update</button>
                 </div>
+                <% } else { %>
+                <textarea id="Coco-Script-area" style="display: none;"><% if (user2.script) { %><%- user2.script %> <% } %></textarea>
                 <% } %>
               </div>
 
@@ -450,9 +452,9 @@
         CocoScript.run(`!username = "<%= user.username %>";`)
       </script>
       <% } %>
-      <% if (user2.script) { %><script>
+      <% if (user2.script && (user.CocoScriptEnabled === 'true')) { %><script>
         setTimeout(function(event) {
-          RunCocoScript()
+          RunCocoScript();
         }, 2000);
       </script><% } %>
       <script src="/Scripts/user.js"></script>

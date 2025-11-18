@@ -139,7 +139,7 @@ async function init() {
   if (fs.existsSync(DB_FILE)) {
     const filebuffer = fs.readFileSync(DB_FILE);
     db = new SQL.Database(filebuffer);
-    //db.run(`ALTER TABLE users ADD COLUMN script TEXT DEFAULT 'diplay("Coco!");'`);
+    //db.run(`ALTER TABLE users ADD COLUMN CocoScriptEnabled TEXT DEFAULT 'true'`);
     /**
     setDefaultScriptForAllUsers();
     resetAllScripts();
@@ -157,7 +157,8 @@ async function init() {
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         description TEXT DEFAULT "",
-        script TEXT
+        script TEXT,
+        CocoScriptEnabled TEXT DEFAULT 'true'
       );
 
       CREATE TABLE follows (
