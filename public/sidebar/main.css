@@ -83,6 +83,13 @@ a {
     width: 570px !important;
 }
 
+#main.mailbox {
+    margin: 10px;
+    padding: 5px;
+    float: left !important;
+    width: 740px !important;
+}
+
 #sidebar {
     float: right !important;
 }

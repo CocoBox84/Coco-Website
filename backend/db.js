@@ -183,13 +183,25 @@ async function init() {
         FOREIGN KEY (user_id) REFERENCES users(id)
       );
 
+      CREATE TABLE sentMessages (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        sender TEXT NOT NULL,
+        title TEXT NOT NULL,
+        content TEXT NOT NULL,
+        isRead INTEGER DEFAULT 0,
+        isTrashed INTEGER DEFAULT 0,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id)
+      );
 
       CREATE TABLE project (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         creator TEXT DEFAULT "",
         workers TEXT DEFAULT "",
         BASE_64 TEXT DEFAULT "",
-        name TEXT DEFAULT ""
+        name TEXT DEFAULT "",
+        isShared INTEGER default 0
       )
 
     `);
@@ -363,13 +375,37 @@ function markMessageRead(messageId) {
 }
 
 function sendMessage(toUserId, fromUserId, title, content) {
-  const sender = db.getUserById(fromUserId)?.username || "System";
+  const sender = from || "System";
   const stmt = db.prepare(
     'INSERT INTO messages (user_id, sender, title, content, isRead) VALUES (?, ?, ?, ?, 0)'
   );
   stmt.run([toUserId, sender, title, content]);
   stmt.free();
   persist();
+}
+
+// Add sent message to the sender
+function addSentMessage(toUserId, from, title, content, fromUserId) {
+  const sender = from;
+  const stmt = db.prepare(
+    'INSERT INTO sentMessages (user_id, sender, title, content, isRead) VALUES (?, ?, ?, ?, 0)'
+  );
+  stmt.run([fromUserId, sender, title, content]);
+  stmt.free();
+  persist();
+}
+
+function getSentMessages(userId, start, count) {
+  const stmt = db.prepare(
+    'SELECT id, sender, title, content, isRead, created_at FROM sentMessages WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?'
+  );
+  stmt.bind([userId, count, start]);
+  const messages = [];
+  while (stmt.step()) {
+    messages.push(stmt.getAsObject());
+  }
+  stmt.free();
+  return messages;
 }
 
 function deleteMessage(messageId, userId) {
@@ -381,4 +417,4 @@ function deleteMessage(messageId, userId) {
 
 function hiddenPlace() {}
 
-module.exports = { init, createUser, getUserByUsername, getUserById, updateUserPfp, followUser, makeUserPrivate, makeUserPublic, unfollowUser, getFollowers, getFollowing, updateUserDescription, updateUserScript, setDefaultScriptForAllUsers, resetAllScripts, addMessage, getMessages, markMessageRead, sendMessage, deleteMessage };
+module.exports = { init, createUser, getUserByUsername, getUserById, updateUserPfp, followUser, makeUserPrivate, makeUserPublic, unfollowUser, getFollowers, getFollowing, updateUserDescription, updateUserScript, setDefaultScriptForAllUsers, resetAllScripts, addMessage, getMessages, markMessageRead, sendMessage, deleteMessage, addSentMessage, getSentMessages };

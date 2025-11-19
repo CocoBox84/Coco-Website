@@ -184,6 +184,29 @@ const news = [{
   
 }*/];
 
+function countDirectories(dirPath) {
+    try {
+        // Check if the path exists and is a directory
+        if (!fs.existsSync(dirPath)) {
+            throw new Error(`Path does not exist: ${dirPath}`);
+        }
+        if (!fs.statSync(dirPath).isDirectory()) {
+            throw new Error(`Path is not a directory: ${dirPath}`);
+        }
+
+        // Read directory contents
+        const items = fs.readdirSync(dirPath, { withFileTypes: true });
+
+        // Filter only directories
+        const directories = items.filter(item => item.isDirectory());
+
+        return directories.length;
+    } catch (err) {
+        console.error(`Error: ${err.message}`);
+        return -1; // Return -1 to indicate an error
+    }
+}
+
 app.get("", (req, res) => {
   // attach session user to template if available
   const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
@@ -845,6 +868,21 @@ app.post("/api/user/messages", (req, res) => {
   return res.json({ messages });
 });
 
+app.post("/api/user/sent/messages", (req, res) => {
+  const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
+  if (!sessionUser) {
+    return res.status(401).json({ error: "Not logged in" });
+  }
+
+  //const { start, count } = req.body;
+  const { start } = req.body;
+  const count = 5;
+
+  const messages = db.getSentMessages(sessionUser.id, Number(start), Number(count));
+
+  return res.json({ messages });
+});
+
 app.post("/api/messages/read/:id", (req, res) => {
   const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
   if (!sessionUser) {
@@ -877,6 +915,7 @@ app.post("/api/send/message", (req, res) => {
   if (targetUser.isPrivate === 1 && (targetUser.username != sessionUser.username)) return res.status(402).send("No. This user is private");
 
   db.addMessage(targetUser.id, JSON.stringify(from), title, text);
+  db.addSentMessage(targetUser.id, JSON.stringify(from), title, text, sessionUser.id);
   //db.addFromMessage(targetUser.id, JSON.stringify(from), title, text);
   return res.status(200).send("Message successfully sent.");
 });
@@ -943,6 +982,24 @@ app.get("/downloads/", (req, res) => {
 
 // Project APIs
 
+app.get('/projects/:id', (req, res) => {
+  const sessionUser = (req.session.userId) ? db.getUserById(req.session.userId) : null;
+  const projectDir = path.join(__dirname, "projects", req.params.id);
+  let file;
+  let metadataFile;
+  if (!fs.existsSync(projectDir)) return res.status(404).send({status: "Not Found!"});
+  try {
+    file = fs.readFileSync(path.join(projectDir, "project.cbx"));
+    metadataFile = fs.readFileSync(path.join(projectDir, "project.cbm"));
+  } catch (error) {
+    return res.status(404).send({status: "Not Found!"});
+  }
+  const metadata = JSON.parse(metadataFile);
+  const isOk = (!metadata["isShared"] && (sessionUser && (sessionUser.username !== metadata["creator"]["username"])));
+  if (!isOk) return res.status(401).json({status: "Not shared."});
+  return res.status(200).json({filedata: {metadata, file}, status: "ok"});
+});
+
 app.get('/api/get/project/users/:user/:projectID', (req, res) => {
   let file;
   try {
@@ -981,7 +1038,7 @@ app.get('/api/create/new/project/users/:user/:ProjectName/:type', (req, res) => 
     return res.status(403).render("403", { message: "You are not allowed here! To create a project use the endpoint under your account." });
   }
 
-  const projectPath = path.join(__dirname, "private", "users", req.params.user, "projects");
+  const projectPath = path.join(__dirname, "projects");
   fs.mkdirSync(projectPath, { recursive: true });
 
   let id, projectDir, tries = 0;
@@ -1008,7 +1065,8 @@ app.get('/api/create/new/project/users/:user/:ProjectName/:type', (req, res) => 
     projectId: id
   };
 
-  fs.writeFileSync(path.join(projectDir, "metadata.json"), JSON.stringify(metadata, null, 2));
+  fs.writeFileSync(path.join(projectDir, "project.cbm"), JSON.stringify(metadata, null, 2));
+  JSON.parse(fs.readFileSync(path.join(projectPath, "projects.json"))).push({id: 0});
 
   return res.status(200).json({ message: "Project Saved", metadata });
 });
@@ -1018,7 +1076,7 @@ app.get('/api/list/projects/:user', (req, res) => {
   const targetUser = db.getUserByUsername(req.params.user);
 
   if (!targetUser) {
-    return res.status(404).redirect("/NotFound/");
+    return res.status(404).send("Invalid user");
   }
 
   if ((!sessionUser || sessionUser.username !== req.params.user) && targetUser.isPrivate === 1) {

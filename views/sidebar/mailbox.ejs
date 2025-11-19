@@ -22,18 +22,19 @@
       <p id="sun-text">The Coco Help Screens</p>
     </header>
     <div id="webpage">
-      <main id="main">
+      <main id="main" class="mailbox">
         <% if (isLoggedIn) { %>
         <h3>Welcome to your Mailbox!</h3>
         <h4>Send and receive messages.</h4>
         <img height="100px" src="/Stickers/Mailman.svg" alt="Mailman Coconut">
         <div id="post-office">
           <div id="inbox">
-            <h3><img src="/Stickers/Mailbox.stikr" height="50px"> Mailbox (Your messages):</h3>
+            <h3><img src="/Stickers/Mailbox.stikr" height="50px" alt="Mailbox"> Mailbox (Your messages):</h3>
             <div>
-              Options:
+              Options: <br>
               <button onclick="refreshMessages()">Refresh</button>
               <button onclick="loadMessages()">Load More Messages</button>
+              <button onclick="loadSentMessages()">Load More Sent Messages</button>
             </div>
             <ul id="messages"></ul>
             <button onclick="loadMessages()">Load More Messages</button>
@@ -59,7 +60,9 @@
                 <div id="server-response"></div>
               </form>
             </div>
+            <h3><img src="/Stickers/Mail.stikr" height="30px" alt="Mail"> Sent messages:</h3>
             <ul id="sent-messages"></ul>
+            <button onclick="loadSentMessages()">Load More Sent Messages</button>
           </div>
         </div>
         <% } else { %>
@@ -67,13 +70,6 @@
         <p>Please login to use your mailbox.</p>
         <% } %>
       </main>
-      <aside id="sidebar">
-        <h4>Inbox</h4>
-        <ul>
-          Links
-        </ul>
-
-      </aside>
     </div>
     <footer>
       <h4>Footer:<br></h4>
@@ -110,6 +106,7 @@
     }
 
     let messageIndex = 0;
+    let messageSentIndex = 0;
 
     // Pass isSidebar=true when rendering inside the sidebar iframe
     function loadMessages(isSidebar = true) {
@@ -165,13 +162,133 @@
               senderDisplay = `
           <img src="/users/${senderObj.user.username}/pfp/" 
                alt="${senderObj.user.username}'s Profile Picture" 
-               height="50px" width="70px" style="border:2px solid black">
+               height="50px" width="70px" style="border:2px solid black; background-color: white !important;">
           <br>${senderObj.nickname}`;
             } else {
               senderDisplay = `
           <img src="/users/${senderObj.user.username}/pfp/" 
                alt="${senderObj.user.username}'s Profile Picture" 
-               height="50px" width="70px" style="border:2px solid black">
+               height="50px" width="70px" style="border:2px solid black; background-color: white !important;">
+          <br>From @${senderObj.user.username} as "${senderObj.nickname}"`;
+            }
+
+            // Escape title always
+            const safeTitle = escapeHTML(message.title);
+
+            let safeContent;
+            if (isSidebar) {
+              // Sidebar rules
+              if (message.sender === "System" || message.sender === "Admin") {
+                safeContent = stripLinks(message.content); // strip <a>, keep text
+              } else {
+                safeContent = escapeHTML(message.content); // plain text only
+              }
+            } else {
+              // Full page rules
+              if (message.sender === "System" || message.sender === "Admin") {
+                // allow links, but escape everything else
+                const div = document.createElement("div");
+                div.innerHTML = message.content;
+                // escape non-link text
+                div.childNodes.forEach(node => {
+                  if (node.nodeType === Node.TEXT_NODE) {
+                    node.textContent = escapeHTML(node.textContent);
+                  }
+                });
+                safeContent = div.innerHTML;
+              } else {
+                safeContent = escapeHTML(message.content); // plain text only
+              }
+            }
+
+            // Build message element
+            const messageElement = document.createElement("li");
+            messageElement.dataset.messageId = message.id;
+            messageElement.className = message.isRead ? "read" : "unread";
+            messageElement.innerHTML = `
+        <h2>${safeTitle}</h2>
+        <h3>${senderDisplay}:</h3>
+        <p>${new Amp().Stickerify(safeContent)}</p>
+        <div>
+          ${(message.sender !== "System" && message.sender !== "Admin") ? `
+            <button class="special-button" onclick="reportMessage(${message.id})">Report Message</button>
+            ${(senderObj.user.username !== "<%= user.username %>") ? '<button class="special-button">Block user</button>' : ""}
+          ` : ""}
+          <button class="special-button" onclick="deleteMessage(${message.id})">Delete</button>
+        </div>
+      `;
+
+
+
+            messagesBox.appendChild(messageElement);
+          });
+        })
+        .catch(error => {
+          console.error('Error loading messages:', error);
+          showError();
+        });
+    }
+
+    function loadSentMessages(isSidebar = true) {
+      const start = messageSentIndex;
+      const count = 5;
+
+      fetch('/api/user/sent/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            start,
+            count
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log("received response");
+          const messagesBox = document.getElementById('sent-messages');
+
+          data.messages.forEach(message => {
+            messageSentIndex++;
+            if (!message) return;
+
+            // Parse sender
+            let senderObj;
+            if (typeof message.sender === "string" && message.sender !== "System" && message.sender !== "Admin") {
+              try {
+                senderObj = JSON.parse(message.sender);
+              } catch {
+                senderObj = {
+                  nickname: message.sender,
+                  user: {
+                    username: message.sender
+                  }
+                };
+              }
+            } else {
+              senderObj = {
+                nickname: message.sender,
+                user: {
+                  username: message.sender
+                }
+              };
+            }
+
+            // Sender display logic
+            let senderDisplay;
+            if (message.sender === "System" || message.sender === "Admin") {
+              senderDisplay = `From ${senderObj.user.username}`;
+            } else if (senderObj.nickname === senderObj.user.username) {
+              senderDisplay = `
+          <img src="/users/${senderObj.user.username}/pfp/" 
+               alt="${senderObj.user.username}'s Profile Picture" 
+               height="50px" width="70px" style="border:2px solid black; background-color: white !important;">
+          <br>${senderObj.nickname}`;
+            } else {
+              senderDisplay = `
+          <img src="/users/${senderObj.user.username}/pfp/" 
+               alt="${senderObj.user.username}'s Profile Picture" 
+               height="50px" width="70px" style="border:2px solid black; background-color: white !important;">
           <br>From @${senderObj.user.username} as "${senderObj.nickname}"`;
             }
 
@@ -261,8 +378,11 @@
 
     async function refreshMessages() {
       window.document.getElementById("messages").innerHTML = "";
+      window.document.getElementById("sent-messages").innerHTML = "";
       messageIndex = 0;
+      messageSentIndex = 0;
       loadMessages();
+      loadSentMessages();
     }
 
     window.document.getElementById("message-form").addEventListener("submit", function(event) {
@@ -270,6 +390,7 @@
     });
 
     loadMessages();
+    loadSentMessages();
   </script>
   <script src="/JS/@.js"></script>
 </body>
