@@ -17,7 +17,21 @@ class Amp {
         this.invalidNameAt = "!#$%^&*()<>?{}+=-\"'`~\\/;:,\n "; // List of characters that are not allowed in usernames excluding the @ symbol.
         this.textArray = [];
         // Example list of valid stickers
-        this.validStickers = ["Coco", "Close", "Mail", "File", "Mailbox", "Mailman", "Remix", "X", "Sticker Girl", "Sticker Face", "Rainbow non gay"];
+
+        this.validStickers = ["Coco", "Close", "Mail", "File", "Mailbox", "Mailman", "Remix", "X", "Sticker Girl", "Sticker Face", "Rainbow non gay", "Happy", "Basketball"];
+        /*
+        %sticker="Coco"
+        %sticker="Close"
+        %sticker="Mail"
+        %sticker="File"
+        %sticker="Mailbox"
+        %sticker="Mailman"
+        %sticker="Remix"
+        %sticker="X"
+        %sticker="Sticker Girl"
+        %sticker="Sticker Face"
+        %sticker="Rainbow non gay"
+        */
     }
 
     /* Turn any "@" into links
@@ -197,8 +211,12 @@ class Amp {
 
     // !!Clanker code below:!!
 
-    Stickerify(str) {
+    Stickerify(str = "") {
         // Regex to find %sticker="name"
+        // Allow this quotes to work, fixes iOS bug
+        str = str.replaceAll("“", '"');
+        str = str.replaceAll("”", '"');
+
         return str.replace(/%sticker="([^"]+)"/g, (match, stickerName) => {
             // Check if sticker is valid
             if (this.validStickers.includes(stickerName)) {

@@ -870,8 +870,11 @@ app.post("/api/send/message", (req, res) => {
 
   const targetUser = req.session.userId ? db.getUserByUsername(amp.cleanNameNonSplit(to)) : null;
   if (!targetUser) return res.status(402).send("Who? This user does not exist. Remember their username is different form their real name.");
+  if (sessionUser.isPrivate === 1 && (targetUser.username !== sessionUser.username)) return res.status(401).send("Can't send a message if your private.");
 
   if (fromNickname.length > 500 || text.length > 500 || title.length > 500) return res.status(400).send("Your message or other entries are not allowed to be more then 500 characters.");
+
+  if (targetUser.isPrivate === 1 && (targetUser.username != sessionUser.username)) return res.status(402).send("No. This user is private");
 
   db.addMessage(targetUser.id, JSON.stringify(from), title, text);
   //db.addFromMessage(targetUser.id, JSON.stringify(from), title, text);
