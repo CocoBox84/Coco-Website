@@ -3,8 +3,9 @@
     Copyright 2025 (C) Coco Ink Software
     // @.js
 
-    @.js is an library for cleaning users's names, and turning '@'s into links
+    @.js is an library for cleaning users's names, and turning '@'s into links (Clanker sticker bonus)
     Also there is 0% clanker code here!
+    "Except for at the bottom sadly, I don't know how to use regex. Sorry!"
 */
 
 class Amp {
@@ -15,6 +16,7 @@ class Amp {
         this.invalidName = "!@#$%^&*()<>?{}+=-\"'`~\\/;:,\n "; // List of characters that are not allowed in usernames.
         this.invalidNameAt = "!#$%^&*()<>?{}+=-\"'`~\\/;:,\n "; // List of characters that are not allowed in usernames excluding the @ symbol.
         this.textArray = [];
+        this.validStickers = ["Coco", "A", "Smile", "Heart"];
     }
 
     /* Turn any "@" into links
@@ -150,7 +152,7 @@ class Amp {
         return string;
     }
 
-        // Sanitize message to prevent html injection
+    // Sanitize message to prevent html injection
     cleanMessage(name) {
         //console.log("cleaning");
         let string = "";
@@ -182,6 +184,32 @@ class Amp {
         const text2 = this.normalize(this.textArray);
         this.textArray = [];
         return text2;
+    }
+
+    stripBetweenQuotes(str) {
+        if (typeof str !== 'string') {
+            throw new TypeError('Input must be a string');
+        }
+        const match = str.match(/"([^"]*)"/);
+        return match ? match[1] : null;
+    }
+
+    // !!Clanker code below:!!
+    // Example list of valid stickers
+    validStickers = ["Coco", "Close", "Mail", "File", "Mailbox", "Mailman", "Remix", "X"];
+
+    Stickerify(str) {
+        // Regex to find %sticker="name"
+        return str.replace(/%sticker="([^"]+)"/g, (match, stickerName) => {
+            // Check if sticker is valid
+            if (validStickers.includes(stickerName)) {
+                // Replace with image tag
+                return `<img src="/Stickers/${stickerName}.stikr" alt="${stickerName}">`;
+            } else {
+                // If invalid, leave text or replace with a warning
+                return str;
+            }
+        });
     }
 }
 

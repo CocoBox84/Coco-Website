@@ -169,7 +169,20 @@ const news = [{
   media_description: `Welcome! The site is still new if this is the first news box that you see.`,
   icon: { src: "/Coco Icon/Old Coco Icon.svg", width: 100, height: 120, styles: ``, alt: "Coco The Coconut" },
   //...
-}];
+}/*, {
+  name: "Sticker Update!",
+  id: 2,
+  description: `<p>Today I have added a new feature! Stickers!<br>
+  Want to use them?  Click <a href="/projects/Coco/0/">here</a>.</p>`,
+  imgs: [{ src: "/Stickers/Sticker Face.stikr", width: 100, height: 120, styles: ``, alt: "Sticker Face" }],
+  img: { src: "/Stickers/Sticker Face.stikr", width: 100, height: 120, styles: ``, alt: "Sticker Face" },
+  media_type: "image",
+  video: { src: "/Videos/Movie on 9-4-24 at 5.34 PM.mov" },
+  media_description: `Welcome! The site is still new if this is the first news box that you see.`,
+  icon: { src: "/Stickers/Sticker Face.stikr", width: 100, height: 120, styles: ``, alt: "Sticker Sally" },
+  //...
+  
+}*/];
 
 app.get("", (req, res) => {
   // attach session user to template if available
@@ -861,7 +874,7 @@ app.post("/api/send/message", (req, res) => {
   if (fromNickname.length > 500 || text.length > 500 || title.length > 500) return res.status(400).send("Your message or other entries are not allowed to be more then 500 characters.");
 
   db.addMessage(targetUser.id, JSON.stringify(from), title, text);
-  db.addFromMessage(targetUser.id, JSON.stringify(from), title, text);
+  //db.addFromMessage(targetUser.id, JSON.stringify(from), title, text);
   return res.status(200).send("Message successfully sent.");
 });
 

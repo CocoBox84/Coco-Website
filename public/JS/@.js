@@ -3,7 +3,9 @@
     Copyright 2025 (C) Coco Ink Software
     // @.js
 
-    @.js is an library for cleaning users's names, and turning '@'s into links
+    @.js is an library for cleaning users's names, and turning '@'s into links (Clanker sticker bonus)
+    Also there is 0% clanker code here!
+    "Except for at the bottom sadly, I don't know how to use regex. Sorry!"
 */
 
 class Amp {
@@ -14,6 +16,8 @@ class Amp {
         this.invalidName = "!@#$%^&*()<>?{}+=-\"'`~\\/;:,\n "; // List of characters that are not allowed in usernames.
         this.invalidNameAt = "!#$%^&*()<>?{}+=-\"'`~\\/;:,\n "; // List of characters that are not allowed in usernames excluding the @ symbol.
         this.textArray = [];
+        // Example list of valid stickers
+        this.validStickers = ["Coco", "Close", "Mail", "File", "Mailbox", "Mailman", "Remix", "X", "Sticker Girl", "Sticker Face", "Rainbow non gay"];
     }
 
     /* Turn any "@" into links
@@ -40,10 +44,10 @@ class Amp {
 
     at(text) {
         if (!text.includes("@")) {
-            console.log("skip at");
+            //console.log("skip at");
             return text;
         }
-        console.log("at");
+        //console.log("at");
 
         const i = text.indexOf("@");
 
@@ -115,13 +119,13 @@ class Amp {
 
     // Sanitize usernames and split it at invalid characters
     cleanNameSplit(name) {
-        console.log("cleaning");
+        //console.log("cleaning");
         let string = "";
         let inv = "";
         let i2;
         let valid = true;
         for (let i = 0; i < name.length; i++) {
-            if (this.invalidChar(name[i])) {
+            if (this.invalidChar(name[i], true)) {
                 i2 = i;
                 valid = false;
                 break;
@@ -131,21 +135,35 @@ class Amp {
         for (let i = i2; i < name.length; i++) {
             inv += name[i];
         }
-        console.log("Cleaned");
+        //console.log("Cleaned");
         return [string, inv];
     }
 
     // Sanitize usernames without splitting it at invalid characters
     cleanNameNonSplit(name) {
-        console.log("cleaning");
+        //console.log("cleaning");
         let string = "";
         for (let i = 0; i < name.length; i++) {
-            if (this.invalidChar(name[i])) {
+            if (this.invalidChar(name[i], true)) {
                 continue;
             }
             else string += name[i];
         }
-        console.log("Cleaned");
+        //console.log("Cleaned");
+        return string;
+    }
+
+    // Sanitize message to prevent html injection
+    cleanMessage(name) {
+        //console.log("cleaning");
+        let string = "";
+        for (let i = 0; i < name.length; i++) {
+            if (this.isHtml(name[i], true)) {
+                continue;
+            }
+            else string += name[i];
+        }
+        //console.log("Cleaned");
         return string;
     }
 
@@ -161,12 +179,36 @@ class Amp {
     linkify(text) {
         this.arrayifyWS(text).forEach(block => {
             this.textArray.push(this.at(block));
-            console.log("pushing");
+            //console.log("pushing");
         });
-        console.log("normalizing");
+        //console.log("normalizing");
         const text2 = this.normalize(this.textArray);
         this.textArray = [];
         return text2;
+    }
+
+    stripBetweenQuotes(str) {
+        if (typeof str !== 'string') {
+            throw new TypeError('Input must be a string');
+        }
+        const match = str.match(/"([^"]*)"/);
+        return match ? match[1] : null;
+    }
+
+    // !!Clanker code below:!!
+
+    Stickerify(str) {
+        // Regex to find %sticker="name"
+        return str.replace(/%sticker="([^"]+)"/g, (match, stickerName) => {
+            // Check if sticker is valid
+            if (this.validStickers.includes(stickerName)) {
+                // Replace with image tag
+                return `<img src="/Stickers/${stickerName}.stikr" alt="Sticker ${stickerName}" class="sticker">`;
+            } else {
+                // If invalid, leave text or replace with a warning
+                return str;
+            }
+        });
     }
 }
 
@@ -175,3 +217,5 @@ const isNode = // Source - https://stackoverflow.com/a
     // Retrieved 2025-11-13, License - CC BY-SA 4.0
 
     (typeof process !== 'undefined') && (process.release.name === 'node')
+if (isNode)
+    module.exports = { Amp };

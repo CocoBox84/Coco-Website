@@ -158,7 +158,8 @@ async function init() {
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         description TEXT DEFAULT "",
         script TEXT,
-        CocoScriptEnabled TEXT DEFAULT 'true'
+        CocoScriptEnabled TEXT DEFAULT 'true',
+        role TEXT default "user"
       );
 
       CREATE TABLE follows (

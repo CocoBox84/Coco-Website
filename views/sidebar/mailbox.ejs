@@ -97,9 +97,22 @@
       return div.innerHTML;
     }
 
+    // Utility: strip <a> tags but keep their text
+    function stripLinks(str) {
+      const div = document.createElement("div");
+      div.innerHTML = str;
+      div.querySelectorAll("a").forEach(a => {
+        const text = a.textContent;
+        a.replaceWith(text); // replace <a> with its text
+        a.style.textDecoration = "underline";
+      });
+      return div.textContent; // return plain text
+    }
+
     let messageIndex = 0;
 
-    function loadMessages() {
+    // Pass isSidebar=true when rendering inside the sidebar iframe
+    function loadMessages(isSidebar = true) {
       const start = messageIndex;
       const count = 5;
 
@@ -162,9 +175,34 @@
           <br>From @${senderObj.user.username} as "${senderObj.nickname}"`;
             }
 
-            // Escape title and content
+            // Escape title always
             const safeTitle = escapeHTML(message.title);
-            const safeContent = escapeHTML(message.content);
+
+            let safeContent;
+            if (isSidebar) {
+              // Sidebar rules
+              if (message.sender === "System" || message.sender === "Admin") {
+                safeContent = stripLinks(message.content); // strip <a>, keep text
+              } else {
+                safeContent = escapeHTML(message.content); // plain text only
+              }
+            } else {
+              // Full page rules
+              if (message.sender === "System" || message.sender === "Admin") {
+                // allow links, but escape everything else
+                const div = document.createElement("div");
+                div.innerHTML = message.content;
+                // escape non-link text
+                div.childNodes.forEach(node => {
+                  if (node.nodeType === Node.TEXT_NODE) {
+                    node.textContent = escapeHTML(node.textContent);
+                  }
+                });
+                safeContent = div.innerHTML;
+              } else {
+                safeContent = escapeHTML(message.content); // plain text only
+              }
+            }
 
             // Build message element
             const messageElement = document.createElement("li");
@@ -173,7 +211,7 @@
             messageElement.innerHTML = `
         <h2>${safeTitle}</h2>
         <h3>${senderDisplay}:</h3>
-        <p>${safeContent}</p>
+        <p>${new Amp().Stickerify(safeContent)}</p>
         <div>
           ${(message.sender !== "System" && message.sender !== "Admin") ? `
             <button class="special-button">Report Message</button>
@@ -183,12 +221,7 @@
         </div>
       `;
 
-            // Sanitize links inside message (remove href)
-            messageElement.querySelectorAll("a").forEach(link => {
-              link.removeAttribute("href");
-              link.style.pointerEvents = "none";
-              link.style.color = "inherit";
-            });
+
 
             messagesBox.appendChild(messageElement);
           });

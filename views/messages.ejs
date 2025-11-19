@@ -238,7 +238,7 @@
           </p>
         </div>
         <ul id="messages-box"></ul>
-        <button class="center" onclick="loadMessages();">Load More Messages</button>
+        <button class="center special-button" onclick="loadMessages();">Load More Messages</button>
       </div>
     </div>
     <footer class="box-product">
@@ -290,16 +290,43 @@
       }
     }
 
+    console.log(`At: ${window.location.pathname}`);
+    if (window.location.pathname.includes('index.html')) window.location.href = window.location.pathname.replace('index.html', '');
+  </script>
+  <!--<script src="/Scripts/spawnNewstuff.js" type="module"></script>-->
+  <script src="https://unpkg.com/dayjs@1.11.10/dayjs.min.js"></script>
+  <!--<script type="module" src="/Scripts/bodyScripts.js"></script>-->
+  <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
+  <script>
+    function escapeHTML(str) {
+      const div = document.createElement("div");
+      div.textContent = str; // browser escapes automatically
+      return div.innerHTML;
+    }
+
+    // Utility: strip <a> tags but keep their text
+    function stripLinks(str) {
+      const div = document.createElement("div");
+      div.innerHTML = str;
+      div.querySelectorAll("a").forEach(a => {
+        const text = a.textContent;
+        a.replaceWith(text); // replace <a> with its text
+        a.style.textDecoration = "underline";
+      });
+      return div.textContent; // return plain text
+    }
+
     let messageIndex = 0;
 
-    function loadMessages() {
+    // Pass isSidebar=true when rendering inside the sidebar iframe
+    function loadMessages(isSidebar = false) {
       const start = messageIndex;
       const count = 5;
 
-      fetch('api/user/messages', {
+      fetch('/api/user/messages', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             start,
@@ -310,13 +337,15 @@
         .then(data => {
           console.log("received response");
           const messagesBox = document.getElementById('messages-box');
+
           data.messages.forEach(message => {
             messageIndex++;
             if (!message) return;
+            markAsRead(message.id);
 
-            // Parse sender once
+            // Parse sender
             let senderObj;
-            if (typeof message.sender === "string" && message.sender !== "System") {
+            if (typeof message.sender === "string" && message.sender !== "System" && message.sender !== "Admin") {
               try {
                 senderObj = JSON.parse(message.sender);
               } catch {
@@ -336,26 +365,71 @@
               };
             }
 
-            const senderDisplay =
-              senderObj.nickname === senderObj.user.username ?
-              senderObj.nickname :
-              `<img src="/users/${senderObj.user.username}/pfp/" alt="${senderObj.user.username}'s Profile Picture" height="50px" width="70px" border="2px solid black"> From <a href="/users/${senderObj.user.username}/">@${senderObj.user.username}</a> as "${senderObj.nickname}"`;
+            // Sender display logic
+            let senderDisplay;
+            if (message.sender === "System" || message.sender === "Admin") {
+              senderDisplay = `From ${senderObj.user.username}`;
+            } else if (senderObj.nickname === senderObj.user.username) {
+              senderDisplay = `
+          <img src="/users/${senderObj.user.username}/pfp/" 
+               alt="${senderObj.user.username}'s Profile Picture" 
+               height="50px" width="70px" style="border:2px solid black">
+          <br>${senderObj.nickname}`;
+            } else {
+              senderDisplay = `
+          <img src="/users/${senderObj.user.username}/pfp/" 
+               alt="${senderObj.user.username}'s Profile Picture" 
+               height="50px" width="70px" style="border:2px solid black">
+          <br>From @${senderObj.user.username} as "${senderObj.nickname}"`;
+            }
 
-            // Build element
+            // Escape title always
+            const safeTitle = escapeHTML(message.title);
+
+            let safeContent;
+            if (isSidebar) {
+              // Sidebar rules
+              if (message.sender === "System" || message.sender === "Admin") {
+                safeContent = stripLinks(message.content); // strip <a>, keep text
+              } else {
+                safeContent = escapeHTML(message.content); // plain text only
+              }
+            } else {
+              // Full page rules
+              if (message.sender === "System" || message.sender === "Admin") {
+                // allow links, but escape everything else
+                const div = document.createElement("div");
+                div.innerHTML = message.content;
+                // escape non-link text
+                div.childNodes.forEach(node => {
+                  if (node.nodeType === Node.TEXT_NODE) {
+                    node.textContent = escapeHTML(node.textContent);
+                  }
+                });
+                safeContent = div.innerHTML;
+              } else {
+                safeContent = escapeHTML(message.content); // plain text only
+              }
+            }
+
+            // Build message element
             const messageElement = document.createElement("li");
             messageElement.dataset.messageId = message.id;
             messageElement.className = message.isRead ? "read" : "unread";
             messageElement.innerHTML = `
-    <h2>${message.title}</h2>
-    <h3>${senderDisplay}:</h3>
-    <p>${message.content}</p>
-    <div>
-      ${((message.sender !== "System") || (message.sender !== "Admin")) ? `
-        <button class="special-button">Report Message</button>
-      ` : ""}
-      <button class="special-button" onclick="deleteMessage(${message.id})">Delete</button>
-    </div>
-  `;
+        <h2>${safeTitle}</h2>
+        <h3>${senderDisplay}:</h3>
+        <p>${new Amp().Stickerify(safeContent)}</p>
+        <div>
+          ${(message.sender !== "System" && message.sender !== "Admin") ? `
+            <button class="special-button">Report Message</button>
+            ${(senderObj.user.username !== "<%= user.username %>") ? '<button class="special-button">Block user</button>' : ""}
+          ` : ""}
+          <button class="special-button" onclick="deleteMessage(${message.id})">Delete</button>
+        </div>
+      `;
+
+
 
             messagesBox.appendChild(messageElement);
           });
@@ -366,36 +440,46 @@
         });
     }
 
-    function sendMessage(toUsername) {
-      const title = document.getElementById("msg-title").value;
-      const content = document.getElementById("msg-content").value;
+    async function sendMessage() {
+      const payload = {
+        to: document.getElementById("message-to").value,
+        text: document.getElementById("your-text").value,
+        fromNickname: document.getElementById("Sender-Nickname").value,
+        title: document.getElementById("message-title").value
+      };
 
-      fetch(` /api/send/message/${
-                    toUsername
-                  }
-                  `, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            title,
-            content
-          })
-        })
-        .then(res => res.json())
-        .then(data => console.log(data.message))
-        .catch(err => console.error("Error sending message:", err));
+      fetch("/api/send/message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      }).then(response => {
+        console.log(response);
+        return response.text();
+      }).then(data => {
+        console.log(data);
+        window.clearTimeout(0);
+        document.getElementById("server-response").textContent = data;
+        window.setTimeout(function() {
+          document.getElementById("server-response").textContent = "";
+        }, 5000);
+      });
     }
+
+    async function refreshMessages() {
+      window.document.getElementById("messages").innerHTML = "";
+      messageIndex = 0;
+      loadMessages();
+    }
+
+    window.document.getElementById("message-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+    });
+
+    loadMessages();
   </script>
-  <script>
-    console.log(`At: ${window.location.pathname}`);
-    if (window.location.pathname.includes('index.html')) window.location.href = window.location.pathname.replace('index.html', '');
-  </script>
-  <!--<script src="/Scripts/spawnNewstuff.js" type="module"></script>-->
-  <script src="https://unpkg.com/dayjs@1.11.10/dayjs.min.js"></script>
-  <!--<script type="module" src="/Scripts/bodyScripts.js"></script>-->
-  <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
+  <script src="/JS/@.js"></script>
   <script>
     const errorMessageContainer = document.getElementById("error-container");
 

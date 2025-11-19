@@ -336,10 +336,10 @@
                 <p id="user-description"><%= user2.description %></p>
                 <% if (isEditable) { %>
                 <div id="edit-des-box">
-                  <textarea inputmode="url" id="description" style="min-width: 218px !important; min-height: 135px !important"><%= user2.description %></textarea>
+                  <textarea inputmode="url" id="description" wrap="off" style="white-space: pre; overflow-x: auto; min-width: 279px !important; min-height: 233px !important; max-width: 382px !important;"><%= user2.description %></textarea>
                   <h3>CocoScript:</h3>
                   <p>Use CocoScript to style your pages and add interactivity.</p>
-                  <textarea id="Coco-Script-area" wrap="off" style="white-space: pre; overflow-x: auto; min-width: 279px !important; min-height: 233px !important;"><% if (user2.script) { %><%- user2.script %> <% } %></textarea>
+                  <textarea id="Coco-Script-area" wrap="off" style="white-space: pre; overflow-x: auto; min-width: 279px !important; min-height: 233px !important; max-width: 382px !important;"><% if (user2.script) { %><%- user2.script %> <% } %></textarea>
                   <br>
                   <button onclick="RunCocoScript()">Test Script</button>
                   <h4>CocoScript Output:</h4>
@@ -465,6 +465,7 @@
       <script>
         setTimeout(function() {
           window.document.getElementById("user-description").innerHTML = new Amp().linkify(window.document.getElementById("user-description").innerHTML);
+          window.document.getElementById("user-description").innerHTML = new Amp().Stickerify(window.document.getElementById("user-description").innerHTML);
         })
       </script>
 </body>
