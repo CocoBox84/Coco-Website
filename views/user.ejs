@@ -223,7 +223,7 @@
             <span><%= username %>'s profile</span>
             <span style="float: right;">
               <a href="/api/follow/<%= username %>/"><button class="special-button">Follow</button></a>
-              <% if (username != user.username) { %><button class="special-button">Send Message</button><% } %>
+              <% if (username != user.username) { %><button class="special-button" onclick="navBoxOpen('messages', 'to=<%= username %>')">Send Message</button><% } %>
             </span>
           </h3>
         </div>
@@ -433,6 +433,10 @@
             </div>
           </div>
           <div id="main-nav-box" class="navigation-box">
+          </div>
+          <div id="error-container" class="error-container-hide">
+            <!--Some Scripts Have Probably Crashed-->
+            <div id="e" class="error big-box"></div>
           </div>
         </div>
       </div>

@@ -392,6 +392,9 @@
     loadMessages();
     loadSentMessages();
   </script>
+  <script>
+    if(new URLSearchParams(window.location.search).get("to")) window.document.getElementById("message-to").value = "@" + new URLSearchParams(window.location.search).get("to");
+  </script>
   <script src="/JS/@.js"></script>
 </body>
 

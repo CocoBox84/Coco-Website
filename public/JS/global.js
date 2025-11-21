@@ -84,7 +84,7 @@ function navBoxClick() {
     sidebar.classList.toggle("closed");
 }
 
-function navBoxOpen(page) {
+function navBoxOpen(page, params) {
     sidebar.classList.remove("closed");
     sidebar.classList.add("open");
     switch (page) {
@@ -95,7 +95,7 @@ function navBoxOpen(page) {
             document.getElementById("sidebar-content").src = "/sidebar/help/screens/help/";
         } break;
         case "messages": {
-            document.getElementById("sidebar-content").src = "/sidebar/help/screens/mailbox/";
+            document.getElementById("sidebar-content").src = "/sidebar/help/screens/mailbox/?" + params;
         } break;
         case "close": {
             document.getElementById("sidebar-content").src = "about:blank";
