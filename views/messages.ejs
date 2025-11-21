@@ -14,7 +14,7 @@
     body {
       background-color: grey;
       font-family: Arial, Helvetica, sans-serif;
-      background-image: url("Images/Background.png");
+      background-image: url("/Images/Background.png");
       margin: 0px;
       padding: 0px;
       height: 3000px;
@@ -341,7 +341,7 @@
           data.messages.forEach(message => {
             messageIndex++;
             if (!message) return;
-            markAsRead(message.id);
+            markAsRead(message.id, false);
 
             // Parse sender
             let senderObj;
@@ -424,8 +424,8 @@
           ${(message.sender !== "System" && message.sender !== "Admin") ? `
             <button class="special-button">Report Message</button>
             ${(senderObj.user.username !== "<%= user.username %>") ? '<button class="special-button">Block user</button>' : ""}
-          ` : ""}
-          <button class="special-button" onclick="deleteMessage(${message.id})">Delete</button>
+          ` : ""} ${(message.isRead) ? `<button class="b" data-message-id="${message.id}" onclick="markAsUnRead(${message.id}, true);">Mark as unread</button>` : `<button class="b" data-message-id="${message.id}" onclick="markAsRead(${message.id});">Mark as read</button>`}
+          <button class="special-button" onclick="deleteMessage(${message.id}, true)">Delete</button>
         </div>
       `;
 
@@ -492,13 +492,50 @@
       errorContainer.classList.add("error-container-hide");
     };
 
-    function markAsRead(messageId) {
-      fetch(`/api/messages/read/${messageId}`, {
+    async function markAsRead(messageId, animate) {
+      await fetch(`/api/messages/read/${messageId}`, {
           method: "POST"
         })
         .then(res => res.json())
         .then((data) => {
-          console.log(data.message)
+          console.log(data.message);
+          success = true;
+          console.log(success);
+          if (!animate) return;
+          window.document.querySelectorAll('li').forEach(li => {
+            console.log(li.dataset);
+            if (Number(li?.dataset?.messageId) !== messageId) {} else {
+              li.classList.remove("unread");
+              li.classList.add("read");
+              const button = li.querySelector('.b');
+              button.innerHTML = "Mark as unread";
+              button.setAttribute("onclick", `markAsUnRead(${messageId}, true)`);
+            }
+          });
+        })
+        .catch(err => console.error("Error marking message:", err));
+    }
+
+    async function markAsUnRead(messageId, animate) {
+      await fetch(`/api/messages/unread/${messageId}`, {
+          method: "POST"
+        })
+        .then(res => res.json())
+        .then((data) => {
+          console.log(data.message);
+          success = true;
+          console.log(success);
+          if (!animate) return;
+          window.document.querySelectorAll('li').forEach(li => {
+            console.log(li.dataset);
+            if (Number(li?.dataset?.messageId) !== messageId) {} else {
+              li.classList.remove("read");
+              li.classList.add("unread");
+              const button = li.querySelector('.b');
+              button.innerHTML = "Mark as read";
+              button.setAttribute("onclick", `markAsRead(${messageId}, true)`);
+            }
+          });
         })
         .catch(err => console.error("Error marking message:", err));
     }
@@ -508,7 +545,15 @@
           method: "POST"
         })
         .then(res => res.json())
-        .then(data => console.log(data.message));
+        .then(data => {
+          console.log(data.message);
+          window.document.querySelectorAll('li').forEach(li => {
+            console.log(li.dataset);
+            if (Number(li?.dataset?.messageId) !== messageId) {} else {
+              li.remove();
+            }
+          });
+        });
     }
 
     clearError();

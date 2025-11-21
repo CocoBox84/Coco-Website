@@ -110,7 +110,7 @@ function createUser(username, email, passwordHash, isAdmin) {
   if (!user || !user.id) throw new Error('Failed to retrieve inserted user id');
   const userId = user.id;
   // seed welcome messages
-  addMessage(userId, "System", "Welcome!", `Thanks for joining Coco! Please follow the rules… To learn CocoScript, go to your profile and click edit. Find products made made by me, or someone else. <a href="/users/Coco/">@Coco</a>`);
+  addMessage(userId, "System", "Welcome!", `Thanks for joining %sticker="Coco"! Please follow the rules… To learn CocoScript, go to your profile and click edit. Find products made made by me, or someone else. <a href="/users/Coco/">@Coco</a>`);
   addMessage(userId, "Admin", "Community Guidelines", "Please follow the rules… <a href=\"/faq#guidelines\">Community Guidelines</a>");
   return userId;
 }
@@ -257,6 +257,13 @@ function markMessageRead(messageId) {
   persist();
 }
 
+function markMessageUnRead(messageId) {
+  const stmt = db.prepare('UPDATE messages SET isRead = 0 WHERE id = ?');
+  stmt.run([messageId]);
+  stmt.free();
+  persist();
+}
+
 function sendMessage(toUserId, fromUserId, title, content) {
   const sender = from || "System";
   const stmt = db.prepare(
@@ -300,4 +307,4 @@ function deleteMessage(messageId, userId) {
 
 function hiddenPlace() {}
 
-module.exports = { init, createUser, getUserByUsername, getUserById, updateUserPfp, followUser, makeUserPrivate, makeUserPublic, unfollowUser, getFollowers, getFollowing, updateUserDescription, updateUserScript, setDefaultScriptForAllUsers, resetAllScripts, addMessage, getMessages, markMessageRead, sendMessage, deleteMessage, addSentMessage, getSentMessages };
+module.exports = { init, createUser, getUserByUsername, getUserById, updateUserPfp, followUser, makeUserPrivate, makeUserPublic, unfollowUser, getFollowers, getFollowing, updateUserDescription, updateUserScript, setDefaultScriptForAllUsers, resetAllScripts, addMessage, getMessages, markMessageRead, sendMessage, deleteMessage, addSentMessage, getSentMessages, markMessageUnRead };

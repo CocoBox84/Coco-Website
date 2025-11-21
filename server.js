@@ -900,6 +900,21 @@ app.post("/api/messages/read/:id", (req, res) => {
   return res.status(200).json({ message: "Message marked as read" });
 });
 
+app.post("/api/messages/unread/:id", (req, res) => {
+  const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
+  if (!sessionUser) {
+    return res.status(401).json({ error: "Not logged in" });
+  }
+
+  const messageId = Number(req.params.id);
+  if (!messageId) {
+    return res.status(400).json({ error: "Invalid message ID" });
+  }
+
+  db.markMessageUnRead(messageId, sessionUser.id);
+  return res.status(200).json({ message: "Message marked as read" });
+});
+
 app.post("/api/send/message", (req, res) => {
   const sessionUser = req.session.userId ? db.getUserById(req.session.userId) : null;
   const amp = new Amp(); // Create username cleaner.

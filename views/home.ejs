@@ -212,6 +212,22 @@
 
       </header>
     </div>
+  <!----<div id="Surprise" class="info-box" style="background-image: url('/Stickers/Sticker Face.svg');">
+      <h1>Introducing... Stickers!</h1>
+      <h4>Stickers are almost like emojis, they are usable on user descriptions, messages, and Comments.</h4>
+      <a href="/projects/LPPDKduVk8/">Sticker Tutorial.</a>
+    </div><!---->
+  <!----<div id="Surprise" class="info-box" style="background-image: url('/Coco Icon/Coco\ The\ Coconut.svg'); background-size: contain !important;">
+      <h1>Welcome To The new Coco Website!</h1>
+      <h4>Welcome to my new website! If you see this box, then my website is still new!</h4>
+      <ul>
+        <li><a href="/register/">Create an Account</a></li>
+        <li><a href="/login/">Sign in</a></li>
+        <li><a href="JavaScript:navBoxOpen('messages')">Start messaging</a></li>
+        <li><a href="/messages/">View messages</a></li>
+        <li><a href="/users/Coco/">Follow the official <img class="sticker" src="/Stickers/Coco.stikr" alt="Coco Sticker"> account!</a></li>
+      </ul>
+    </div><!---->
     <div id="welcome">
 
       <div id="main-nav-box" class="navigation-box">
@@ -466,13 +482,6 @@
         <h2>${safeTitle}</h2>
         <h3>${senderDisplay}:</h3>
         <p>${new Amp().Stickerify(safeContent)}</p>
-        <div>
-          ${(message.sender !== "System" && message.sender !== "Admin") ? `
-            <button class="special-button">Report Message</button>
-            ${(senderObj.user.username !== "<%= username %>") ? '<button class="special-button">Block user</button>' : ""}
-          ` : ""}
-          <button class="special-button" onclick="deleteMessage(${message.id})">Delete</button>
-        </div>
       `;
 
 

@@ -176,3 +176,11 @@ object {
     padding: 40px;
     height: auto;
 }
+
+#Surprise {
+    padding: 15px !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 500px;
+}
