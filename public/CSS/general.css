@@ -126,8 +126,8 @@ button:hover {
     background-color: rgb(14, 72, 129);
 }
 
-/**/
-::-webkit-file-upload-button,
+/* Same Styles, Waterfox Classic hates the double rules, so do them separately. */
+
 .special-button {
     text-align: left !important;
     word-wrap: break-word !important;
@@ -146,16 +146,41 @@ button:hover {
     background-image: linear-gradient(to bottom, #849fc2 0, #6683b3 100%) !important;
 }
 
-::-webkit-file-upload-button:hover,
 .special-button:hover {
     background-image: none !important;
     cursor: pointer !important;
 }
 
-::-webkit-file-upload-button:active,
 .special-button:active {
     background-color: #4b6288 !important;
-}/**/
+}
+
+::-webkit-file-upload-button {
+    text-align: left !important;
+    word-wrap: break-word !important;
+    font: 12px arial, sans-serif !important;
+    color: #ffffff !important;
+    border: 0 !important;
+    font-size: 100% !important;
+    background: transparent !important;
+    position: relative !important;
+    margin: 5px !important;
+    padding: 1px 10px !important;
+    overflow: hidden !important;
+    border-radius: 3px !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .5) !important;
+    background-color: #6683b3 !important;
+    background-image: linear-gradient(to bottom, #849fc2 0, #6683b3 100%) !important;
+}
+
+::-webkit-file-upload-button:hover {
+    background-image: none !important;
+    cursor: pointer !important;
+}
+
+::-webkit-file-upload-button:active {
+    background-color: #4b6288 !important;
+}
 
 .text-area {
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -261,15 +286,15 @@ body {
     padding: 0px;*/
     overflow-y: auto;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.418);
-    display: flex;
-    justify-content: center;
-    place-content: center;
+    display: grid;
+    flex-direction: row !important;
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     z-index: 9999999;
+    background-image: url("/Coco\ Icon/Coco the Coconut Dead Gray.png") !important;
 }
 
 .error-container-hide {

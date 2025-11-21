@@ -38,7 +38,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'dev-secret-change-me',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 * 24, sameSite: 'lax' } // 1 day
+  cookie: { maxAge: (1000 * 60 * 60 * 24) * 5, sameSite: 'lax' } // 5 days
 }));
 
 // NOTE: removed stray `app.use(express.Router())` which can interfere with middleware ordering
@@ -183,6 +183,8 @@ const news = [{
   //...
   
 }*/];
+
+const adminNames = ["Coco", "Nino", "CocoBox84", "CocoDay"]; // Reserved Usernames
 
 function countDirectories(dirPath) {
     try {
@@ -800,7 +802,7 @@ app.post('/register', async (req, res) => {
     if (existing) return res.status(400).send('username taken');
 
     const hash = await bcrypt.hash(password, 10);
-    const id = db.createUser(cleanUsername, email || '', hash);
+    const id = db.createUser(cleanUsername, email || '', hash, adminNames.includes(cleanUsername));
 
     // set session directly from insert ID and explicitly save before redirecting
     req.session.userId = id;
@@ -983,6 +985,10 @@ app.get("/downloads/", (req, res) => {
 // Project APIs
 
 app.get('/projects/:id', (req, res) => {
+  return res.status(200).render("project");
+});
+
+app.get('/api/projects/:id', (req, res) => {
   const sessionUser = (req.session.userId) ? db.getUserById(req.session.userId) : null;
   const projectDir = path.join(__dirname, "projects", req.params.id);
   let file;

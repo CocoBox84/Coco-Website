@@ -1,3 +1,56 @@
+var errorMessages = ["Some Scripts Have Probably Crashed", "<h2>Sorry! But the Coco Website will not work with your Web Browser.</h2>"];
+showError(1, new Error("Your Web Browser is to stupid to understand JavaScript Classes."));
+var isOld = false;
+try {
+    eval("class a{s; constructor() {}};");
+} catch (error) {
+    isOld = true;
+}
+
+if (isOld) throw new Error("Your Web Browser is to stupid to understand JavaScript Classes.");
+
+document.addEventListener("DOMContentLoaded", () => {
+    /* Aa *
+    showError(); /* Aa */
+    /* Aa */
+    showMessage();
+});
+
+function showError(errorType, error = new Error()) {
+    document.getElementById("e").innerHTML = `<h1>Oops! Something Crashed!</h1> ${errorMessages[errorType]} <h2>Error:</h2> <p>${error.message}</p>`;
+    var errorContainer = document.getElementById("error-container");
+    errorContainer.classList.remove("error-container-hide");
+    errorContainer.classList.add("error-container-show");
+}
+
+function hideError() {
+    document.getElementById("e").innerHTML = ``;
+    var errorContainer = document.getElementById("error-container");
+    errorContainer.classList.remove("error-container-show");
+    errorContainer.classList.add("error-container-hide");
+}
+
+function showMessage(messageAtIndex) {
+    var messageBox;
+    switch (messageAtIndex) {
+        case 5:
+            //
+            break;
+    }
+}
+
+try {
+const errorMessageContainer = document.getElementById("error-container");
+
+function clearError() {
+    errorMessageContainer.classList.remove("error-container-show");
+    errorMessageContainer.classList.add("error-container-hide");
+    document.getElementById("e").innerHTML = ``;
+    var errorContainer = document.getElementById("error-container");
+    errorContainer.classList.remove("error-container-show");
+    errorContainer.classList.add("error-container-hide");
+};
+
 window.document.querySelectorAll('video').forEach(video => {
     video.addEventListener('play', () => {
         lowerMusic();
@@ -68,13 +121,13 @@ function onPageLoad() {
     // Inject sidebar HTML first
     sidebar.innerHTML = Sidebar;
 
-    document.getElementById("sidebar-about-button").addEventListener("click", function () {navBoxOpen("about");});
-    
-    document.getElementById("sidebar-help-button").addEventListener("click", function () {navBoxOpen("help");});
+    document.getElementById("sidebar-about-button").addEventListener("click", function () { navBoxOpen("about"); });
 
-    document.getElementById("sidebar-messages-button").addEventListener("click", function () {navBoxOpen("messages");});
+    document.getElementById("sidebar-help-button").addEventListener("click", function () { navBoxOpen("help"); });
 
-    document.getElementById("sidebar-close-button").addEventListener("click", function () {navBoxOpen("close");});
+    document.getElementById("sidebar-messages-button").addEventListener("click", function () { navBoxOpen("messages"); });
+
+    document.getElementById("sidebar-close-button").addEventListener("click", function () { navBoxOpen("close"); });
 
     // Remove both closed and open, this will push it offscreen
     sidebar.style.transition = "none";
@@ -82,6 +135,10 @@ function onPageLoad() {
     sidebar.classList.remove("open");
 
     // Add the show class, it will automatically close because the parameter is blank
-    setTimeout(function() {sidebar.style.transition = ""; navBoxOpen("");}, 1000);
-    
+    setTimeout(function () { sidebar.style.transition = ""; navBoxOpen(""); }, 1000);
+
+}
+hideError();
+} catch (error) {
+    showError(3, error);
 }

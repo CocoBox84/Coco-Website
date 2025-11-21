@@ -1,126 +1,8 @@
 // db.js
 
 const DEFAULT_SCRIPT = `
-
-// Welcome to CocoScript!
-// Note!: AI fixed my text, it did not do it for me!
-// If this is your first time using it, let me show you the basics.
-
-//// Comments ////
-// Comments are pieces of "code" that don’t run.
-// For example, this text you’re reading is a comment.
-// Comments are useful for taking notes or saving code for later.
-// To write a comment, type "//". Everything after it on the line will be ignored.
-
-//// Output ////
-// One of the most important things in coding is output.
-// Output lets you see your progress and keep track of variables.
-//
-// Note: Other users cannot see your output — it’s just for testing.
-//
-// Here is a simple output program:
-diplay("Coco!");
-// No, that’s not a typo — it’s "diplay", not "display".
-//
-// You can also output your username:
-diplay(username); 
-// This prints the name of the user currently on your page.
-// Notice the difference: "text" in quotes is a string,
-// while text without quotes is a variable or keyword.
-// Always put "" around text you want to display literally.
-
-//// Styles ////
-// If you know a bit of CSS, styling your page will be easier.
-// CocoScript makes styling even simpler — you don’t need full CSS syntax.
-// Instead, you use the "style" keyword.
-//
-// Example:
-style("body", "background-color", "white");
-// This changes the background color of the page’s body to white.
-
-// Note!: you have to remove the background image first!
-// The image covers the color, un-comment this to see the color,
-// Or modify it to a different background image.
-
-// style("body", "background-image", "none");
-
-// To modify background images to another image, use background-img instead.
-
-//style("body", "background-img", "/Images/background.png");
-
-// Which is: style (target, "background-img", url to image);
-
-// CocoScript cannot parse nested "()", so
-// style ("body", "background-image", "url(url)");
-// will not work. Any CSS within nested parenthesis, will fail.
-// At least currently, this may be fixed by the time your reading this.
-
-//// Variables ////
-// The "username" variable stores your username.
-// Variables are used to store data.
-//
-// Example:
-!var1 = 5; // "!" creates a new variable
-diplay(var1); // Displays 5
-//
-// You can reassign variables:
-var1 = 6;
-diplay(var1); // Displays 6
-var1 = 7;
-diplay(var1); // Displays 7
-//
-// You can also store your username in a variable:
-!var2 = username;
-// Or even overwrite the username:
-username = "My New Name!";
-
-//// Booleans ////
-// A Boolean is a type of data that can only be true or false.
-!var3 = true;
-!var4 = false;
-//
-// Example use:
-!var5 = var1 == var2; // "==" compares values
-// If var1 equals var2, var5 becomes true. Otherwise, it’s false.
-
-//// If Statements ////
-// An if statement runs code only if a condition is true.
-!isTrue = false;
-?isTrue {
-  diplay("It is true!");
-}
-//
-// Example:
-!isMyName = username == "My Username";
-?isMyName {
-  diplay("Hello, Me!");
-}
-
-//// If-Else Statements ////
-// If-else statements let you run code whether the condition is true or false.
-!isMyName = username == "My Username";
-?isMyName {
-  diplay("Hello, Me!");
-} else {
-  diplay("You are not me!");
-}
-//
-// You can also chain else-if statements:
-!isMyOtherName = username == "My other username";
-?isMyName {
-  diplay("Hello, Me!");
-} else ?isMyOtherName {
-  diplay("Hello, me on another account!");
-} else {
-  diplay("You are not me!");
-}
-
-//// Important Notes ////
-// - If statements are still experimental — they may not work perfectly yet.
-// - Use styles to customize your webpage. Don’t add inappropriate images.
-// - diplay’s output is visible only to you in DevTools, or in the output below; not to other users.
-
-diplay("Program End.");
+diplay("Hello, World!");
+diplay("Coco");
 `;
 
 const fs = require('fs');
@@ -159,7 +41,7 @@ async function init() {
         description TEXT DEFAULT "",
         script TEXT,
         CocoScriptEnabled TEXT DEFAULT 'true',
-        role TEXT default "user"
+        role TEXT default "User"
       );
 
       CREATE TABLE follows (
@@ -215,11 +97,12 @@ function persist() {
   fs.writeFileSync(DB_FILE, buffer);
 }
 
-function createUser(username, email, passwordHash) {
+function createUser(username, email, passwordHash, isAdmin) {
   const stmt = db.prepare(
-    'INSERT INTO users (username, email, password_hash, isPrivate, script) VALUES (?, ?, ?, ?, ?)'
+    'INSERT INTO users (username, email, password_hash, isPrivate, script, role) VALUES (?, ?, ?, ?, ?, ?)'
   );
-  stmt.run([username, email, passwordHash, 1, DEFAULT_SCRIPT]);
+  const role = (isAdmin) ? "Admin" : "User";
+  stmt.run([username, email, passwordHash, 1, DEFAULT_SCRIPT, role]);
   stmt.free();
   persist();
   // After persisting, query the user row to obtain the id (more reliable across sql.js)

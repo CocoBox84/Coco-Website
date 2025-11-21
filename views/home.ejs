@@ -339,38 +339,6 @@
     <!---->
     <script src="/Ambler.mp3Sound.js"></script>
     <script src="/JS/global.js"></script>
-    <!---->
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        /* Aa *
-        showError(); /* Aa */
-        /* Aa */
-        showMessage();
-      });
-
-      function showError() {
-        document.getElementById("e").innerHTML = `Oops! Something Crashed!`;
-        var errorContainer = document.getElementById("error-container");
-        errorContainer.classList.remove("error-container-hide");
-        errorContainer.classList.add("error-container-show");
-      }
-
-      function hideError() {
-        document.getElementById("e").innerHTML = ``;
-        var errorContainer = document.getElementById("error-container");
-        errorContainer.classList.remove("error-container-show");
-        errorContainer.classList.add("error-container-hide");
-      }
-
-      function showMessage(messageAtIndex) {
-        var messageBox;
-        switch (messageAtIndex) {
-          case 5:
-            //
-            break;
-        }
-      }
-    </script>
     <script>
       console.log(`At: ${window.location.pathname}`);
       if (window.location.pathname.includes('index.html')) window.location.href = window.location.pathname.replace('index.html', '');
@@ -380,17 +348,6 @@
     <!--<script type="module" src="/Scripts/bodyScripts.js"></script>-->
     <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
     <script>
-      const errorMessageContainer = document.getElementById("error-container");
-
-      function clearError() {
-        errorMessageContainer.classList.remove("error-container-show");
-        errorMessageContainer.classList.add("error-container-hide");
-        document.getElementById("e").innerHTML = ``;
-        var errorContainer = document.getElementById("error-container");
-        errorContainer.classList.remove("error-container-show");
-        errorContainer.classList.add("error-container-hide");
-      };
-
       function escapeHTML(str) {
         const div = document.createElement("div");
         div.textContent = str; // browser escapes automatically
@@ -525,7 +482,6 @@
           })
           .catch(error => {
             console.error('Error loading messages:', error);
-            showError();
           });
       }
 
