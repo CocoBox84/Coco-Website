@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function showError(errorType, error = new Error()) {
-    document.getElementById("e").innerHTML = `<h1>Oops! Something Crashed!</h1> ${errorMessages[errorType]} <h2>Error:</h2> <p>${error.message}</p>`;
+    document.getElementById("e").innerHTML = "<h1>Oops! Something Crashed!</h1>" + errorMessages[errorType] + "<h2>Error:</h2> <p>" + error.message + "</p>";
     var errorContainer = document.getElementById("error-container");
     errorContainer.classList.remove("error-container-hide");
     errorContainer.classList.add("error-container-show");
